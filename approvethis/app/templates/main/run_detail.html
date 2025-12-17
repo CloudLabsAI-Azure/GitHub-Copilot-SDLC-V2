@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Run #{{ run.run_number }} - {{ current_repo.full_name }} - ApproveThis{% endblock %}
+
+{% block content %}
+<div class="run-detail-page">
+    <div class="page-header">
+        <div>
+            <h1>{{ run.workflow_name or run.name }}</h1>
+            <p>Run #{{ run.run_number }}</p>
+        </div>
+        <div>
+            <a href="{{ url_for('main.runs', owner=owner, repo=repo) }}" class="btn btn-secondary">Back to Runs</a>
+        </div>
+    </div>
+    
+    <div class="run-summary">
+        <div class="run-summary-item">
+            <strong>Status:</strong>
+            {% include 'components/_run_status_badge.html' %}
+        </div>
+        <div class="run-summary-item">
+            <strong>Branch:</strong>
+            <code>{{ run.head_branch }}</code>
+        </div>
+        <div class="run-summary-item">
+            <strong>Event:</strong>
+            <span class="badge badge-secondary">{{ run.event }}</span>
+        </div>
+        <div class="run-summary-item">
+            <strong>Actor:</strong>
+            {{ run.actor.login }}
+        </div>
+        <div class="run-summary-item">
+            <strong>Started:</strong>
+            {{ run.run_started_at or run.created_at }}
+        </div>
+        {% if run.updated_at %}
+        <div class="run-summary-item">
+            <strong>Completed:</strong>
+            {{ run.updated_at }}
+        </div>
+        {% endif %}
+    </div>
+    
+    {% if run.jobs %}
+        <div class="jobs-section">
+            <h2>Jobs</h2>
+            {% for job in run.jobs %}
+                <div class="job-card">
+                    <div class="job-header">
+                        <h3>{{ job.name }}</h3>
+                        <span class="badge {% if job.conclusion == 'success' %}badge-success{% elif job.conclusion == 'failure' %}badge-danger{% else %}badge-secondary{% endif %}">
+                            {{ job.conclusion or job.status | upper }}
+                        </span>
+                    </div>
+                    
+                    {% if job.started_at %}
+                        <div class="job-meta">
+                            <span>Started: {{ job.started_at }}</span>
+                            {% if job.completed_at %}
+                                <span>Completed: {{ job.completed_at }}</span>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    
+                    {% if job.steps %}
+                        <div class="steps-list">
+                            <h4>Steps:</h4>
+                            <ul>
+                                {% for step in job.steps %}
+                                    <li class="step-item">
+                                        <span class="step-number">{{ step.number }}.</span>
+                                        <span class="step-name">{{ step.name }}</span>
+                                        <span class="badge badge-sm {% if step.conclusion == 'success' %}badge-success{% elif step.conclusion == 'failure' %}badge-danger{% else %}badge-secondary{% endif %}">
+                                            {{ step.conclusion or step.status }}
+                                        </span>
+                                        {% if step.started_at %}
+                                            <span class="step-time">{{ step.started_at }} - {{ step.completed_at }}</span>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="info-message">
+            <p>No detailed job information available for this run.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

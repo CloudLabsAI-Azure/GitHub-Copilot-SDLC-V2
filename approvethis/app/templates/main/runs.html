@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Workflow Runs - {{ current_repo.full_name }} - ApproveThis{% endblock %}
+
+{% block content %}
+<div class="runs-page">
+    <div class="page-header">
+        <div>
+            <h1>{{ current_repo.full_name }}</h1>
+            <p>Workflow Runs</p>
+        </div>
+        <div>
+            <a href="{{ url_for('main.workflows', owner=owner, repo=repo) }}" class="btn btn-secondary">Back to Workflows</a>
+        </div>
+    </div>
+    
+    {% if runs %}
+        <div class="runs-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Workflow</th>
+                        <th>Branch</th>
+                        <th>Event</th>
+                        <th>Actor</th>
+                        <th>Run #</th>
+                        <th>Started</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for run in runs %}
+                        <tr>
+                            <td>{% include 'components/_run_status_badge.html' %}</td>
+                            <td>{{ run.workflow_name or run.name }}</td>
+                            <td><code>{{ run.head_branch }}</code></td>
+                            <td><span class="badge badge-secondary">{{ run.event }}</span></td>
+                            <td>{{ run.actor.login }}</td>
+                            <td>#{{ run.run_number }}</td>
+                            <td>{{ run.created_at }}</td>
+                            <td>
+                                <a href="{{ url_for('main.run_detail', owner=owner, repo=repo, run_id=run.id) }}" class="btn btn-sm btn-primary">
+                                    Details
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <p>No workflow runs found.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

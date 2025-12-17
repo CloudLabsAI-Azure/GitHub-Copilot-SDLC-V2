@@ -1,0 +1,8 @@
+{% macro render_field(field, label=None) %}
+    <div class="form-group">
+        {% if label %}
+            <label for="{{ field.id }}">{{ label }}</label>
+        {% endif %}
+        {{ field(class="form-control") }}
+    </div>
+{% endmacro %}

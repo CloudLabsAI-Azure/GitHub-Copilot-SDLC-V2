@@ -1,0 +1,67 @@
+{
+  "id": 5002,
+  "name": "CI/CD Pipeline",
+  "workflow_id": 1001,
+  "workflow_name": "CI/CD Pipeline",
+  "head_branch": "feature/new-ui",
+  "head_sha": "def789ghi012",
+  "run_number": 144,
+  "event": "pull_request",
+  "status": "completed",
+  "conclusion": "failure",
+  "created_at": "2024-12-17T07:30:00Z",
+  "updated_at": "2024-12-17T07:35:00Z",
+  "run_started_at": "2024-12-17T07:30:15Z",
+  "html_url": "https://github.com/acme-corp/web-app/actions/runs/5002",
+  "repository": {
+    "full_name": "acme-corp/web-app"
+  },
+  "actor": {
+    "login": "jane-dev"
+  },
+  "jobs": [
+    {
+      "id": 10003,
+      "run_id": 5002,
+      "name": "Build and Test",
+      "status": "completed",
+      "conclusion": "failure",
+      "started_at": "2024-12-17T07:30:20Z",
+      "completed_at": "2024-12-17T07:35:00Z",
+      "steps": [
+        {
+          "name": "Checkout code",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2024-12-17T07:30:20Z",
+          "completed_at": "2024-12-17T07:30:28Z"
+        },
+        {
+          "name": "Setup Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2024-12-17T07:30:28Z",
+          "completed_at": "2024-12-17T07:30:55Z"
+        },
+        {
+          "name": "Install dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2024-12-17T07:30:55Z",
+          "completed_at": "2024-12-17T07:32:10Z"
+        },
+        {
+          "name": "Run tests",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 4,
+          "started_at": "2024-12-17T07:32:10Z",
+          "completed_at": "2024-12-17T07:35:00Z"
+        }
+      ]
+    }
+  ]
+}

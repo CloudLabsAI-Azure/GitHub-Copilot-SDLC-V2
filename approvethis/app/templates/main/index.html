@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - ApproveThis{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <div class="dashboard-header">
+        <h1>Welcome to ApproveThis</h1>
+        <p>Manage GitHub Actions workflow dispatches and approvals</p>
+    </div>
+    
+    <div class="dashboard-content">
+        {% if repos %}
+            <div class="section">
+                <h2>Repositories</h2>
+                {% include 'components/_repo_selector.html' %}
+                
+                <div class="repo-list">
+                    {% for repo in repos %}
+                        <div class="repo-item">
+                            <div class="repo-info">
+                                <h3>
+                                    <a href="{{ url_for('main.workflows', owner=repo.owner.login, repo=repo.name) }}">
+                                        {{ repo.full_name }}
+                                    </a>
+                                </h3>
+                                {% if repo.description %}
+                                    <p>{{ repo.description }}</p>
+                                {% endif %}
+                                <div class="repo-meta">
+                                    {% if repo.language %}
+                                        <span class="badge">{{ repo.language }}</span>
+                                    {% endif %}
+                                    {% for topic in repo.topics[:3] %}
+                                        <span class="badge badge-secondary">{{ topic }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="repo-actions">
+                                <a href="{{ url_for('main.workflows', owner=repo.owner.login, repo=repo.name) }}" class="btn btn-sm btn-primary">
+                                    View Workflows
+                                </a>
+                                <a href="{{ url_for('main.runs', owner=repo.owner.login, repo=repo.name) }}" class="btn btn-sm btn-secondary">
+                                    View Runs
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p>No repositories available or you don't have permission to view them.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

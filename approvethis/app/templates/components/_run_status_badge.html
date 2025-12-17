@@ -1,0 +1,12 @@
+{% set status_class_map = {
+    'success': 'badge-success',
+    'failure': 'badge-danger',
+    'in_progress': 'badge-info',
+    'queued': 'badge-secondary',
+    'cancelled': 'badge-warning'
+} %}
+
+{% set status = run.conclusion or run.status %}
+{% set badge_class = status_class_map.get(status, 'badge-secondary') %}
+
+<span class="badge {{ badge_class }}">{{ status | upper }}</span>

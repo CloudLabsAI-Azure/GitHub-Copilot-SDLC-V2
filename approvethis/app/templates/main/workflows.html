@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Workflows - {{ current_repo.full_name }} - ApproveThis{% endblock %}
+
+{% block content %}
+<div class="workflows-page">
+    <div class="page-header">
+        <div>
+            <h1>{{ current_repo.full_name }}</h1>
+            <p>Workflows</p>
+        </div>
+        <div>
+            <a href="{{ url_for('main.index') }}" class="btn btn-secondary">Back to Dashboard</a>
+            <a href="{{ url_for('main.runs', owner=owner, repo=repo) }}" class="btn btn-primary">View All Runs</a>
+        </div>
+    </div>
+    
+    {% if workflows %}
+        <div class="workflows-grid">
+            {% for workflow in workflows %}
+                {% include 'components/_workflow_card.html' %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <p>No workflows found in this repository.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function dispatchWorkflow(owner, repo, workflowId, workflowName) {
+    const ref = prompt(`Dispatch workflow: ${workflowName}\n\nEnter branch/tag name:`, 'main');
+    
+    if (!ref) {
+        return;
+    }
+    
+    fetch(`/api/repos/${owner}/${repo}/workflows/${workflowId}/dispatch`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ref: ref, inputs: {} })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Workflow dispatched successfully!');
+            window.location.href = `/repos/${owner}/${repo}/runs`;
+        } else {
+            alert('Error: ' + (data.message || 'Unknown error'));
+        }
+    })
+    .catch(error => {
+        alert('Error dispatching workflow: ' + error);
+    });
+}
+</script>
+{% endblock %}

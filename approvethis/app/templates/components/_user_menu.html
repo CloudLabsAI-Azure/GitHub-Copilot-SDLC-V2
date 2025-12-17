@@ -1,0 +1,5 @@
+<div class="user-menu">
+    <span class="user-name">{{ current_user.username }}</span>
+    <span class="user-role">({{ current_user.role.name }})</span>
+    <a href="{{ url_for('auth.logout') }}" class="btn btn-sm btn-secondary">Logout</a>
+</div>
