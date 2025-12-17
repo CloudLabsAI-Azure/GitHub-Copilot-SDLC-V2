@@ -1,0 +1,20 @@
+<div class="repo-selector">
+    <label for="repo-select">Repository:</label>
+    <select id="repo-select" onchange="navigateToRepo(this.value)">
+        <option value="">Select a repository...</option>
+        {% for repo in repos %}
+            <option value="{{ repo.full_name }}" {% if current_repo and current_repo.full_name == repo.full_name %}selected{% endif %}>
+                {{ repo.full_name }}
+            </option>
+        {% endfor %}
+    </select>
+</div>
+
+<script>
+function navigateToRepo(repoFullName) {
+    if (repoFullName) {
+        const [owner, repo] = repoFullName.split('/');
+        window.location.href = `/repos/${owner}/${repo}/workflows`;
+    }
+}
+</script>

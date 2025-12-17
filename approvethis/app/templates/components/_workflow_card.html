@@ -1,0 +1,29 @@
+<div class="workflow-card">
+    <div class="workflow-header">
+        <h3 class="workflow-name">{{ workflow.name }}</h3>
+        <span class="workflow-path">{{ workflow.path }}</span>
+    </div>
+    
+    <div class="workflow-info">
+        <span class="workflow-trigger">
+            Triggers: 
+            {% if workflow.event is iterable and workflow.event is not string %}
+                {{ workflow.event | join(', ') }}
+            {% else %}
+                {{ workflow.event }}
+            {% endif %}
+        </span>
+    </div>
+    
+    <div class="workflow-actions">
+        <a href="{{ url_for('main.runs', owner=owner, repo=repo) }}?workflow_id={{ workflow.id }}" class="btn btn-sm btn-secondary">
+            View Runs
+        </a>
+        
+        {% if can_dispatch and workflow.event and 'workflow_dispatch' in (workflow.event if workflow.event is iterable else [workflow.event]) %}
+            <button class="btn btn-sm btn-primary" onclick="dispatchWorkflow('{{ owner }}', '{{ repo }}', '{{ workflow.id }}', '{{ workflow.name }}')">
+                Run Workflow
+            </button>
+        {% endif %}
+    </div>
+</div>

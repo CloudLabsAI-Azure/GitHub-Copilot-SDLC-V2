@@ -1,0 +1,72 @@
+{
+  "acme-corp/web-app": [
+    {
+      "id": 1001,
+      "name": "CI/CD Pipeline",
+      "path": ".github/workflows/ci-cd.yml",
+      "state": "active",
+      "created_at": "2023-03-10T12:00:00Z",
+      "updated_at": "2024-11-20T09:30:00Z",
+      "html_url": "https://github.com/acme-corp/web-app/actions/workflows/ci-cd.yml",
+      "badge_url": "https://github.com/acme-corp/web-app/actions/workflows/ci-cd.yml/badge.svg",
+      "event": ["push", "pull_request"]
+    },
+    {
+      "id": 1002,
+      "name": "Deploy to Production",
+      "path": ".github/workflows/deploy-prod.yml",
+      "state": "active",
+      "created_at": "2023-03-15T14:20:00Z",
+      "updated_at": "2024-12-01T16:00:00Z",
+      "html_url": "https://github.com/acme-corp/web-app/actions/workflows/deploy-prod.yml",
+      "badge_url": "https://github.com/acme-corp/web-app/actions/workflows/deploy-prod.yml/badge.svg",
+      "event": ["workflow_dispatch"]
+    },
+    {
+      "id": 1003,
+      "name": "Nightly Tests",
+      "path": ".github/workflows/nightly.yml",
+      "state": "active",
+      "created_at": "2023-04-01T08:00:00Z",
+      "updated_at": "2024-11-15T10:15:00Z",
+      "html_url": "https://github.com/acme-corp/web-app/actions/workflows/nightly.yml",
+      "badge_url": "https://github.com/acme-corp/web-app/actions/workflows/nightly.yml/badge.svg",
+      "event": ["schedule", "workflow_dispatch"]
+    }
+  ],
+  "acme-corp/api-service": [
+    {
+      "id": 2001,
+      "name": "Test Suite",
+      "path": ".github/workflows/test.yml",
+      "state": "active",
+      "created_at": "2023-02-25T11:00:00Z",
+      "updated_at": "2024-12-10T13:45:00Z",
+      "html_url": "https://github.com/acme-corp/api-service/actions/workflows/test.yml",
+      "badge_url": "https://github.com/acme-corp/api-service/actions/workflows/test.yml/badge.svg",
+      "event": ["push", "pull_request"]
+    },
+    {
+      "id": 2002,
+      "name": "Deploy Staging",
+      "path": ".github/workflows/deploy-staging.yml",
+      "state": "active",
+      "created_at": "2023-03-05T10:30:00Z",
+      "updated_at": "2024-11-28T15:20:00Z",
+      "html_url": "https://github.com/acme-corp/api-service/actions/workflows/deploy-staging.yml",
+      "badge_url": "https://github.com/acme-corp/api-service/actions/workflows/deploy-staging.yml/badge.svg",
+      "event": ["workflow_dispatch"]
+    },
+    {
+      "id": 2003,
+      "name": "Security Scan",
+      "path": ".github/workflows/security.yml",
+      "state": "active",
+      "created_at": "2023-05-10T09:00:00Z",
+      "updated_at": "2024-12-05T11:00:00Z",
+      "html_url": "https://github.com/acme-corp/api-service/actions/workflows/security.yml",
+      "badge_url": "https://github.com/acme-corp/api-service/actions/workflows/security.yml/badge.svg",
+      "event": ["schedule", "push"]
+    }
+  ]
+}

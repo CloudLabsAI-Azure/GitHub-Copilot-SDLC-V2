@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}403 - Forbidden{% endblock %}
+
+{% block content %}
+<div class="empty-state">
+    <h1>403 - Forbidden</h1>
+    <p>You don't have permission to access this resource.</p>
+    <p>Your current role may not have the required permissions.</p>
+    <a href="{{ url_for('main.index') }}" class="btn btn-primary">Go to Dashboard</a>
+</div>
+{% endblock %}
