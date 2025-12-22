@@ -55,26 +55,43 @@ jobs:
           terraform_version: ${{ env.TF_VERSION }}
       
       - name: Azure Login
+        if: ${{ secrets.AZURE_CREDENTIALS != '' }}
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+        continue-on-error: true
+      
+      - name: Check Azure Credentials
+        id: check_azure
+        run: |
+          if [ "${{ secrets.AZURE_CREDENTIALS }}" == "" ]; then
+            echo "configured=false" >> $GITHUB_OUTPUT
+            echo "⚠️ Azure credentials not configured"
+            echo "This workflow requires Azure credentials to destroy infrastructure"
+            exit 1
+          else
+            echo "configured=true" >> $GITHUB_OUTPUT
+          fi
       
       - name: Terraform Init
+        if: steps.check_azure.outputs.configured == 'true'
         id: init
         run: terraform init
       
       - name: Terraform Plan Destroy
+        if: steps.check_azure.outputs.configured == 'true'
         id: plan
         run: |
           terraform plan -destroy -no-color -out=destroy.tfplan
         env:
-          TF_VAR_storage_account_name: ${{ secrets[format('TF_VAR_STORAGE_ACCOUNT_NAME_{0}', env.ENVIRONMENT)] }}
-          TF_VAR_function_storage_name: ${{ secrets[format('TF_VAR_FUNCTION_STORAGE_NAME_{0}', env.ENVIRONMENT)] }}
-          TF_VAR_app_service_name: ${{ secrets[format('TF_VAR_APP_SERVICE_NAME_{0}', env.ENVIRONMENT)] }}
-          TF_VAR_function_app_name: ${{ secrets[format('TF_VAR_FUNCTION_APP_NAME_{0}', env.ENVIRONMENT)] }}
-          TF_VAR_database_url: ${{ secrets[format('TF_VAR_DATABASE_URL_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_storage_account_name: ${{ secrets.TF_VAR_STORAGE_ACCOUNT_NAME || 'stapprovethisdev001' }}
+          TF_VAR_function_storage_name: ${{ secrets.TF_VAR_FUNCTION_STORAGE_NAME || 'stapprovethisfndev001' }}
+          TF_VAR_app_service_name: ${{ secrets.TF_VAR_APP_SERVICE_NAME || 'app-approvethis-dev-001' }}
+          TF_VAR_function_app_name: ${{ secrets.TF_VAR_FUNCTION_APP_NAME || 'func-terraform-dev-001' }}
+          TF_VAR_database_url: ${{ secrets.TF_VAR_DATABASE_URL || '' }}
       
       - name: Display Destroy Plan
+        if: steps.check_azure.outputs.configured == 'true'
         run: |
           echo "## Terraform Destroy Plan for ${{ env.ENVIRONMENT }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
@@ -85,8 +102,15 @@ jobs:
           echo '```' >> $GITHUB_STEP_SUMMARY
       
       - name: Terraform Destroy
+        if: steps.check_azure.outputs.configured == 'true'
         id: destroy
         run: terraform apply -auto-approve destroy.tfplan
+        env:
+          TF_VAR_storage_account_name: ${{ secrets.TF_VAR_STORAGE_ACCOUNT_NAME || 'stapprovethisdev001' }}
+          TF_VAR_function_storage_name: ${{ secrets.TF_VAR_FUNCTION_STORAGE_NAME || 'stapprovethisfndev001' }}
+          TF_VAR_app_service_name: ${{ secrets.TF_VAR_APP_SERVICE_NAME || 'app-approvethis-dev-001' }}
+          TF_VAR_function_app_name: ${{ secrets.TF_VAR_FUNCTION_APP_NAME || 'func-terraform-dev-001' }}
+          TF_VAR_database_url: ${{ secrets.TF_VAR_DATABASE_URL || '' }}
         env:
           TF_VAR_storage_account_name: ${{ secrets[format('TF_VAR_STORAGE_ACCOUNT_NAME_{0}', env.ENVIRONMENT)] }}
           TF_VAR_function_storage_name: ${{ secrets[format('TF_VAR_FUNCTION_STORAGE_NAME_{0}', env.ENVIRONMENT)] }}
