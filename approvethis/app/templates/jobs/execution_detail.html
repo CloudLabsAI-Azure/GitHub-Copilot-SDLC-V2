@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+
+{% block title %}Execution #{{ execution.id }} - Jobs{% endblock %}
+
+{% block content %}
+<div class="execution-detail-page">
+    <div class="breadcrumb">
+        <a href="{{ url_for('jobs.index') }}">Jobs</a> / 
+        <a href="{{ url_for('jobs.executions') }}">Executions</a> / 
+        #{{ execution.id }}
+    </div>
+    
+    <div class="execution-header">
+        <h1>Execution #{{ execution.id }}</h1>
+        <div class="execution-status-large">
+            {% include 'components/_execution_status_badge.html' with context %}
+        </div>
+    </div>
+    
+    <div class="execution-details">
+        <div class="detail-section">
+            <h2>Job Information</h2>
+            <dl>
+                <dt>Job Name:</dt>
+                <dd>
+                    <a href="{{ url_for('jobs.detail', job_id=execution.job_definition.id) }}">
+                        {{ execution.job_definition.name }}
+                    </a>
+                </dd>
+                
+                <dt>Category:</dt>
+                <dd>{{ execution.job_definition.category or 'N/A' }}</dd>
+                
+                <dt>Execution Target:</dt>
+                <dd>{{ execution.job_definition.execution_target.name if execution.job_definition.execution_target else 'Unknown' }}</dd>
+            </dl>
+        </div>
+        
+        <div class="detail-section">
+            <h2>Execution Timeline</h2>
+            <dl>
+                <dt>Requested By:</dt>
+                <dd>{{ execution.requester.username if execution.requester else 'Unknown' }}</dd>
+                
+                <dt>Created:</dt>
+                <dd>{{ execution.created_at.strftime('%Y-%m-%d %H:%M:%S UTC') if execution.created_at else 'N/A' }}</dd>
+                
+                <dt>Started:</dt>
+                <dd>{{ execution.started_at.strftime('%Y-%m-%d %H:%M:%S UTC') if execution.started_at else 'Not started' }}</dd>
+                
+                <dt>Completed:</dt>
+                <dd>{{ execution.completed_at.strftime('%Y-%m-%d %H:%M:%S UTC') if execution.completed_at else 'Not completed' }}</dd>
+                
+                {% if execution.approved_by %}
+                <dt>Approved By:</dt>
+                <dd>{{ execution.approver.username }} at {{ execution.approved_at.strftime('%Y-%m-%d %H:%M:%S UTC') }}</dd>
+                {% endif %}
+            </dl>
+        </div>
+        
+        {% if inputs %}
+        <div class="detail-section">
+            <h2>Inputs</h2>
+            <pre class="json-display">{{ inputs | tojson(indent=2) }}</pre>
+        </div>
+        {% endif %}
+        
+        {% if result %}
+        <div class="detail-section">
+            <h2>Result</h2>
+            <pre class="json-display">{{ result | tojson(indent=2) }}</pre>
+        </div>
+        {% endif %}
+        
+        {% if execution.error_message %}
+        <div class="detail-section error-section">
+            <h2>Error</h2>
+            <pre class="error-display">{{ execution.error_message }}</pre>
+        </div>
+        {% endif %}
+        
+        {% if execution.external_url %}
+        <div class="detail-section">
+            <h2>External Links</h2>
+            <a href="{{ execution.external_url }}" target="_blank" class="btn">
+                View in External System →
+            </a>
+        </div>
+        {% endif %}
+        
+        <div class="actions">
+            {% if execution.status in ['running', 'queued'] %}
+                {% if current_user.is_admin() or execution.requested_by_id == current_user.id %}
+                <form method="POST" action="{{ url_for('jobs.api_cancel_execution', execution_id=execution.id) }}" 
+                      onsubmit="return confirm('Are you sure you want to cancel this execution?');">
+                    <button type="submit" class="btn btn-danger">Cancel Execution</button>
+                </form>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+.execution-detail-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.breadcrumb {
+    margin-bottom: 1rem;
+    color: #666;
+}
+
+.breadcrumb a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.execution-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #eee;
+}
+
+.execution-header h1 {
+    margin: 0;
+}
+
+.execution-status-large .status-badge {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+.execution-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.detail-section {
+    background: #f5f5f5;
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.detail-section h2 {
+    margin: 0 0 1rem 0;
+    font-size: 1.25rem;
+}
+
+.detail-section dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 0.75rem;
+}
+
+.detail-section dt {
+    font-weight: 500;
+    color: #666;
+}
+
+.detail-section dd {
+    margin: 0;
+}
+
+.json-display,
+.error-display {
+    margin: 0;
+    padding: 1rem;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: monospace;
+    font-size: 0.875rem;
+}
+
+.error-section {
+    background: #ffebee;
+}
+
+.error-display {
+    color: #c62828;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    background-color: #0066cc;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #d32f2f;
+}
+
+.actions {
+    margin-top: 2rem;
+}
+</style>
+{% endblock %}

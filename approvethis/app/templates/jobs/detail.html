@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block title %}{{ job.name }} - Jobs{% endblock %}
+
+{% block content %}
+<div class="job-detail-page">
+    <div class="breadcrumb">
+        <a href="{{ url_for('jobs.index') }}">Jobs</a> / {{ job.name }}
+    </div>
+    
+    <div class="job-header">
+        <div class="job-title-section">
+            <h1>{{ job.name }}</h1>
+            <div class="job-meta">
+                <span class="badge badge-{{ job.category }}">{{ job.category }}</span>
+                {% if job.requires_approval %}
+                    <span class="badge badge-warning">Requires Approval</span>
+                {% endif %}
+                <span class="execution-target">
+                    Target: {{ job.execution_target.name if job.execution_target else 'Unknown' }}
+                </span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="job-content">
+        <div class="job-description">
+            <h2>Description</h2>
+            <p>{{ job.description }}</p>
+        </div>
+        
+        {% if current_user.can(job.required_permission) %}
+        <div class="execution-form">
+            <h2>Execute Job</h2>
+            <form method="POST" action="{{ url_for('jobs.execute', job_id=job.id) }}">
+                {% if input_schema %}
+                    {% for field_name, field_spec in input_schema.items() %}
+                        <div class="form-group">
+                            <label for="{{ field_name }}">{{ field_spec.label }}</label>
+                            
+                            {% if field_spec.type == 'select' %}
+                                <select name="{{ field_name }}" id="{{ field_name }}" 
+                                        {% if field_spec.required %}required{% endif %}>
+                                    {% for option in field_spec.options %}
+                                        <option value="{{ option }}" 
+                                                {% if default_inputs.get(field_name) == option %}selected{% endif %}>
+                                            {{ option }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            {% elif field_spec.type == 'checkbox' %}
+                                <input type="checkbox" name="{{ field_name }}" id="{{ field_name }}"
+                                       {% if default_inputs.get(field_name) %}checked{% endif %}>
+                            {% else %}
+                                <input type="text" name="{{ field_name }}" id="{{ field_name }}"
+                                       value="{{ default_inputs.get(field_name, '') }}"
+                                       {% if field_spec.required %}required{% endif %}>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <button type="submit" class="btn btn-primary">
+                    {% if job.requires_approval %}
+                        Request Execution
+                    {% else %}
+                        Execute Now
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+        {% else %}
+        <div class="alert alert-warning">
+            You do not have permission to execute this job.
+        </div>
+        {% endif %}
+        
+        {% if recent_executions %}
+        <div class="recent-executions">
+            <h2>Recent Executions</h2>
+            <table class="executions-table">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Requested By</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for execution in recent_executions %}
+                    <tr>
+                        <td>{% include 'components/_execution_status_badge.html' with context %}</td>
+                        <td>{{ execution.requester.username if execution.requester else 'Unknown' }}</td>
+                        <td>{{ execution.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>
+                            <a href="{{ url_for('jobs.execution_detail', execution_id=execution.id) }}" 
+                               class="btn btn-sm">View</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+.job-detail-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.breadcrumb {
+    margin-bottom: 1rem;
+    color: #666;
+}
+
+.breadcrumb a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.job-header {
+    margin-bottom: 2rem;
+}
+
+.job-title-section h1 {
+    margin: 0 0 0.5rem 0;
+}
+
+.job-meta {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.badge-infrastructure { background-color: #e3f2fd; color: #1976d2; }
+.badge-deployment { background-color: #f3e5f5; color: #7b1fa2; }
+.badge-warning { background-color: #fff3e0; color: #f57c00; }
+
+.execution-target {
+    color: #666;
+    font-size: 0.875rem;
+}
+
+.job-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.job-description h2,
+.execution-form h2,
+.recent-executions h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.execution-form {
+    background: #f5f5f5;
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-group input[type="checkbox"] {
+    width: auto;
+    margin-left: 0.5rem;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: #0066cc;
+    color: white;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+.alert {
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.alert-warning {
+    background-color: #fff3e0;
+    color: #f57c00;
+}
+
+.executions-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.executions-table th,
+.executions-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.executions-table th {
+    background-color: #f5f5f5;
+    font-weight: 500;
+}
+</style>
+{% endblock %}
