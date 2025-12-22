@@ -1,0 +1,15 @@
+# Example Terraform Variables for Dev Environment
+# Copy this file to terraform.tfvars and update with your values
+
+location = "East US"
+
+# Storage account names must be globally unique, 3-24 lowercase letters and numbers
+storage_account_name  = "stapprovethisdev001"
+function_storage_name = "stapprovethisfndev001"
+
+# App Service and Function names must be globally unique
+app_service_name  = "app-approvethis-dev-001"
+function_app_name = "func-terraform-dev-001"
+
+# Database URL (use environment variable in production)
+# database_url = "postgresql://user:pass@host:5432/dbname"

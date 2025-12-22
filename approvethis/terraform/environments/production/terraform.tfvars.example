@@ -1,0 +1,10 @@
+# Example Terraform Variables for Production Environment
+# Copy this file to terraform.tfvars and update with your values
+
+location = "East US"
+
+storage_account_name  = "stapprovethisprod001"
+function_storage_name = "stapprovethisfnprd001"
+
+app_service_name  = "app-approvethis-prod-001"
+function_app_name = "func-terraform-prod-001"

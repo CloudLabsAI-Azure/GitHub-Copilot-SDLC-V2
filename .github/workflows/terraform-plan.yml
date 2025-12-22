@@ -1,0 +1,115 @@
+name: Terraform Plan
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to plan'
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - production
+      terraform_version:
+        description: 'Terraform version'
+        required: false
+        default: '1.6.0'
+  pull_request:
+    paths:
+      - 'approvethis/terraform/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  terraform-plan:
+    name: Terraform Plan - ${{ github.event.inputs.environment || 'dev' }}
+    runs-on: ubuntu-latest
+    
+    env:
+      TF_VERSION: ${{ github.event.inputs.terraform_version || '1.6.0' }}
+      ENVIRONMENT: ${{ github.event.inputs.environment || 'dev' }}
+    
+    defaults:
+      run:
+        working-directory: approvethis/terraform/environments/${{ github.event.inputs.environment || 'dev' }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+      
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Terraform Format Check
+        id: fmt
+        run: terraform fmt -check -recursive
+        continue-on-error: true
+      
+      - name: Terraform Init
+        id: init
+        run: terraform init
+      
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+      
+      - name: Terraform Plan
+        id: plan
+        run: |
+          terraform plan -no-color -out=tfplan
+        env:
+          TF_VAR_storage_account_name: ${{ secrets[format('TF_VAR_STORAGE_ACCOUNT_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_function_storage_name: ${{ secrets[format('TF_VAR_FUNCTION_STORAGE_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_app_service_name: ${{ secrets[format('TF_VAR_APP_SERVICE_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_function_app_name: ${{ secrets[format('TF_VAR_FUNCTION_APP_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_database_url: ${{ secrets[format('TF_VAR_DATABASE_URL_{0}', env.ENVIRONMENT)] }}
+      
+      - name: Upload Plan
+        uses: actions/upload-artifact@v3
+        with:
+          name: terraform-plan-${{ env.ENVIRONMENT }}
+          path: approvethis/terraform/environments/${{ env.ENVIRONMENT }}/tfplan
+          retention-days: 7
+      
+      - name: Comment PR with Plan
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const output = `#### Terraform Plan for \`${{ env.ENVIRONMENT }}\` 🚀
+            
+            #### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+            
+            <details><summary>Show Plan</summary>
+            
+            \`\`\`terraform
+            ${{ steps.plan.outputs.stdout }}
+            \`\`\`
+            
+            </details>
+            
+            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            });
+      
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1

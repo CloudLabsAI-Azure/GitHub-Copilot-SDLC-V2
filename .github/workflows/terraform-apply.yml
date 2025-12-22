@@ -1,0 +1,110 @@
+name: Terraform Apply
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to apply'
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - production
+      auto_approve:
+        description: 'Auto-approve apply (skip manual approval)'
+        required: false
+        type: boolean
+        default: false
+      terraform_version:
+        description: 'Terraform version'
+        required: false
+        default: '1.6.0'
+
+permissions:
+  contents: read
+
+jobs:
+  terraform-apply:
+    name: Terraform Apply - ${{ github.event.inputs.environment }}
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment }}
+    
+    env:
+      TF_VERSION: ${{ github.event.inputs.terraform_version || '1.6.0' }}
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
+    
+    defaults:
+      run:
+        working-directory: approvethis/terraform/environments/${{ github.event.inputs.environment }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+      
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Terraform Init
+        id: init
+        run: terraform init
+      
+      - name: Download Plan (if available)
+        id: download-plan
+        uses: actions/download-artifact@v3
+        continue-on-error: true
+        with:
+          name: terraform-plan-${{ env.ENVIRONMENT }}
+          path: approvethis/terraform/environments/${{ env.ENVIRONMENT }}
+      
+      - name: Terraform Plan (if no cached plan)
+        if: steps.download-plan.outcome == 'failure'
+        id: plan
+        run: |
+          terraform plan -no-color -out=tfplan
+        env:
+          TF_VAR_storage_account_name: ${{ secrets[format('TF_VAR_STORAGE_ACCOUNT_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_function_storage_name: ${{ secrets[format('TF_VAR_FUNCTION_STORAGE_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_app_service_name: ${{ secrets[format('TF_VAR_APP_SERVICE_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_function_app_name: ${{ secrets[format('TF_VAR_FUNCTION_APP_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_database_url: ${{ secrets[format('TF_VAR_DATABASE_URL_{0}', env.ENVIRONMENT)] }}
+      
+      - name: Terraform Apply
+        id: apply
+        run: |
+          if [ "${{ github.event.inputs.auto_approve }}" == "true" ]; then
+            terraform apply -auto-approve tfplan
+          else
+            terraform apply tfplan
+          fi
+        env:
+          TF_VAR_storage_account_name: ${{ secrets[format('TF_VAR_STORAGE_ACCOUNT_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_function_storage_name: ${{ secrets[format('TF_VAR_FUNCTION_STORAGE_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_app_service_name: ${{ secrets[format('TF_VAR_APP_SERVICE_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_function_app_name: ${{ secrets[format('TF_VAR_FUNCTION_APP_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_database_url: ${{ secrets[format('TF_VAR_DATABASE_URL_{0}', env.ENVIRONMENT)] }}
+      
+      - name: Terraform Output
+        id: output
+        run: terraform output -json
+      
+      - name: Display Results
+        run: |
+          echo "## Terraform Apply Results for ${{ env.ENVIRONMENT }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Outputs" >> $GITHUB_STEP_SUMMARY
+          echo '```json' >> $GITHUB_STEP_SUMMARY
+          echo '${{ steps.output.outputs.stdout }}' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+      
+      - name: Terraform Apply Status
+        if: steps.apply.outcome == 'failure'
+        run: exit 1

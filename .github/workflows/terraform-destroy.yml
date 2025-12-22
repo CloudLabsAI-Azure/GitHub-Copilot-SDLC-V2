@@ -1,0 +1,105 @@
+name: Terraform Destroy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to destroy'
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - production
+      confirmation:
+        description: 'Type "destroy" to confirm'
+        required: true
+        type: string
+      terraform_version:
+        description: 'Terraform version'
+        required: false
+        default: '1.6.0'
+
+permissions:
+  contents: read
+
+jobs:
+  terraform-destroy:
+    name: Terraform Destroy - ${{ github.event.inputs.environment }}
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment }}-destroy
+    
+    env:
+      TF_VERSION: ${{ github.event.inputs.terraform_version || '1.6.0' }}
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
+    
+    defaults:
+      run:
+        working-directory: approvethis/terraform/environments/${{ github.event.inputs.environment }}
+    
+    steps:
+      - name: Validate Confirmation
+        run: |
+          if [ "${{ github.event.inputs.confirmation }}" != "destroy" ]; then
+            echo "Error: Confirmation input must be 'destroy'"
+            exit 1
+          fi
+      
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+      
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Terraform Init
+        id: init
+        run: terraform init
+      
+      - name: Terraform Plan Destroy
+        id: plan
+        run: |
+          terraform plan -destroy -no-color -out=destroy.tfplan
+        env:
+          TF_VAR_storage_account_name: ${{ secrets[format('TF_VAR_STORAGE_ACCOUNT_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_function_storage_name: ${{ secrets[format('TF_VAR_FUNCTION_STORAGE_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_app_service_name: ${{ secrets[format('TF_VAR_APP_SERVICE_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_function_app_name: ${{ secrets[format('TF_VAR_FUNCTION_APP_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_database_url: ${{ secrets[format('TF_VAR_DATABASE_URL_{0}', env.ENVIRONMENT)] }}
+      
+      - name: Display Destroy Plan
+        run: |
+          echo "## Terraform Destroy Plan for ${{ env.ENVIRONMENT }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "⚠️ **WARNING: This will destroy all resources in the ${{ env.ENVIRONMENT }} environment!**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo '```terraform' >> $GITHUB_STEP_SUMMARY
+          terraform show -no-color destroy.tfplan >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+      
+      - name: Terraform Destroy
+        id: destroy
+        run: terraform apply -auto-approve destroy.tfplan
+        env:
+          TF_VAR_storage_account_name: ${{ secrets[format('TF_VAR_STORAGE_ACCOUNT_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_function_storage_name: ${{ secrets[format('TF_VAR_FUNCTION_STORAGE_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_app_service_name: ${{ secrets[format('TF_VAR_APP_SERVICE_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_function_app_name: ${{ secrets[format('TF_VAR_FUNCTION_APP_NAME_{0}', env.ENVIRONMENT)] }}
+          TF_VAR_database_url: ${{ secrets[format('TF_VAR_DATABASE_URL_{0}', env.ENVIRONMENT)] }}
+      
+      - name: Destroy Status
+        run: |
+          echo "## Terraform Destroy Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ All resources in the **${{ env.ENVIRONMENT }}** environment have been destroyed." >> $GITHUB_STEP_SUMMARY
+      
+      - name: Terraform Destroy Status
+        if: steps.destroy.outcome == 'failure'
+        run: exit 1
