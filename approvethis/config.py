@@ -11,6 +11,10 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     GITHUB_PROVIDER = os.environ.get('GITHUB_PROVIDER', 'mock')
     
+    # Azure Function configuration
+    AZURE_FUNCTION_URL = os.environ.get('AZURE_FUNCTION_URL')
+    AZURE_FUNCTION_KEY_SECRET = os.environ.get('AZURE_FUNCTION_KEY_SECRET')
+    
     @staticmethod
     def init_app(app):
         """Initialize application."""

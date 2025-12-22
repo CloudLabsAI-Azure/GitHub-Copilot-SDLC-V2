@@ -1,0 +1,116 @@
+[
+  {
+    "id": 1,
+    "name": "Terraform Plan",
+    "description": "Run Terraform plan to preview infrastructure changes before applying them. This performs a dry-run to show what resources will be created, modified, or destroyed.",
+    "category": "infrastructure",
+    "execution_target": "github_actions",
+    "workflow_id": "301",
+    "default_ref": "main",
+    "requires_approval": false,
+    "input_schema": {
+      "environment": {
+        "type": "select",
+        "label": "Environment",
+        "required": true,
+        "options": ["dev", "staging", "production"],
+        "description": "Target environment for Terraform plan"
+      }
+    },
+    "default_inputs": {
+      "environment": "dev"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Terraform Apply",
+    "description": "Apply Terraform changes to create, update, or delete infrastructure resources. This will make actual changes to your cloud infrastructure based on the Terraform plan.",
+    "category": "infrastructure",
+    "execution_target": "github_actions",
+    "workflow_id": "302",
+    "default_ref": "main",
+    "requires_approval": true,
+    "approval_roles": ["GlobalAdmin"],
+    "input_schema": {
+      "environment": {
+        "type": "select",
+        "label": "Environment",
+        "required": true,
+        "options": ["dev", "staging", "production"],
+        "description": "Target environment for Terraform apply"
+      },
+      "auto_approve": {
+        "type": "checkbox",
+        "label": "Auto-approve",
+        "required": false,
+        "default": false,
+        "description": "Skip manual approval and apply changes automatically"
+      }
+    },
+    "default_inputs": {
+      "environment": "dev",
+      "auto_approve": false
+    }
+  },
+  {
+    "id": 3,
+    "name": "Azure Function Terraform",
+    "description": "Execute Terraform operations via Azure Function. This demonstrates alternative execution backends for infrastructure deployments.",
+    "category": "infrastructure",
+    "execution_target": "azure_function",
+    "workflow_id": null,
+    "default_ref": "main",
+    "requires_approval": true,
+    "approval_roles": ["GlobalAdmin"],
+    "input_schema": {
+      "action": {
+        "type": "select",
+        "label": "Action",
+        "required": true,
+        "options": ["plan", "apply", "destroy"],
+        "description": "Terraform action to perform"
+      },
+      "environment": {
+        "type": "select",
+        "label": "Environment",
+        "required": true,
+        "options": ["dev", "staging", "production"],
+        "description": "Target environment"
+      }
+    },
+    "default_inputs": {
+      "action": "plan",
+      "environment": "dev"
+    }
+  },
+  {
+    "id": 4,
+    "name": "Deploy Web Application",
+    "description": "Deploy the web application to the selected environment using GitHub Actions.",
+    "category": "deployment",
+    "execution_target": "github_actions",
+    "workflow_id": "201",
+    "default_ref": "main",
+    "requires_approval": false,
+    "input_schema": {
+      "environment": {
+        "type": "select",
+        "label": "Environment",
+        "required": true,
+        "options": ["dev", "staging", "production"],
+        "description": "Deployment target"
+      },
+      "version": {
+        "type": "text",
+        "label": "Version",
+        "required": false,
+        "default": "latest",
+        "description": "Application version to deploy"
+      }
+    },
+    "default_inputs": {
+      "environment": "dev",
+      "version": "latest"
+    }
+  }
+]

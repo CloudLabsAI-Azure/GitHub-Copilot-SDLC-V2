@@ -1,0 +1,84 @@
+{% set status = execution.status %}
+
+<span class="status-badge status-{{ status }}">
+    {% if status == 'pending_approval' %}
+        ⏳ Pending Approval
+    {% elif status == 'approved' %}
+        ✓ Approved
+    {% elif status == 'rejected' %}
+        ✗ Rejected
+    {% elif status == 'queued' %}
+        ⏱ Queued
+    {% elif status == 'running' %}
+        ▶ Running
+    {% elif status == 'completed' %}
+        ✓ Completed
+    {% elif status == 'failed' %}
+        ✗ Failed
+    {% elif status == 'cancelled' %}
+        ⊗ Cancelled
+    {% else %}
+        {{ status }}
+    {% endif %}
+</span>
+
+<style>
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.status-pending_approval {
+    background-color: #fff3e0;
+    color: #f57c00;
+}
+
+.status-approved {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.status-rejected {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.status-queued {
+    background-color: #f5f5f5;
+    color: #666;
+}
+
+.status-running {
+    background-color: #e3f2fd;
+    color: #1976d2;
+    animation: pulse 2s infinite;
+}
+
+.status-completed {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-failed {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.status-cancelled {
+    background-color: #f5f5f5;
+    color: #999;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+</style>
