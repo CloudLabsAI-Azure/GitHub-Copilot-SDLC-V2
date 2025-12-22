@@ -14,7 +14,7 @@ class AzureFunctionProvider(ExecutionProvider):
     Request:
         {
             "action": "plan|apply|destroy",
-            "environment": "dev|staging|production",
+            "environment": "dev|production",
             "inputs": {...}
         }
     

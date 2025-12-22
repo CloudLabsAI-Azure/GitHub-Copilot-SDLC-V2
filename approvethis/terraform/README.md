@@ -12,7 +12,6 @@ terraform/
 │   └── storage-account/  # Azure Storage Account
 └── environments/         # Environment-specific configurations
     ├── dev/             # Development environment
-    ├── staging/         # Staging environment
     └── production/      # Production environment
 ```
 
@@ -63,10 +62,9 @@ Creates an Azure Storage Account for application data and backups.
 
 ## Environments
 
-Each environment (dev, staging, production) composes the modules with environment-specific configuration:
+Each environment (dev, production) composes the modules with environment-specific configuration:
 
 - **dev**: Development environment with minimal resources (B1 tier)
-- **staging**: Staging environment with production-like setup (S1 tier)
 - **production**: Production environment with high availability (P1V2 tier, GRS storage)
 
 ## Prerequisites
@@ -153,9 +151,9 @@ Development environment uses local state (`terraform.tfstate`) for simplicity.
 
 **Warning**: Local state is not suitable for team collaboration or production use.
 
-### Staging and Production
+### Production
 
-For staging and production, configure Azure Storage backend:
+For production, configure Azure Storage backend:
 
 1. Create a storage account for Terraform state:
    ```bash

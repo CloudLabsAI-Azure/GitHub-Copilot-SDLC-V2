@@ -81,7 +81,7 @@
       "completed_at": "2024-12-17T08:22:00Z",
       "steps": [
         {
-          "name": "Deploy to staging",
+          "name": "Deploy to dev",
           "status": "completed",
           "conclusion": "success",
           "number": 1,

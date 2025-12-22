@@ -13,7 +13,7 @@
         "type": "select",
         "label": "Environment",
         "required": true,
-        "options": ["dev", "staging", "production"],
+        "options": ["dev", "production"],
         "description": "Target environment for Terraform plan"
       }
     },
@@ -36,7 +36,7 @@
         "type": "select",
         "label": "Environment",
         "required": true,
-        "options": ["dev", "staging", "production"],
+        "options": ["dev", "production"],
         "description": "Target environment for Terraform apply"
       },
       "auto_approve": {
@@ -74,7 +74,7 @@
         "type": "select",
         "label": "Environment",
         "required": true,
-        "options": ["dev", "staging", "production"],
+        "options": ["dev", "production"],
         "description": "Target environment"
       }
     },
@@ -97,7 +97,7 @@
         "type": "select",
         "label": "Environment",
         "required": true,
-        "options": ["dev", "staging", "production"],
+        "options": ["dev", "production"],
         "description": "Deployment target"
       },
       "version": {

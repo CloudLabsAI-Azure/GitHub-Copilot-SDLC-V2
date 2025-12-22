@@ -50,7 +50,7 @@ class JobDefinition(db.Model):
                         'type': 'select',
                         'label': 'Environment',
                         'required': True,
-                        'options': ['dev', 'staging', 'production']
+                        'options': ['dev', 'production']
                     }
                 }),
                 'default_inputs': json.dumps({'environment': 'dev'}),
@@ -70,7 +70,7 @@ class JobDefinition(db.Model):
                         'type': 'select',
                         'label': 'Environment',
                         'required': True,
-                        'options': ['dev', 'staging', 'production']
+                        'options': ['dev', 'production']
                     },
                     'auto_approve': {
                         'type': 'checkbox',
@@ -102,7 +102,7 @@ class JobDefinition(db.Model):
                         'type': 'select',
                         'label': 'Environment',
                         'required': True,
-                        'options': ['dev', 'staging', 'production']
+                        'options': ['dev', 'production']
                     }
                 }),
                 'default_inputs': json.dumps({'action': 'plan', 'environment': 'dev'}),
