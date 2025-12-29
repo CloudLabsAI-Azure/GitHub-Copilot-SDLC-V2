@@ -95,13 +95,22 @@ Capabilities available to custom agents:
 ## Model Context Protocol (MCP)
 
 ### MCP
-Model Context Protocol - a standard for connecting AI assistants to external data sources and tools.
+Model Context Protocol - a standard for connecting AI assistants to external data sources and tools. Enables Copilot to access external systems like Azure DevOps, Terraform, and cloud providers.
 
 ### MCP Server
 A service that provides data or functionality to Copilot through the MCP interface. Examples:
 - GitHub MCP Server
 - Slack MCP Server
 - Jira MCP Server
+- Azure DevOps MCP Server
+- Terraform MCP Server
+- Azure MCP Server
+
+### Azure DevOps MCP
+An MCP server that connects Copilot to Azure Boards for work item management, sprint planning, and project tracking.
+
+### Terraform MCP
+An MCP server that enables Copilot to understand Terraform state, validate configurations, and explain infrastructure code.
 
 ### Toolsets
 Categories of functionality provided by MCP servers:
@@ -109,6 +118,8 @@ Categories of functionality provided by MCP servers:
 - `pull_requests` - PR workflows
 - `repositories` - Repository information
 - `code_search` - Search across repos
+- `work_items` - Azure DevOps work items
+- `terraform_state` - Terraform infrastructure state
 
 ## Copilot Spaces
 
@@ -199,6 +210,68 @@ Code that follows the conventions and patterns typical of a language or framewor
 
 ### Type Safety
 Use of static types to catch errors at compile time (TypeScript, C#, etc.).
+
+---
+
+## ApproveThis Application Terms
+
+### ApproveThis
+The learning application for this workshop - a centralized job/workflow dispatch and approval system for managing CI/CD processes across multiple platforms.
+
+### ShipIt Industries
+The fictional company scenario for this workshop. Participants join ShipIt Industries to complete the ApproveThis application.
+
+### Approval Workflow
+The core feature of ApproveThis where workflow dispatches require approval from GlobalAdmin users before execution.
+
+### Execution Provider
+An abstraction layer in ApproveThis for connecting to different job execution platforms (GitHub Actions, Azure Functions, etc.).
+
+### Job Definition
+A template in ApproveThis that defines a job type (e.g., "Terraform Plan - Dev"). Specifies what to execute and where.
+
+### Job Execution
+A record of a specific job run in ApproveThis, including status, logs, and timestamps.
+
+### Execution Target
+Configuration in ApproveThis defining where jobs can execute (GitHub Actions workflow, Azure Function, etc.).
+
+### Provider Pattern
+Architectural pattern in ApproveThis using abstract base classes to support multiple implementations (mock vs. real GitHub API).
+
+### DispatchRequest
+Model in ApproveThis representing a workflow dispatch request, including approval status and audit trail.
+
+## Testing Terms
+
+### End-to-End (E2E) Testing
+Testing complete user workflows from start to finish in a real browser environment using tools like Playwright.
+
+### Playwright
+A modern browser automation framework for E2E testing that supports multiple browsers and provides auto-waiting features.
+
+### Test Fixture
+Reusable test setup code (e.g., authenticated client, test database) defined in pytest conftest.py files.
+
+### Page Object Model
+A testing pattern that encapsulates page interactions in classes for maintainable E2E tests.
+
+### Mock Provider
+A test implementation of the provider pattern that returns fake data without making real API calls.
+
+## Infrastructure Terms
+
+### Infrastructure as Code (IaC)
+Managing and provisioning infrastructure through code (e.g., Terraform) rather than manual processes.
+
+### Terraform Module
+A reusable, self-contained package of Terraform configurations that creates specific infrastructure resources.
+
+### Terraform State
+A file tracking the current state of managed infrastructure, used to plan and apply changes.
+
+### Environment Configuration
+Infrastructure definitions for specific environments (dev, staging, production) with different resource sizes and settings.
 
 ---
 
