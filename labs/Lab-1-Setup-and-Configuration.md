@@ -23,6 +23,7 @@ To solve this, management has greenlit the development of an internal applicatio
 - **Control**: Trigger and manage workflows across different platforms
 - **Approvals**: Require approvals before critical deployments execute
 - **RBAC**: Role-based access control for safe, seamless use across teams
+- **Audit Trail**: Track who executed what, when, and why
 
 **Your Role**: The initial version of ApproveThis was built by another developer who has since left the company. Management has assigned you to take over the application and implement the remaining functionality. You'll use GitHub Copilot throughout the entire software development lifecycle to complete this mission.
 
