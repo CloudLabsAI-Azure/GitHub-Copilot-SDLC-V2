@@ -11,7 +11,7 @@ By the end of this lab, you will be able to:
 - Verify GitHub Copilot installation and configuration
 - Understand the workshop scenario and learning path
 
-## 📸 Scenario: Welcome to ShipIt Industries
+## 🏢 Scenario: Welcome to ShipIt Industries
 
 Welcome to your first day at **ShipIt Industries**! 🏢
 
