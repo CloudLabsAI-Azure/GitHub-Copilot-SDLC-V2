@@ -11,21 +11,43 @@ By the end of this lab, you will be able to:
 - Locate extension points for future development
 - Plan next implementation steps based on codebase analysis
 
-## 🏢 Scenario: First Day at ShipIt Industries
+## 🏢 Your First Day Assignment
 
-It's your first day at ShipIt Industries, and you've just been assigned to the ApproveThis project. The previous developer left, and you're inheriting a partially complete codebase. Your manager has scheduled a status meeting for tomorrow morning and needs to know:
+You arrive at your desk at ShipIt Industries, coffee in hand, and find a message from your team lead:
 
-- What functionality is already implemented?
-- What still needs to be built?
-- How long will it take to complete the remaining features?
+> **From**: Maya Chen (Platform Engineering Lead)  
+> **Subject**: Welcome to the team! Your first assignment
+> 
+> Welcome aboard! Glad to have you on the Platform Engineering team.
+> 
+> I'm assigning you to ApproveThis - our workflow dispatch and approval system. The previous developer left for another opportunity, and we need someone to pick up where they left off.
+> 
+> **What's working**:
+> - Basic authentication and RBAC
+> - UI for browsing repositories and workflows
+> - Mock data provider for development
+> - Database models and migrations
+> 
+> **What needs work**:
+> - Real GitHub API integration (currently using mock data)
+> - Approval workflow system (database models exist but no UI/logic)
+> - E2E testing (we have infrastructure but no tests)
+> - Multi-platform CI/CD (Connecting to Azure resources, deployments, homegrown systems, etc.)
+> 
+> **Your task for today**: Get familiar with the codebase. Use whatever tools help you learn fastest. We use GitHub Copilot extensively here - it's great for understanding inherited code.
+> 
+> I'll check in with you this afternoon. Come prepared with questions and a sense of what you want to tackle first.
+> 
+> \- Maya
 
-Instead of spending hours reading through files manually, you'll use **GitHub Copilot as your onboarding buddy** to get up to speed quickly. Let's see how AI can accelerate understanding a new codebase!
+> [!IMPORTANT]
+> This lab focuses on **exploration and understanding**, not implementation. We'll build features in later labs. The goal is to map the codebase mentally and identify what's done vs. what's missing.
 
 ---
 
 ## Step 1: Understanding Project Structure with @workspace
 
-Let's start by getting a high-level understanding of the codebase organization.
+Let's start by getting a high-level understanding of the application architecture.
 
 ### 1.1 Query the Project Structure
 
@@ -43,10 +65,11 @@ Open Copilot Chat and use the `@workspace` participant to ask about the overall 
 
 </details>
 
-**What to observe:**
+**Things to observe:**
 - Copilot will describe the application factory pattern
 - Blueprint-based organization (auth, main, api, jobs)
 - Provider abstraction layer
+- RBAC with Role and Permission models
 - Database models and migrations
 
 ### 1.2 Understand the Application Factory Pattern
@@ -91,18 +114,9 @@ One of the key architectural decisions in ApproveThis is the **provider pattern*
 
 Navigate to `approvethis/app/providers/` and explore the files:
 
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Explain the provider pattern used in app/providers/. What is the purpose of base.py, mock.py, and github.py?
-```
-
-</details>
-
 **Key insights:**
 - `base.py` - Abstract base class defining the provider interface
-- `mock.py` - Mock implementation returning sample data
+- `mock.py` - Mock GitHub implementation returning sample data
 - `github.py` - Placeholder for real GitHub API integration (not yet implemented!)
 
 ### 2.2 Examine the Base Provider Interface
@@ -127,19 +141,19 @@ class GitHubProvider(ABC):
     def dispatch_workflow(self, owner, repo, workflow_id, ref, inputs): pass
 ```
 
-Ask Copilot:
+If you're unsure about the provider pattern, you can ask Copilot to help you understand it:
 
 <details>
 <summary>💡 Example prompt</summary>
 
 ```
-Looking at app/providers/base.py, what operations must any GitHub provider implement? What's the benefit of this abstraction?
+@workspace Explain the provider pattern used in app/providers/. What is the purpose of this design pattern?
 ```
 
 </details>
 
 > [!NOTE]
-> The provider pattern allows switching between mock data (for development) and real API calls (for production) without changing application code. This is a common pattern for external service integration.
+> The provider pattern allows switching between mock data (for development) and real API calls (for production) without changing application code. This is a helpful pattern for external service integration.
 
 ---
 
@@ -151,16 +165,11 @@ Now let's find what needs to be completed. Copilot excels at finding TODOs, NotI
 
 Ask Copilot to locate unimplemented functionality:
 
-<details>
-<summary>💡 Example prompt</summary>
+> [!TIP]
+> Use Copilot with `@workspace` to search for any of the things mentioned above.
 
-```
-@workspace Find all instances of NotImplementedError or TODO comments in the codebase. What functionality is marked as incomplete?
-```
-
-</details>
-
-**Expected findings:**
+**Potential findings:**
+- `app/utils/form_builder.py` - TODO comments for parsing yaml
 - `app/providers/github.py` - All methods raise `NotImplementedError`
 - `app/providers/execution/azure_function.py` - Placeholder for Azure Function execution
 - Potentially missing routes for job execution
@@ -199,7 +208,7 @@ Look at the models in `app/models/`:
 - `job_execution.py` - Tracks job execution history
 - `execution_target.py` - Defines where jobs can execute
 
-These models exist, but may not have corresponding UI routes yet!
+These models exist, but may not have complete route or UI support yet.
 
 ---
 
@@ -222,7 +231,7 @@ class Permission:
     ADMIN = 64
 ```
 
-Ask Copilot:
+This class uses powers of 2 to define permissions. We don't know exactly why yet, so let's ask Copilot to help explain it to us:
 
 <details>
 <summary>💡 Example prompt</summary>
@@ -233,8 +242,8 @@ Explain how the Permission class in app/models/role.py implements permission fla
 
 </details>
 
-> [!TIP]
-> 💡 Using powers of 2 allows combining multiple permissions with bitwise operations. A role can have permissions 1 + 2 + 4 = 7, representing VIEW_REPOS, VIEW_WORKFLOWS, and VIEW_RUNS.
+<!-- > [!TIP]
+> 💡 Using powers of 2 allows combining multiple permissions with bitwise operations. A role can have permissions 1 + 2 + 4 = 7, representing VIEW_REPOS, VIEW_WORKFLOWS, and VIEW_RUNS. -->
 
 ### 4.2 Review Default Roles
 
@@ -244,7 +253,7 @@ The `Role.insert_roles()` method creates three default roles:
 - **LeadDeveloper**: Previous + DISPATCH_WORKFLOW  
 - **GlobalAdmin**: All permissions including MANAGE_APPROVALS
 
-Notice that `MANAGE_APPROVALS` permission exists but isn't fully utilized yet—this is your Lab 8 capstone challenge!
+Notice that `MANAGE_APPROVALS` permission exists but isn't fully utilized yet. Keep this in mind for later!
 
 ### 4.3 Check Permission Enforcement
 
@@ -260,102 +269,6 @@ Ask Copilot how permissions are enforced:
 </details>
 
 Look for the `@permission_required` decorator usage in route files.
-
----
-
-## Step 5: Examining the Database Models
-
-Understanding the data model is crucial for implementing new features.
-
-### 5.1 Review the DispatchRequest Model
-
-Open `approvethis/app/models/dispatch_request.py`:
-
-```python
-class DispatchRequest(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    owner = db.Column(db.String(128), nullable=False)
-    repo = db.Column(db.String(128), nullable=False)
-    workflow_id = db.Column(db.String(128), nullable=False)
-    status = db.Column(db.String(32), default='pending')
-    # ... more fields
-```
-
-Ask Copilot:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-Looking at app/models/dispatch_request.py, what fields are available for the approval workflow feature? Are there fields for approved_by, approved_at, or rejection_reason?
-```
-
-</details>
-
-> [!NOTE]
-> The DispatchRequest model may already have approval-related fields defined, even if they're not yet used by the application. This is an important discovery!
-
-### 5.2 Explore Job Execution Models
-
-Review the job-related models:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Explain the relationship between JobDefinition, JobExecution, and ExecutionTarget models. How do they work together?
-```
-
-</details>
-
-**Understanding the job system:**
-- **JobDefinition**: Templates for jobs (e.g., "Run Terraform Plan")
-- **ExecutionTarget**: Where jobs execute (GitHub Actions, Azure Functions, etc.)
-- **JobExecution**: Historical record of job runs with status and logs
-
----
-
-## Step 6: Planning Next Steps
-
-Now that you understand the codebase, let's document your findings.
-
-### 6.1 Create a Feature Priority List
-
-Use Copilot to help draft a prioritized list of what needs to be implemented:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-Based on our exploration, help me create a prioritized list of features that need to be implemented in ApproveThis. Consider dependencies between features.
-```
-
-</details>
-
-**Expected priority order:**
-1. Real GitHub API integration (provider implementation)
-2. Job execution routes and UI
-3. Approval workflow implementation
-4. Azure Function execution provider
-5. Additional CI/CD platform integrations
-
-### 6.2 Identify Dependencies
-
-Ask Copilot:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-What are the dependencies between features? For example, what must be implemented before the approval workflow can work?
-```
-
-</details>
-
-**Key dependencies:**
-- GitHub provider must work before dispatch approvals make sense
-- Job execution framework should be functional before adding approval gates
-- RBAC is already implemented and can be leveraged
 
 ---
 

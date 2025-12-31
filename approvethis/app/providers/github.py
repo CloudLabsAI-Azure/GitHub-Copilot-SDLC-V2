@@ -1,5 +1,5 @@
 """GitHub Provider (placeholder for future implementation)."""
-from app.providers.base import GitHubProvider
+from app.providers.github_base import GitHubProvider
 
 
 class RealGitHubProvider(GitHubProvider):
@@ -28,4 +28,8 @@ class RealGitHubProvider(GitHubProvider):
     
     def dispatch_workflow(self, owner, repo, workflow_id, ref, inputs):
         """Dispatch workflow via GitHub API."""
+        raise NotImplementedError("Real GitHub provider not yet implemented")
+    
+    def get_rate_limit(self):
+        """Get rate limit via GitHub API."""
         raise NotImplementedError("Real GitHub provider not yet implemented")

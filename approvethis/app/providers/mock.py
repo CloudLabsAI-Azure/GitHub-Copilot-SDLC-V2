@@ -1,7 +1,7 @@
 """Mock GitHub Provider implementation."""
 import json
 from pathlib import Path
-from app.providers.base import GitHubProvider
+from app.providers.github_base import GitHubProvider
 
 
 class MockGitHubProvider(GitHubProvider):
@@ -105,4 +105,12 @@ class MockGitHubProvider(GitHubProvider):
             'success': True,
             'message': 'Workflow dispatch request created successfully',
             'dispatch_request_id': dispatch_request.id
+        }
+    
+    def get_rate_limit(self):
+        """Return mock rate limit (unlimited for mock)."""
+        return {
+            'limit': 5000,
+            'remaining': 5000,
+            'reset': 0
         }

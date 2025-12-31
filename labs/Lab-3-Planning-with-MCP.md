@@ -12,18 +12,20 @@ By the end of this lab, you will be able to:
 - Create work items and user stories with AI assistance
 - Incorporate governance policies into AI-generated suggestions
 
-## 📸 Scenario: Planning at ShipIt Industries
+## 🏢 Planning at ShipIt Industries
 
-🏢 After exploring the ApproveThis codebase, you meet with your manager at ShipIt Industries to discuss the implementation plan. She mentions:
+You're wrapping up your codebase exploration when Maya, your team lead, stops by your desk:
 
-> "We track all our work in Azure DevOps. Make sure you create work items for the features you'll be implementing. Also, check if there are any existing items assigned to you from the previous developer."
+> **Maya**: "Hey! I hope your exploration of the codebase went well. Before you start coding, let's talk about how we plan work here at ShipIt.
+>
+> We use **Azure DevOps** for work tracking and sprint planning. Each feature needs a work item with clear acceptance criteria. But here's the cool part - we don't have to context-switch between VS Code and Azure DevOps. We use **MCP** to let Copilot talk directly to our Azure Boards.
+>
+> I need you to create work items for the GitHub API integration we discussed, as well as some other future enhancements we want to make. Let me show you how we can do it with Copilot and MCP."
 
-Additionally, she hands you a document titled "ShipIt Industries Development Standards" which includes:
-- All API integrations must include rate limiting
-- Authentication tokens must be stored securely, never in code
-- All workflow dispatches require approval (hence the name ApproveThis!)
+This lab introduces a powerful Copilot capability: **connecting to external tools and data sources** via MCP. Instead of leaving your editor to check work items, create tasks, or update project boards, Copilot can do it for you.
 
-Instead of manually switching between your IDE, Azure DevOps, and policy documents, you'll use **Model Context Protocol (MCP)** to bring all this context directly into GitHub Copilot. Let's see how!
+> [!IMPORTANT]
+> **Model Context Protocol (MCP)** is an open standard that allows AI assistants like GitHub Copilot to securely connect to external data sources and tools. Think of it as giving Copilot "plugins" for your development infrastructure.
 
 ---
 
@@ -172,39 +174,67 @@ You might find:
 
 ### 3.2 Create User Stories for GitHub Provider
 
-Based on your Lab 2 exploration, you know the real GitHub provider needs implementation. Ask Copilot to help create user stories:
+Use Copilot to help draft a prioritized list of what needs to be implemented:
+
+<details>
+<summary>💡 Example prompts</summary>
+
+```
+Based on our exploration, help me create a prioritized list of features that need to be implemented in ApproveThis. Consider dependencies between features.
+```
+
+**Potential priority order:**
+1. Real GitHub API integration (provider implementation)
+2. Job execution routes and UI
+3. Approval workflow implementation
+4. Azure Function execution provider
+5. Additional CI/CD platform integrations
+
+```
+What are the dependencies between features? For example, what must be implemented before the approval workflow can work?
+```
+
+**Key dependencies:**
+- GitHub provider must work before dispatch approvals make sense
+- Job execution framework should be functional before adding approval gates
+- RBAC is already implemented and can be leveraged
+
+</details>
+
+With our prioritized list, let's create user stories in Azure DevOps for the items Copilot helped us come up with.
+
+> [!IMPORTANT]
+> As we need to make use of the ADO MCP to create the work items it is easiest to use Agent mode. This will allow Copilot to interact with ADO directly through the MCP connection.
 
 <details>
 <summary>💡 Example prompt</summary>
 
 ```
-@workspace @azure-devops Based on the NotImplementedError findings in app/providers/github.py, help me create user stories in Azure DevOps for implementing the real GitHub provider. Each method should be its own story with acceptance criteria.
+Now that we have a prioritized feature list, help me create user stories in Azure DevOps for each feature. Include requirements and acceptance criteria based on existing models and patterns in the codebase. 
+
+For tasks that will be implemented later and that rely on other features yet to be implemented, make note of that in the description.
 ```
 
 </details>
 
 Copilot will:
-1. Analyze the `github.py` file
+1. Analyze all relevant code files and models
 2. Identify the methods that need implementation
 3. Generate user story titles and descriptions
-4. Create acceptance criteria based on the `base.py` interface
-5. Submit the work items to Azure DevOps
-
-**Expected user stories:**
-- "Implement list_repositories() in GitHub provider"
-- "Implement list_workflows() in GitHub provider"  
-- "Implement dispatch_workflow() in GitHub provider"
-- etc.
+4. Submit the work items to Azure DevOps
 
 ### 3.3 Review and Refine User Stories
 
-Review the created work items in Azure DevOps. Ask Copilot to enhance them:
+Review the created work items in Azure DevOps. If any of the descriptions or acceptance criteria need refinement, ask Copilot to help:
 
 <details>
 <summary>💡 Example prompt</summary>
 
+> [!NOTE]
+> This prompt is stricly an example. The actual work item IDs will vary based on your Azure DevOps instance and the work items created by Copilot.
+
 ```
-@azure-devops For work item #123 (GitHub provider - list_repositories), add technical details about:
+For work item #123 (GitHub provider - list_repositories), add technical details about:
 - Required GitHub API endpoint
 - Authentication approach
 - Rate limiting considerations
@@ -221,53 +251,7 @@ ShipIt Industries has development standards. Let's ensure Copilot respects them.
 
 ### 4.1 Create Copilot Instructions File
 
-Create a `.github` directory in the repository root (if it doesn't exist):
-
-```bash
-mkdir -p /home/runner/work/copilot-advanced-workshop-sdlc/copilot-advanced-workshop-sdlc/.github
-```
-
-Create `.github/copilot-instructions.md`:
-
-```markdown
-# ShipIt Industries Development Standards
-
-## API Integration Requirements
-
-- All external API integrations MUST include rate limiting
-- API calls MUST have retry logic with exponential backoff
-- All errors MUST be logged with appropriate context
-- Authentication tokens MUST be stored in environment variables, never hardcoded
-
-## Security Standards
-
-- All user inputs MUST be validated and sanitized
-- Authentication tokens MUST use secure storage mechanisms
-- Sensitive data MUST NOT appear in logs or error messages
-
-## Workflow Dispatch Standards
-
-- All workflow dispatches REQUIRE approval from GlobalAdmin users
-- Dispatch requests MUST be logged with user, timestamp, and parameters
-- Failed dispatches MUST be retried according to configured retry policy
-
-## Code Quality
-
-- All new code MUST include unit tests
-- Test coverage MUST be at least 80% for new files
-- All public functions MUST have docstrings
-- Follow PEP 8 style guide for Python code
-
-## ApproveThis Specific Guidelines
-
-- Use the provider pattern for all external service integrations
-- Leverage existing RBAC system for permission checks
-- All database changes require migrations via Flask-Migrate
-- Follow the blueprint organization for new routes
-```
-
-> [!IMPORTANT]
-> Copilot instructions take effect immediately. Copilot will now incorporate these policies into all code suggestions.
+TODO Update this section to have the users skim through the `copilot-instructions.md` file to see how it is structured and what policies are included. Then guide them through connecting to whatever external MCP server is relevant to the policies (either a Copilot Space or some documentation hub)
 
 ### 4.2 Test Policy Integration
 
@@ -290,67 +274,15 @@ Notice that Copilot's suggestions now include:
 
 This is the power of governance through AI context!
 
----
+### 4.3 Generate Technical Design Documentation
 
-## Step 5: Cross-Tool Planning
-
-Let's plan a sprint using Copilot with Azure DevOps context.
-
-### 5.1 Create a Sprint Plan
-
-Ask Copilot to help organize work items into a sprint:
+You can even have Copilot draft a technical design document for the GitHub provider implementation that adheres to your organization's standards:
 
 <details>
 <summary>💡 Example prompt</summary>
 
 ```
-@azure-devops Based on the user stories we created for GitHub provider implementation, help me create a 2-week sprint plan. Consider dependencies and prioritize core functionality first.
-```
-
-</details>
-
-Copilot will:
-- Identify dependencies (e.g., authentication before API calls)
-- Suggest sprint ordering
-- Estimate story points based on complexity
-- Create a sprint backlog
-
-### 5.2 Link Code Changes to Work Items
-
-When you start implementing in Lab 4, you can link commits to work items:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@azure-devops Generate a commit message for implementing list_repositories() that links to work item #123
-```
-
-</details>
-
-Example output:
-```
-Implement list_repositories() in GitHub provider
-
-- Connects to GitHub API using PyGithub library
-- Includes rate limiting with exponential backoff
-- Authenticates using GITHUB_TOKEN from environment
-- Includes comprehensive error handling
-
-Resolves AB#123
-```
-
-The `AB#123` syntax automatically links the commit to Azure Boards!
-
-### 5.3 Generate Technical Design Documentation
-
-Use Copilot to draft a technical design document:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace @azure-devops Create a technical design document for the GitHub provider implementation. Include architecture diagrams (in Mermaid), API endpoints used, authentication flow, and testing strategy.
+Please create a technical design document for the future GitHub provider implementation. Include architecture diagrams (in Mermaid), API endpoints used, authentication flow, and testing strategy.
 ```
 
 </details>
