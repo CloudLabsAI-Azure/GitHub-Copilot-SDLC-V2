@@ -11,9 +11,9 @@ By the end of this lab, you will be able to:
 - Locate extension points for future development
 - Plan next implementation steps based on codebase analysis
 
-## 📸 Scenario: First Day at ShipIt Industries
+## 🏢 Scenario: First Day at ShipIt Industries
 
-🏢 It's your first day at ShipIt Industries, and you've just been assigned to the ApproveThis project. The previous developer left, and you're inheriting a partially complete codebase. Your manager has scheduled a status meeting for tomorrow morning and needs to know:
+It's your first day at ShipIt Industries, and you've just been assigned to the ApproveThis project. The previous developer left, and you're inheriting a partially complete codebase. Your manager has scheduled a status meeting for tomorrow morning and needs to know:
 
 - What functionality is already implemented?
 - What still needs to be built?
@@ -29,7 +29,10 @@ Let's start by getting a high-level understanding of the codebase organization.
 
 ### 1.1 Query the Project Structure
 
-Open Copilot Chat (`Ctrl+Shift+I` / `Cmd+Shift+I`) and use the `@workspace` participant to ask about the overall structure:
+> [!TIP]
+> Using Ask mode is the go to when working with Copilot to learn about a codebase.
+
+Open Copilot Chat and use the `@workspace` participant to ask about the overall structure:
 
 <details>
 <summary>💡 Example prompt</summary>
@@ -58,9 +61,6 @@ What is the Application Factory pattern and how is it implemented in this Flask 
 ```
 
 </details>
-
-> [!TIP]
-> 💡 The Application Factory pattern allows creating multiple instances of the Flask application with different configurations (development, testing, production). This is especially useful for testing and deployment scenarios.
 
 ### 1.3 Explore the Blueprint Organization
 
