@@ -1,3 +1,99 @@
+# FROM LAB 4
+
+## Step 3: Using Edit Mode for Targeted Changes
+
+Now let's handle that urgent bug report using Edit mode.
+
+### 3.1 Understand the Bug
+
+The bug report states: "Users are seeing an error when trying to view workflows for empty repositories."
+
+Open Copilot Chat in Edit mode and investigate:
+
+<details>
+<summary>💡 Example prompt for Edit mode</summary>
+
+```
+@workspace In Edit mode: Find where workflows are retrieved and displayed in the application. Add error handling for repositories that have no workflows. The specific files that likely need changes are in app/blueprints/main/routes.py.
+```
+
+</details>
+
+### 3.2 Apply Targeted Fix
+
+Edit mode will show you the specific changes needed. For example, adding a check:
+
+```python
+@main.route('/workflows/<owner>/<repo>')
+@login_required
+def workflows(owner, repo):
+    provider = get_github_provider()
+    try:
+        workflows = provider.list_workflows(owner, repo)
+        if not workflows:
+            flash('This repository has no workflows configured.', 'info')
+            workflows = []
+    except Exception as e:
+        flash(f'Error retrieving workflows: {str(e)}', 'error')
+        workflows = []
+    
+    return render_template('workflows.html', workflows=workflows, owner=owner, repo=repo)
+```
+
+**Benefits of Edit Mode:**
+- You specified the exact file to modify
+- Changes are surgical and focused
+- Easy to review the diff
+- Doesn't touch unrelated code
+
+### 3.3 Verify the Fix
+
+Test the bug fix:
+
+1. Navigate to a repository with no workflows
+2. Verify the friendly message appears instead of an error
+3. Confirm the page still works for repositories with workflows
+
+## Step 4: Multitasking with Copilot
+
+Let's demonstrate how to switch contexts seamlessly with Copilot.
+
+### 4.1 Start a Feature in Agent Mode
+
+Begin implementing another provider method:
+
+<details>
+<summary>💡 Example prompt</summary>
+
+```
+@workspace Implement the list_workflow_runs() method in app/providers/github.py. Include pagination support for repositories with many runs.
+```
+
+</details>
+
+### 4.2 Pause for Context Switch
+
+While Agent is working (or you're reviewing its suggestions), a colleague asks you to quickly fix a typo in the README.
+
+**Switch to Edit mode** without losing your Agent context:
+
+<details>
+<summary>💡 Example prompt in Edit mode</summary>
+
+```
+In Edit mode: Fix the typo in README.md line 42 where "mananagement" should be "management"
+```
+
+</details>
+
+### 4.3 Return to Original Context
+
+After fixing the typo, return to Agent mode's conversation thread and continue reviewing the `list_workflow_runs()` implementation.
+
+> [!TIP]
+> 💡 Copilot maintains separate conversation contexts for Ask, Edit, and Agent modes. You can switch between them without losing your place!
+
+
 # Exercise 8 - Capstone Challenge: ApproveThis Requires Approvals!
 
 **Duration**: 60+ minutes

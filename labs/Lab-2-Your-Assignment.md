@@ -37,11 +37,15 @@ You arrive at your desk at ShipIt Industries, coffee in hand, and find a message
 > **Your task for today**: Get familiar with the codebase. Use whatever tools help you learn fastest. We use GitHub Copilot extensively here - it's great for understanding inherited code.
 > 
 > I'll check in with you this afternoon. Come prepared with questions and a sense of what you want to tackle first.
+>
+> Oh, and one more thing. I'm including some example prompts to get you started with Copilot Chat. Feel free to modify them as needed.
 > 
 > \- Maya
 
 > [!IMPORTANT]
-> This lab focuses on **exploration and understanding**, not implementation. We'll build features in later labs. The goal is to map the codebase mentally and identify what's done vs. what's missing.
+> This lab focuses on **exploration and understanding**, not implementation. We'll build features in later labs. The goal is to map the codebase mentally and identify what's done vs. what's missing. Afterall, it's hard to work on something you don't understand!
+>
+> Like Maya said, feel free to use the example prompts or adapt them to fit your style. You can also come up with your own questions as you explore. The key is to leverage Copilot to accelerate your learning.
 
 ---
 
@@ -74,7 +78,7 @@ Open Copilot Chat and use the `@workspace` participant to ask about the overall 
 
 ### 1.2 Understand the Application Factory Pattern
 
-The ApproveThis application uses the **Application Factory Pattern**. Ask Copilot to explain this:
+The ApproveThis application uses the **Application Factory Pattern**. If you're unfamiliar with this pattern, ask Copilot to explain it:
 
 <details>
 <summary>💡 Example prompt</summary>
@@ -87,7 +91,9 @@ What is the Application Factory pattern and how is it implemented in this Flask 
 
 ### 1.3 Explore the Blueprint Organization
 
-Ask Copilot about the blueprint structure:
+Whether you've worked with Flask and Blueprints before or not, it's helpful to understand how **this** application is organized. Even if it's a common practice in Flask, every project has its own conventions.
+
+Let's ask Copilot to detail the blueprints used in the application:
 
 <details>
 <summary>💡 Example prompt</summary>
@@ -103,8 +109,6 @@ Ask Copilot about the blueprint structure:
 - `main` - Main application routes and views
 - `api` - RESTful API endpoints
 - `jobs` - Job definition and execution management
-
----
 
 ## Step 2: Understanding the Provider Pattern
 
@@ -154,8 +158,6 @@ If you're unsure about the provider pattern, you can ask Copilot to help you und
 
 > [!NOTE]
 > The provider pattern allows switching between mock data (for development) and real API calls (for production) without changing application code. This is a helpful pattern for external service integration.
-
----
 
 ## Step 3: Identifying Implementation Gaps
 
@@ -209,8 +211,6 @@ Look at the models in `app/models/`:
 - `execution_target.py` - Defines where jobs can execute
 
 These models exist, but may not have complete route or UI support yet.
-
----
 
 ## Step 4: Understanding RBAC Implementation
 
@@ -285,8 +285,6 @@ Excellent work! You've used GitHub Copilot to rapidly understand the ApproveThis
 - [x] Reviewed database models including approval-related fields
 - [x] Created a prioritized list of remaining work
 
----
-
 ## 🤔 Reflection Questions
 
 Take a moment to consider:
@@ -295,8 +293,6 @@ Take a moment to consider:
 2. What questions did Copilot help you answer that might have taken significant time to discover on your own?
 3. Which architectural patterns (factory, provider, RBAC) were new to you? Which were familiar?
 4. How might you use Copilot for onboarding in your real-world projects?
-
----
 
 ## 🎓 Key Takeaways
 
@@ -307,12 +303,8 @@ Take a moment to consider:
 - **Copilot accelerates onboarding** by answering questions about code structure, patterns, and dependencies
 - **Understanding before implementing** leads to better design decisions
 
----
-
-## 🔜 Coming Up Next
+## Coming Up Next
 
 In **Lab 3: Planning with MCP**, you'll take your understanding to the next level. You'll set up Model Context Protocol (MCP) servers to connect Copilot with Azure DevOps, allowing you to query work items, create user stories, and plan features with full project management context. Get ready to see how Copilot extends beyond code!
-
----
 
 **[← Back to Lab 1](Lab-1-Setup-and-Configuration.md)** | **[Continue to Lab 3: Planning with MCP →](Lab-3-Planning-with-MCP.md)**

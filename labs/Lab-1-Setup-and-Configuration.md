@@ -83,8 +83,6 @@ Take a moment to familiarize yourself with the repository layout:
 └── README.md             # Main documentation
 ```
 
----
-
 ## Step 2: ApproveThis Application Setup
 
 Now let's get the ApproveThis application running locally.
@@ -190,8 +188,6 @@ http://localhost:5001
 
 You should see the ApproveThis login page! 🎉
 
----
-
 ## Step 3: GitHub Copilot Configuration
 
 Let's ensure GitHub Copilot is properly configured in your development environment.
@@ -234,8 +230,6 @@ What is this repository about? Give me a brief overview.
 </details>
 
 Copilot should provide a summary of the ApproveThis application and repository structure.
-
----
 
 ## Step 4: Exploring the Application
 
@@ -282,8 +276,6 @@ Explore the main sections:
 > [!NOTE]
 > Currently, the application displays **mock data**. In later labs, you'll implement the real GitHub API integration to show live data.
 
----
-
 ## Step 5: Verify Pre-Configured Secrets
 
 Your repository comes pre-configured with necessary secrets for Azure deployments. Let's verify they're in place.
@@ -318,8 +310,6 @@ Congratulations! You've successfully completed the setup for the GitHub Copilot 
 - [x] Repository secrets verified as present
 - [x] Understanding of the ShipIt Industries scenario
 
----
-
 ## 🤔 Reflection Questions
 
 Take a moment to consider:
@@ -327,8 +317,6 @@ Take a moment to consider:
 1. What differences did you notice between the three user roles (Viewer, Developer, Admin)?
 2. How might GitHub Copilot help you understand a new codebase faster than traditional methods?
 3. What aspects of the ApproveThis application seem complete vs. incomplete based on your initial exploration?
-
----
 
 ## 🎓 Key Takeaways
 
@@ -338,12 +326,8 @@ Take a moment to consider:
 - **Mock data** enables development and testing before live integrations are complete
 - The **ApproveThis application** follows Flask best practices including the Application Factory pattern and Blueprint organization
 
----
-
-## 🔜 Coming Up Next
+## Coming Up Next
 
 In **Lab 2: Your Assignment**, you'll step into your role at ShipIt Industries and use GitHub Copilot to explore the ApproveThis codebase. You'll discover what's been implemented, identify gaps, and plan your next steps—all with AI assistance. Get ready to become familiar with a new codebase faster than ever before!
-
----
 
 **[Continue to Lab 2: Your Assignment →](Lab-2-Your-Assignment.md)**

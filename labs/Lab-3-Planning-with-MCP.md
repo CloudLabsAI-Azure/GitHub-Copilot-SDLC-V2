@@ -53,8 +53,6 @@ In this workshop, you'll work with three MCP servers:
 
 For detailed information on MCP architecture and concepts, see the [MCP Configuration Guide](../docs/MCP-Configuration-Guide.md).
 
----
-
 ## Step 2: Azure DevOps MCP Setup
 
 Let's set up the Azure DevOps MCP server to connect Copilot with Azure Boards.
@@ -138,17 +136,15 @@ Close and reopen VS Code to activate the MCP server.
 Test the connection in Copilot Chat:
 
 <details>
-<summary>💡 Example prompt</summary>
+<summary>💡 Example ADO MCP prompt</summary>
 
 ```
-@azure-devops List the work items assigned to me in the current iteration.
+List the work items assigned to me in the current iteration.
 ```
 
 </details>
 
 If configured correctly, Copilot will query Azure DevOps and return your work items!
-
----
 
 ## Step 3: Planning Features with External Context
 
@@ -159,10 +155,10 @@ Now that Copilot can access Azure DevOps, let's use it for real-world planning.
 Check if there are work items related to ApproveThis:
 
 <details>
-<summary>💡 Example prompt</summary>
+<summary>💡 Example prompt for checking work items</summary>
 
 ```
-@azure-devops Search for work items related to "ApproveThis" or "GitHub provider integration". What's the current status?
+Search for work items in ADO related to "ApproveThis" or "GitHub provider integration". What's the current status?
 ```
 
 </details>
@@ -171,27 +167,34 @@ You might find:
 - Existing user stories from the previous developer
 - Bug reports or technical debt items
 - Feature requests from stakeholders
+- OR you might find nothing, which lets us know we need to create new work items!
 
-### 3.2 Create User Stories for GitHub Provider
+### 3.2 Create User Stories for ApproveThis Features
 
-Use Copilot to help draft a prioritized list of what needs to be implemented:
+Since it doesn't look like there are existing work items, let's have Copilot help us prioritize and create them.
+
+Remember that Maya mentioned several features that need implementation:
+- Real GitHub API integration
+- Approval workflow system
+- E2E testing
+- Multi-platform CI/CD
+
+Use Copilot `Ask` mode to help create a prioritized list of what needs to be implemented:
 
 <details>
-<summary>💡 Example prompts</summary>
+<summary>💡 Example prompt to create features list</summary>
 
 ```
-Based on our exploration, help me create a prioritized list of features that need to be implemented in ApproveThis. Consider dependencies between features.
-```
+We need to create user stories for the following features in Azure DevOps:
 
-**Potential priority order:**
-1. Real GitHub API integration (provider implementation)
-2. Job execution routes and UI
-3. Approval workflow implementation
-4. Azure Function execution provider
-5. Additional CI/CD platform integrations
+- Real GitHub API integration (provider implementation)
+- Job execution routes and UI
+- E2E testing
+- Approval workflow implementation
+- Azure Function execution provider
+- Additional CI/CD platform integrations
 
-```
-What are the dependencies between features? For example, what must be implemented before the approval workflow can work?
+Can you help me prioritize these features based on dependencies and complexity and provide an overall outline for each user story? This will be used with the Azure DevOps MCP to create the work items.
 ```
 
 **Key dependencies:**
@@ -204,15 +207,19 @@ What are the dependencies between features? For example, what must be implemente
 With our prioritized list, let's create user stories in Azure DevOps for the items Copilot helped us come up with.
 
 > [!IMPORTANT]
-> As we need to make use of the ADO MCP to create the work items it is easiest to use Agent mode. This will allow Copilot to interact with ADO directly through the MCP connection.
+> As we need to make use of the ADO MCP to create the work items the best approach is to use `Agent` mode. This will allow Copilot to interact with ADO directly through the MCP connection.
+>
+> Ensure you have the ADO MCP tools enabled for Agent mode in the tool configuration dropdown.
 
 <details>
-<summary>💡 Example prompt</summary>
+<summary>💡 Example prompt for creating ADO work items</summary>
 
 ```
-Now that we have a prioritized feature list, help me create user stories in Azure DevOps for each feature. Include requirements and acceptance criteria based on existing models and patterns in the codebase. 
+Now that we have the prioritized feature list and outline, can you help me create user stories in Azure DevOps for each feature? Include requirements and acceptance criteria based on existing models and patterns in the codebase.
 
 For tasks that will be implemented later and that rely on other features yet to be implemented, make note of that in the description.
+
+Do not include any direct implementation details in the user stories; focus on what needs to be done from a feature perspective.
 ```
 
 </details>
@@ -223,15 +230,22 @@ Copilot will:
 3. Generate user story titles and descriptions
 4. Submit the work items to Azure DevOps
 
+> [!TIP]
+> To enhance Copilot's capabilities when planning out features, consider making use of [custom agents](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents) that are specifically designed to help with project management tasks. This can further streamline the process of creating and managing work items.
+
 ### 3.3 Review and Refine User Stories
 
-Review the created work items in Azure DevOps. If any of the descriptions or acceptance criteria need refinement, ask Copilot to help:
+Review the created work items in Azure DevOps.
+
+**Remember**, Copilot is a powerful assistant, but it's important to validate and refine the generated content to ensure it meets your team's standards.
+
+If you see anything that needs adjustment, you can either edit the work items directly in Azure DevOps or ask Copilot to help refine them:
 
 <details>
-<summary>💡 Example prompt</summary>
+<summary>💡 Example prompt to modify a work item</summary>
 
 > [!NOTE]
-> This prompt is stricly an example. The actual work item IDs will vary based on your Azure DevOps instance and the work items created by Copilot.
+> **This prompt is strictly an example. The actual work item IDs will vary based on your Azure DevOps instance and the work items created by Copilot.**
 
 ```
 For work item #123 (GitHub provider - list_repositories), add technical details about:
@@ -243,43 +257,22 @@ For work item #123 (GitHub provider - list_repositories), add technical details 
 
 </details>
 
----
-
 ## Step 4: Governance Policy Integration
 
 ShipIt Industries has development standards. Let's ensure Copilot respects them.
 
 ### 4.1 Create Copilot Instructions File
 
-TODO Update this section to have the users skim through the `copilot-instructions.md` file to see how it is structured and what policies are included. Then guide them through connecting to whatever external MCP server is relevant to the policies (either a Copilot Space or some documentation hub)
+# TODO: Update this section to have the users skim through the `copilot-instructions.md` file to see how it is structured and what policies are included. Then guide them through connecting to whatever external MCP server is relevant to the policies (either a Copilot Space or some documentation hub)
 
-### 4.2 Test Policy Integration
+# TODO: Add example prompts for checking that Copilot is following the policies in the instructions file.
 
-Ask Copilot to generate code and observe how it follows the policies:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Help me implement the list_repositories() method in app/providers/github.py
-```
-
-</details>
-
-Notice that Copilot's suggestions now include:
-- Environment variable for API token (not hardcoded)
-- Rate limiting considerations
-- Error handling with logging
-- Docstrings
-
-This is the power of governance through AI context!
-
-### 4.3 Generate Technical Design Documentation
+### 4.2 Generate Technical Design Documentation
 
 You can even have Copilot draft a technical design document for the GitHub provider implementation that adheres to your organization's standards:
 
 <details>
-<summary>💡 Example prompt</summary>
+<summary>💡 Example design doc generation prompt</summary>
 
 ```
 Please create a technical design document for the future GitHub provider implementation. Include architecture diagrams (in Mermaid), API endpoints used, authentication flow, and testing strategy.
@@ -306,8 +299,6 @@ Outstanding! You've successfully integrated GitHub Copilot with external project
 - [x] Demonstrated how Copilot respects organizational policies
 - [x] Planned sprints and linked work items to code
 
----
-
 ## 🤔 Reflection Questions
 
 Take a moment to consider:
@@ -316,8 +307,6 @@ Take a moment to consider:
 2. What benefits do you see in having Copilot aware of your work items and organizational policies?
 3. How might you use MCP with other systems in your organization (e.g., documentation wikis, monitoring systems)?
 4. What risks or concerns arise from giving AI access to external systems, and how can they be mitigated?
-
----
 
 ## 🎓 Key Takeaways
 
@@ -328,12 +317,8 @@ Take a moment to consider:
 - **Cross-tool planning** becomes possible when AI has access to multiple systems simultaneously
 - **Context-aware AI** produces better results by understanding not just code, but business requirements
 
----
-
-## 🔜 Coming Up Next
+## Coming Up Next
 
 In **Lab 4: Shifting Our Development Process**, you'll put your plan into action! You'll implement the real GitHub provider using Copilot's advanced modes (Edit and Agent), practice multitasking with AI assistance, and use GitHub Copilot Code Review to ensure quality. Get ready to see how AI transforms the development phase of the SDLC!
-
----
 
 **[← Back to Lab 2](Lab-2-Your-Assignment.md)** | **[Continue to Lab 4: Development Process →](Lab-4-Development-Process.md)**
