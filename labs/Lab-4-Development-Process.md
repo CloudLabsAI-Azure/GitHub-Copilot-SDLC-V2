@@ -14,9 +14,9 @@ By the end of this lab, you will be able to:
 
 ## 🏢 Implementation Day at ShipIt Industries
 
-Maya reviews your planning work and gives you the green light to start implementing:
+Erica reviews your planning work and gives you the green light to start implementing:
 
-> **Maya**: "Great planning! The work items look solid, and I love the detailed acceptance criteria. Now let's build it!
+> **Erica**: "Great planning! The work items look solid, and I love the detailed acceptance criteria. Now let's build it!
 >
 > For the GitHub provider, I'd recommend having Copilot help you come up with an implementation plan, and then execute it using Agent mode. It will likely need to touch the provider file, add dependencies, potentially update config, and follow our established patterns so Agent mode makes the most sense.
 >

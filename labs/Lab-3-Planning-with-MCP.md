@@ -14,9 +14,9 @@ By the end of this lab, you will be able to:
 
 ## 🏢 Planning at ShipIt Industries
 
-You're wrapping up your codebase exploration when Maya, your team lead, stops by your desk:
+You're wrapping up your codebase exploration when Erica, your team lead, stops by your desk:
 
-> **Maya**: "Hey! I hope your exploration of the codebase went well. Before you start coding, let's talk about how we plan work here at ShipIt.
+> **Erica**: "Hey! I hope your exploration of the codebase went well. Before you start coding, let's talk about how we plan work here at ShipIt.
 >
 > We use **Azure DevOps** for work tracking and sprint planning. Each feature needs a work item with clear acceptance criteria. But here's the cool part - we don't have to context-switch between VS Code and Azure DevOps. We use **MCP** to let Copilot talk directly to our Azure Boards.
 >
@@ -173,7 +173,7 @@ You might find:
 
 Since it doesn't look like there are existing work items, let's have Copilot help us prioritize and create them.
 
-Remember that Maya mentioned several features that need implementation:
+Remember that Erica mentioned several features that need implementation:
 - Real GitHub API integration
 - Approval workflow system
 - E2E testing

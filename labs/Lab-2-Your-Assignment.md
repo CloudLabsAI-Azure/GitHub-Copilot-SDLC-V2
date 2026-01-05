@@ -15,7 +15,7 @@ By the end of this lab, you will be able to:
 
 You arrive at your desk at ShipIt Industries, coffee in hand, and find a message from your team lead:
 
-> **From**: Maya Chen (Platform Engineering Lead)  
+> **From**: Erica Mendez (Platform Engineering Lead)  
 > **Subject**: Welcome to the team! Your first assignment
 > 
 > Welcome aboard! Glad to have you on the Platform Engineering team.
@@ -40,12 +40,12 @@ You arrive at your desk at ShipIt Industries, coffee in hand, and find a message
 >
 > Oh, and one more thing. I'm including some example prompts to get you started with Copilot Chat. Feel free to modify them as needed.
 > 
-> \- Maya
+> \- Erica
 
 > [!IMPORTANT]
 > This lab focuses on **exploration and understanding**, not implementation. We'll build features in later labs. The goal is to map the codebase mentally and identify what's done vs. what's missing. Afterall, it's hard to work on something you don't understand!
 >
-> Like Maya said, feel free to use the example prompts or adapt them to fit your style. You can also come up with your own questions as you explore. The key is to leverage Copilot to accelerate your learning.
+> Like Erica said, feel free to use the example prompts or adapt them to fit your style. You can also come up with your own questions as you explore. The key is to leverage Copilot to accelerate your learning.
 
 ---
 
