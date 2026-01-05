@@ -15,8 +15,8 @@ on:
         required: false
         default: "1.6.0"
   pull_request:
-    paths:
-      - "approvethis/terraform/**"
+    branches:
+      - main
 
 permissions:
   contents: read

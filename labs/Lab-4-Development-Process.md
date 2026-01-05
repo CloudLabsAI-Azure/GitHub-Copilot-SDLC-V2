@@ -261,18 +261,14 @@ Testing: Manual testing against live GitHub API
 Resolves AB#123, AB#124, AB#125
 ```
 
-### 5.2 Commit, Push, PR, Merge
+### 5.2 Sync Our Changes
 
-We need to:
-1. Commit our changes to our feature branch and push them up to the repo. 
-2. Open a Pull Request for our feature branch targeting `main`.
+We need to commit our changes to our feature branch and push them up to the repo. 
 
-In a standard development workflow, at this point you would request a code review from your teammates. However, since we've already had Copilot do a code review for us, we're going to count that as our review step for this lab and throughout the workshop.
+We do not want to open a Pull request yet. We will be doing this in a later lab.
 
 > [!IMPORTANT]
 > In a real world scenario, you always want to do human code review. Human code reviews are vital to team collaboration, knowledge sharing, and maintaining code quality. Additionally, Copilot is **BLOCKED** from approving PRs by GitHub as a safety feature.
-
-3. Merge the PR into Main.
 
 ---
 

@@ -19,24 +19,27 @@ on:
         description: "Terraform version"
         required: false
         default: "1.6.0"
+  push:
+    branches:
+      - main
 
 permissions:
   contents: read
 
 jobs:
   terraform-apply:
-    name: Terraform Apply - ${{ github.event.inputs.environment }}
+    name: Terraform Apply - ${{ github.event.inputs.environment || 'dev' }}
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.event.inputs.environment }}
+      name: ${{ github.event.inputs.environment || 'dev' }}
 
     env:
       TF_VERSION: ${{ github.event.inputs.terraform_version || '1.6.0' }}
-      ENVIRONMENT: ${{ github.event.inputs.environment }}
+      ENVIRONMENT: ${{ github.event.inputs.environment || 'dev' }}
 
     defaults:
       run:
-        working-directory: approvethis/terraform/environments/${{ github.event.inputs.environment }}
+        working-directory: approvethis/terraform/environments/${{ github.event.inputs.environment || 'dev' }}
 
     steps:
       - name: Checkout code
