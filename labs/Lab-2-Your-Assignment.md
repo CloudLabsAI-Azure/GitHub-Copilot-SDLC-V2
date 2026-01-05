@@ -63,6 +63,7 @@ Open Copilot Chat and use the `@workspace` participant to ask about the overall 
 <details>
 <summary>💡 Example prompt</summary>
 
+**Copilot Mode**: `Ask`
 ```
 @workspace Can you explain the overall structure of this Python Flask application? What are the main components and how are they organized?
 ```
@@ -83,6 +84,7 @@ The ApproveThis application uses the **Application Factory Pattern**. If you're 
 <details>
 <summary>💡 Example prompt</summary>
 
+**Copilot Mode**: `Ask`
 ```
 What is the Application Factory pattern and how is it implemented in this Flask application? Why is it beneficial?
 ```
@@ -98,6 +100,7 @@ Let's ask Copilot to detail the blueprints used in the application:
 <details>
 <summary>💡 Example prompt</summary>
 
+**Copilot Mode**: `Ask`
 ```
 @workspace What blueprints exist in this application and what is each responsible for?
 ```
@@ -150,6 +153,7 @@ If you're unsure about the provider pattern, you can ask Copilot to help you und
 <details>
 <summary>💡 Example prompt</summary>
 
+**Copilot Mode**: `Ask`
 ```
 @workspace Explain the provider pattern used in app/providers/. What is the purpose of this design pattern?
 ```
@@ -199,6 +203,7 @@ Check if the jobs blueprint has complete routes:
 <details>
 <summary>💡 Example prompt</summary>
 
+**Copilot Mode**: `Ask`
 ```
 @workspace Does the jobs blueprint in app/blueprints/jobs/ have routes implemented? What functionality is available vs. what's missing?
 ```
@@ -236,6 +241,7 @@ This class uses powers of 2 to define permissions. We don't know exactly why yet
 <details>
 <summary>💡 Example prompt</summary>
 
+**Copilot Mode**: `Ask`
 ```
 Explain how the Permission class in app/models/role.py implements permission flags. Why use powers of 2?
 ```
@@ -262,6 +268,7 @@ Ask Copilot how permissions are enforced:
 <details>
 <summary>💡 Example prompt</summary>
 
+**Copilot Mode**: `Ask`
 ```
 @workspace How are permissions checked in the application routes? Show me examples of permission enforcement.
 ```

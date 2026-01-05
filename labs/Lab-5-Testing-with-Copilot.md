@@ -12,60 +12,97 @@ By the end of this lab, you will be able to:
 - Understand AI-assisted test-driven development (TDD)
 - Identify edge cases and negative test scenarios with Copilot
 
-## 📸 Scenario: Quality Gates at ShipIt Industries
+## 🏢 Testing Culture at ShipIt Industries
 
-🏢 Your manager at ShipIt Industries reviews your GitHub provider implementation and is impressed! However, she has one concern:
+After reviewing your GitHub provider implementation, Erica emphasizes testing:
 
-> "This looks great, but where are the tests? We require at least 80% test coverage for all new code. Also, since ApproveThis handles critical deployment approvals, we need end-to-end tests to ensure the entire workflow functions correctly."
+> **Erica**: "Nice work on the provider! But before we merge this, we need tests. At ShipIt, we have a rule: **no code ships without tests**.
+>
+> Here's our testing pyramid:
+> - **Unit tests**: Fast, isolated, test individual functions and classes
+> - **Integration tests**: Test API endpoints and database interactions
+> - **E2E tests**: Test full user workflows in the browser
+>
+> The good news? Copilot is excellent at writing tests. It understands our code and can generate comprehensive test suites. Let me show you how we use it."
 
-She continues:
+This lab demonstrates how AI can transform testing from a tedious chore into a rapid, thorough process.
 
-> "The previous developer left almost no tests. We need comprehensive test coverage before we can deploy this to production. Can you get that done quickly?"
-
-With GitHub Copilot, testing is no longer an afterthought that takes days. Let's see how AI can help you generate comprehensive test suites in minutes!
-
----
-
-## Step 1: Introduction to AI-Assisted Testing
-
-### 1.1 Why Testing with Copilot is Different
-
-Traditional testing challenges:
-- ❌ Writing tests is time-consuming and repetitive
-- ❌ Easy to miss edge cases
-- ❌ Test maintenance can be tedious
-- ❌ Setting up test fixtures requires boilerplate code
-
-With GitHub Copilot:
-- ✅ Generate test cases from implementation code
-- ✅ AI suggests edge cases you might not consider
-- ✅ Automatic test fixture generation
-- ✅ Consistent test patterns across the codebase
-
-### 1.2 Types of Tests for ApproveThis
-
-We'll implement three types of tests:
-
-1. **Unit Tests** - Test individual components in isolation
-   - Models (User, Role, DispatchRequest)
-   - Providers (MockProvider, GitHubProvider)
-   - Utilities and helpers
-
-2. **Integration Tests** - Test components working together
-   - Route handlers with database
-   - Provider interactions with application logic
-   - RBAC permission enforcement
-
-3. **End-to-End (E2E) Tests** - Test complete user workflows
-   - Login flows
-   - Workflow dispatch process
-   - Approval workflows
-   - Role-based UI differences
-
-> [!NOTE]
-> For detailed Playwright setup and configuration, see the [Playwright Testing Guide](../docs/Playwright-Testing-Guide.md).
+> [!IMPORTANT]
+> Testing is crucial for:
+> - Preventing regressions when adding features
+> - Documenting expected behavior
+> - Building confidence in deployments
+> - Enabling refactoring safely
+> 
+> Copilot makes it easier to achieve high test coverage without the usual time investment.
 
 ---
+
+## Step 1: Understanding the Testing Strategy
+
+Let's start by understanding what we need to test and setting up the infrastructure.
+
+### Review Existing Test Structure
+
+Let's have Copilot analyze the existing test setup if there are any gaps currently:
+
+<details>
+<summary>💡 Example Prompt</summary>
+
+**Copilot Mode**: `Ask`
+```
+@workspace What testing infrastructure exists in the tests/ directory? What's already set up and what's missing?
+```
+
+**You should find**:
+- `tests/` directory exists
+- Possibly some basic structure but minimal tests
+- May have pytest configuration or conftest.py
+</details>
+
+### Plan Test Coverage
+
+<details>
+<summary>💡 Example Prompt</summary>
+
+```
+Based on the ApproveThis codebase, create a comprehensive test plan covering:
+
+1. Unit tests:
+   - Models (User, Role, Permission, DispatchRequest)
+   - RBAC permission checking
+   - Provider classes (MockGitHubProvider, RealGitHubProvider)
+   - Utility functions
+
+2. Integration tests:
+   - API endpoints (repositories, workflows, dispatch)
+   - Authentication flows
+   - Permission enforcement in routes
+
+3. E2E tests:
+   - User login and navigation
+   - Viewing repositories and workflows
+   - Dispatching a workflow (as LeadDeveloper)
+   - Permission denials (as Viewer)
+
+List test files to create and what each should cover.
+```
+
+**Expected test structure**:
+```
+tests/
+├── conftest.py              # Shared fixtures
+├── unit/
+│   ├── test_models.py       # Model tests
+│   ├── test_rbac.py         # Permission tests
+│   ├── test_providers.py    # Provider tests
+├── integration/
+│   ├── test_api.py          # API endpoint tests
+│   ├── test_auth.py         # Authentication tests
+└── e2e/
+    ├── test_workflows.py    # End-to-end tests
+```
+</details>
 
 ## Step 2: Setting Up the Testing Infrastructure
 
@@ -73,7 +110,7 @@ Let's set up pytest and Playwright for comprehensive testing.
 
 ### 2.1 Install Testing Dependencies
 
-Add testing packages to your requirements (or create a separate `requirements-dev.txt`):
+Add testing packages to your requirements:
 
 ```bash
 pip install pytest pytest-flask pytest-cov playwright
@@ -88,7 +125,7 @@ Ask Copilot to create a pytest configuration:
 <summary>💡 Example prompt</summary>
 
 ```
-@workspace Create a pytest.ini configuration file in the approvethis directory with settings for:
+Create a `pytest.ini` configuration file in the approvethis directory with settings for:
 - Test discovery pattern
 - Coverage reporting
 - Verbose output
@@ -155,8 +192,6 @@ def auth_client_viewer(client, viewer_user):
     """Authenticated client as viewer."""
     # ... authentication
 ```
-
----
 
 ## Step 3: Generating Unit Tests
 
@@ -254,8 +289,6 @@ pytest tests/test_models/ --cov=app/models --cov-report=term-missing
 > [!TIP]
 > 💡 Ask Copilot to explain any test failures: `@workspace Why is test_permission_bitwise_operations failing? Here's the error: [paste error]`
 
----
-
 ## Step 4: Testing the Provider Layer
 
 Now let's test the provider implementations.
@@ -323,8 +356,6 @@ def test_list_repositories_success(app):
         assert len(repos) > 0
         assert repos[0]['full_name'] == 'owner/repo'
 ```
-
----
 
 ## Step 5: End-to-End Testing with Playwright
 
@@ -432,8 +463,6 @@ Save as tests/e2e/test_dispatch.py
 
 </details>
 
----
-
 ## Step 6: Testing Edge Cases with Copilot
 
 One of Copilot's superpowers is suggesting edge cases you might not think of.
@@ -496,8 +525,6 @@ Create tests/test_security.py with these tests
 ```
 
 </details>
-
----
 
 ## Step 7: Achieving and Maintaining Coverage
 

@@ -138,6 +138,7 @@ Test the connection in Copilot Chat:
 <details>
 <summary>💡 Example ADO MCP prompt</summary>
 
+**Copilot Mode**: `Agent`
 ```
 List the work items assigned to me in the current iteration.
 ```
@@ -157,6 +158,7 @@ Check if there are work items related to ApproveThis:
 <details>
 <summary>💡 Example prompt for checking work items</summary>
 
+**Copilot Mode**: `Agent`
 ```
 Search for work items in ADO related to "ApproveThis" or "GitHub provider integration". What's the current status?
 ```
@@ -184,6 +186,7 @@ Use Copilot `Ask` mode to help create a prioritized list of what needs to be imp
 <details>
 <summary>💡 Example prompt to create features list</summary>
 
+**Copilot Mode**: `Ask`
 ```
 We need to create user stories for the following features in Azure DevOps:
 
@@ -214,6 +217,7 @@ With our prioritized list, let's create user stories in Azure DevOps for the ite
 <details>
 <summary>💡 Example prompt for creating ADO work items</summary>
 
+**Copilot Mode**: `Agent`
 ```
 Now that we have the prioritized feature list and outline, can you help me create user stories in Azure DevOps for each feature? Include requirements and acceptance criteria based on existing models and patterns in the codebase.
 
@@ -247,6 +251,7 @@ If you see anything that needs adjustment, you can either edit the work items di
 > [!NOTE]
 > **This prompt is strictly an example. The actual work item IDs will vary based on your Azure DevOps instance and the work items created by Copilot.**
 
+**Copilot Mode**: `Agent`
 ```
 For work item #123 (GitHub provider - list_repositories), add technical details about:
 - Required GitHub API endpoint
@@ -274,6 +279,7 @@ You can even have Copilot draft a technical design document for the GitHub provi
 <details>
 <summary>💡 Example design doc generation prompt</summary>
 
+**Copilot Mode**: `Agent`
 ```
 Please create a technical design document for the future GitHub provider implementation. Include architecture diagrams (in Mermaid), API endpoints used, authentication flow, and testing strategy.
 ```

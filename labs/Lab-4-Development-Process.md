@@ -56,6 +56,7 @@ Ask Copilot to create a detailed implementation plan for the GitHub provider tas
 > [!NOTE]
 > You need to replace `XXX` with the actual Azure DevOps work item ID for the GitHub provider task.
 
+**Copilot Mode**: `Plan`
 ```
 I need to implement the real GitHub provider. The work item is in Azure DevOps under ID XXX. Please help me create an implementation plan.
 ```
@@ -87,6 +88,7 @@ If the plan needs adjustments, ask Copilot to refine specific sections:
 <details>
 <summary>💡 Example refinement prompts</summary>
 
+**Copilot Mode**: `Plan`
 ```
 Can you expand the error handling section to include specific GitHub API error codes we should handle?
 ```
@@ -179,8 +181,9 @@ Ask Copilot to add comprehensive docstrings:
 <details>
 <summary>💡 Example prompt</summary>
 
+**Copilot Mode**: `Agent`
 ```
-@workspace Add comprehensive docstrings to all methods in app/providers/github.py following Google style guide format. Include parameters, return types, exceptions raised, and usage examples.
+Add comprehensive docstrings to all methods in app/providers/github.py following Google style guide format. Include parameters, return types, exceptions raised, and usage examples.
 ```
 
 </details>
@@ -192,8 +195,9 @@ Generate user-facing documentation:
 <details>
 <summary>💡 Example prompt</summary>
 
+**Copilot Mode**: `Agent`
 ```
-@workspace Create API documentation for the GitHub provider in Markdown format. Include:
+Create API documentation for the GitHub provider in Markdown format. Include:
 - Overview of functionality
 - Configuration requirements (environment variables)
 - Available methods with parameters  
@@ -204,36 +208,6 @@ Save this as docs/GitHub-Provider-API.md
 ```
 
 </details>
-
-### 3.3 Generate Commit Message
-
-Use Copilot to craft a detailed commit message:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-Generate a detailed commit message for the GitHub provider implementation following Conventional Commits format. Include the Azure DevOps work item link.
-```
-
-</details>
-
-**Example output:**
-```
-feat(providers): implement real GitHub API provider
-
-- Implemented all methods from GitHubProvider interface
-- Added rate limiting with exponential backoff
-- Included comprehensive error handling and logging
-- Environment-based authentication via GITHUB_TOKEN
-- Added caching for frequently accessed data
-- Updated requirements.txt with PyGithub dependency
-
-Breaking changes: None
-Testing: Manual testing against live GitHub API
-
-Resolves AB#123, AB#124, AB#125
-```
 
 ## Step 4: GitHub Copilot Code Review
 
@@ -259,6 +233,35 @@ Review Copilot's suggestions and apply the ones that make sense and deny/reject 
 ## Step 5: Finishing Up
 
 Now that we've implemented the GitHub provider, tested it, documented it, and had Copilot review our code, it's time to finalize our work.
+
+### 5.1 Generating Commit Messages
+
+Copilot can help you to create detailed commit messages that follow best practices. While you always want to review and potentially edit the generated commit message, this can save you a lot of time and help ensure consistency.
+
+To have Copilot generate a commit message for your changes:
+
+1. Open the `Source Control panel` (`Ctrl+Shift+G`)
+2. Click into the **commit message** input box
+3. Click the **Generate Commit Message** button (similar to ✨) at the end of the input box.
+
+**Example output:**
+```
+feat(providers): implement real GitHub API provider
+
+- Implemented all methods from GitHubProvider interface
+- Added rate limiting with exponential backoff
+- Included comprehensive error handling and logging
+- Environment-based authentication via GITHUB_TOKEN
+- Added caching for frequently accessed data
+- Updated requirements.txt with PyGithub dependency
+
+Breaking changes: None
+Testing: Manual testing against live GitHub API
+
+Resolves AB#123, AB#124, AB#125
+```
+
+### 5.2 Commit, Push, PR, Merge
 
 We need to:
 1. Commit our changes to our feature branch and push them up to the repo. 

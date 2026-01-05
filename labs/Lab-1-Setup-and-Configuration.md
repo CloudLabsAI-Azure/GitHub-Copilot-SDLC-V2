@@ -223,6 +223,7 @@ Open the Copilot Chat panel (`Ctrl+Shift+I` / `Cmd+Shift+I`) and try asking:
 <details>
 <summary>💡 Example prompt to test Copilot</summary>
 
+**Copilot Mode**: `Ask`
 ```
 What is this repository about? Give me a brief overview.
 ```
