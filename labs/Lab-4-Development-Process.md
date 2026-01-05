@@ -251,7 +251,7 @@ To request a Code Review from Copilot on our uncommitted changes we need to do t
 
 ### 4.2 Apply Suggested Improvements
 
-Review Copilot's suggestions and apply the ones that make sense:
+Review Copilot's suggestions and apply the ones that make sense and deny/reject those that don't:
 
 # TODO take a screenshot of code review suggestions and include it here
 **Example improvements:**
@@ -267,10 +267,9 @@ We need to:
 In a standard development workflow, at this point you would request a code review from your teammates. However, since we've already had Copilot do a code review for us, we're going to count that as our review step for this lab and throughout the workshop.
 
 > [!IMPORTANT]
-> In a real world scenario, you would always want to do human code review. Aside from the fact that human code reviews are vital to team collaboration and knowledge sharing, Copilot is **BLOCKED** from approving PRs by GitHub as a safety feature.
+> In a real world scenario, you always want to do human code review. Human code reviews are vital to team collaboration, knowledge sharing, and maintaining code quality. Additionally, Copilot is **BLOCKED** from approving PRs by GitHub as a safety feature.
 
 3. Merge the PR into Main.
-
 
 ---
 
