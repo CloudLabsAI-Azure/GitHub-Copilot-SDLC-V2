@@ -41,3 +41,35 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "approvethis_api_url" {
+  description = "URL of the ApproveThis application API"
+  type        = string
+  default     = ""
+}
+
+variable "approvethis_api_key" {
+  description = "API key for authenticating with ApproveThis"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
+variable "github_token" {
+  description = "GitHub Personal Access Token for API communication"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
+variable "cors_allowed_origins" {
+  description = "List of allowed origins for CORS"
+  type        = list(string)
+  default     = ["*"]
+}
+
+variable "additional_app_settings" {
+  description = "Additional app settings to add to the function app"
+  type        = map(string)
+  default     = {}
+}
