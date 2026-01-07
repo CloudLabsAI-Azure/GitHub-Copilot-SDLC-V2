@@ -4,6 +4,9 @@ Azure Function: Approval Response
 This function receives approval/denial decisions from the ApproveThis application
 and communicates them back to the GitHub Actions workflow run.
 
+NOTE: This is a Lab 7 implementation that provides the skeleton for GitHub integration.
+The actual GitHub API calls will be implemented in Lab 8 as part of the capstone project.
+
 Expected Request Payload from ApproveThis:
 {
     "approval_id": "uuid",
@@ -95,32 +98,32 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         callback_url = req_body.get('callback_url', '')
         
         if callback_url:
-            # Use the callback URL to communicate with GitHub
-            headers = {
-                'Authorization': f'Bearer {github_token}',
-                'Accept': 'application/vnd.github.v3+json',
-                'Content-Type': 'application/json'
-            }
+            # NOTE: This is a placeholder for Lab 8 implementation
+            # In Lab 8, users will implement actual GitHub API integration here
+            # using the callback_url to update workflow run status
             
-            # Prepare status update
-            status_payload = {
-                "state": "success" if approval_status == "approved" else "failure",
-                "description": (
-                    f"Approved by {req_body.get('approved_by', 'unknown')}"
-                    if approval_status == "approved"
-                    else f"Denied: {req_body.get('reason', 'No reason provided')}"
-                ),
-                "context": "ApproveThis/approval"
-            }
-            
-            # Note: In a real implementation, you would use the GitHub API
-            # to either continue the workflow, update status, or cancel the run
-            # The exact mechanism depends on how the workflow is structured
+            # Example of what will be implemented in Lab 8:
+            # headers = {
+            #     'Authorization': f'Bearer {github_token}',
+            #     'Accept': 'application/vnd.github.v3+json',
+            #     'Content-Type': 'application/json'
+            # }
+            # 
+            # status_payload = {
+            #     "state": "success" if approval_status == "approved" else "failure",
+            #     "description": (
+            #         f"Approved by {req_body.get('approved_by', 'unknown')}"
+            #         if approval_status == "approved"
+            #         else f"Denied: {req_body.get('reason', 'No reason provided')}"
+            #     ),
+            #     "context": "ApproveThis/approval"
+            # }
+            # 
+            # response = requests.post(callback_url, headers=headers, json=status_payload)
+            # response.raise_for_status()
             
             logging.info(f'Would notify GitHub at {callback_url} with status: {approval_status}')
-            
-            # For Lab 7, we'll document this approach without making actual GitHub API calls
-            # since the workflow integration will be built in Lab 8
+            logging.info('GitHub API integration will be implemented in Lab 8')
             
         # Return success response to ApproveThis
         return func.HttpResponse(
@@ -143,16 +146,6 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 "details": str(e)
             }),
             status_code=400,
-            mimetype="application/json"
-        )
-    except requests.RequestException as e:
-        logging.error(f'Error communicating with GitHub: {str(e)}')
-        return func.HttpResponse(
-            json.dumps({
-                "error": "Failed to communicate with GitHub",
-                "details": str(e)
-            }),
-            status_code=502,
             mimetype="application/json"
         )
     except Exception as e:
