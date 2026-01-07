@@ -267,9 +267,6 @@ We need to commit our changes to our feature branch and push them up to the repo
 
 We do not want to open a Pull request yet. We will be doing this in a later lab.
 
-> [!IMPORTANT]
-> In a real world scenario, you always want to do human code review. Human code reviews are vital to team collaboration, knowledge sharing, and maintaining code quality. Additionally, Copilot is **BLOCKED** from approving PRs by GitHub as a safety feature.
-
 ---
 
 ## 🏆 Exercise Wrap-Up

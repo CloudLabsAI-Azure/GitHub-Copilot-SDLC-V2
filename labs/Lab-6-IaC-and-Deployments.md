@@ -109,79 +109,28 @@ We need to understand how each workflow works so we can use them effectively.
 
 Once you've gotten a grasp of the workflows it's time to get ready to deploy!
 
-## Step 3: Preparing for Deployment
-
-Before triggering a deployment, let's verify the configuration.
-
-### 3.1 Check Required Secrets
-
-The Terraform workflows require Azure credentials. Ask Copilot what's needed:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace What secrets and environment variables do the Terraform workflows need? Look at both terraform-plan.yml and terraform-apply.yml.
-```
-
-</details>
-
-**Required secrets (pre-configured by your instructor):**
-- `AZURE_CREDENTIALS` - Service principal credentials for Azure authentication
-- `TF_VAR_*` - Various Terraform variable values (storage account names, etc.)
-
-> [!NOTE]
-> These secrets were pre-configured for your training repository. You don't need to create them.
-
-### 3.2 Verify Terraform Configuration Locally (Optional)
-
-If you want to validate the Terraform configuration locally before opening a PR:
-
-```bash
-cd approvethis/terraform/environments/dev
-terraform init -backend=false
-terraform validate
-```
-
-> [!TIP]
-> 💡 If you encounter validation errors, ask Copilot: "I'm getting this Terraform validation error: [paste error]. What's wrong and how do I fix it?"
-
-## Step 4: Triggering a Deployment via PR
+## Step 3: Triggering a Deployment via PR
 
 Now let's walk through the actual deployment process.
 
-### 4.1 Make a Small Terraform Change
+### 3.1 Commit and Push Your Changes
 
-Since the deployment workflows run on every PR, your existing changes will already trigger them! But let's also add a small Terraform change to see the plan output. Let's add a simple tag update:
+If you have any changes that haven't been committed yet and should be included in the deployment, commit and push them now.
 
-1. Open `approvethis/terraform/environments/dev/main.tf`
-2. Ask Copilot to help you add a tag:
+> [!TIP]
+> Remember that you can have Copilot help write commit messages for you!
+>
+> 1. Open the `Source Control panel` (`Ctrl+Shift+G`)
+> 2. Click into the **commit message** input box
+> 3. Click the **Generate Commit Message** button (similar to ✨) at the end of the input box.
 
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Add a "deployed_by" tag with value "workshop-participant" to the locals block in approvethis/terraform/environments/dev/main.tf. If there's no tags local, suggest where to add one that will be used by the modules.
-```
-
-</details>
-
-### 4.2 Commit and Push Your Changes
-
-```bash
-git add approvethis/terraform/environments/dev/main.tf
-git commit -m "Add deployed_by tag to dev environment"
-git push origin your-branch-name
-```
-
-### 4.3 Open a Pull Request
+### 3.2 Open a Pull Request
 
 1. Navigate to your repository on GitHub
-2. Click "Compare & pull request" for your branch
-3. Add a descriptive title like "Add deployment tag to dev Terraform configuration"
-4. Create the pull request
+2. Have Copilot help you draft a PR description that summarizes your changes and their purpose
+3. Create the pull request
 
-### 4.4 Watch the Terraform Plan Run
+### 3.3 Watch the Terraform Plan Run
 
 Once your PR is created:
 
@@ -196,7 +145,10 @@ Once your PR is created:
 - ✅ Validation status
 - 📖 The actual plan showing what will be created/modified
 
-### 4.5 Merge the PR to Deploy
+### 3.5 Merge the PR to Deploy
+
+> [!IMPORTANT]
+> In a real world scenario, you always want to do human code review. Human code reviews are vital to team collaboration, knowledge sharing, and maintaining code quality. Additionally, Copilot is **BLOCKED** from approving PRs by GitHub as a safety feature.
 
 Once you've reviewed the plan output:
 
@@ -208,17 +160,17 @@ Once you've reviewed the plan output:
 > [!IMPORTANT]
 > The apply workflow deploys to the `dev` environment. In a real production scenario, production deployments would require additional approvals and potentially a separate workflow trigger.
 
-## Step 5: Verifying the Deployment
+## Step 4: Verifying the Deployment
 
 After the apply workflow completes, let's verify what was deployed.
 
-### 5.1 Check the Workflow Summary
+### 4.1 Check the Workflow Summary
 
 1. Navigate to the completed "Terraform Apply" workflow run
 2. Click on the job to see detailed logs
 3. Look for the "Terraform Output" step to see what resources were created
 
-### 5.2 Understanding the Job Execution Framework (Preview)
+### 4.2 Understanding the Job Execution Framework (Preview)
 
 ApproveThis includes a job execution framework that could be used to trigger Terraform operations from the UI. Ask Copilot about it:
 
