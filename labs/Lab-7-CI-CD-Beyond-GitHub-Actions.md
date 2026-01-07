@@ -274,14 +274,35 @@ Watch the workflow execution:
 - Function App URL
 - Function endpoints for request-approval and approval-response
 
-### 4.4 Verify in Azure Portal (Optional)
+### 4.4 Verify Deployment with Azure Extension or MCP
 
-If you have access to the Azure Portal:
+Now let's verify the Function App was created successfully. You can use either the Azure VS Code extension or the Azure MCP Server.
 
-1. Navigate to the Azure Portal
-2. Find the Resource Group (e.g., `rg-approvethis-func-dev`)
-3. Verify the Function App was created
-4. Check the Configuration settings to see the app settings
+**Option 1: Using Azure VS Code Extension**
+
+1. Click on the Azure icon in the VS Code sidebar
+2. Expand the **Resources** section
+3. Navigate to your subscription and find the Resource Group (e.g., `rg-approvethis-func-dev`)
+4. Expand the Function App to see it was created
+5. Check the Application Settings to verify the configuration
+
+**Option 2: Using Azure MCP Server with Copilot**
+
+<details>
+<summary>💡 Example prompt</summary>
+
+**Copilot Mode**: `Ask`
+```
+@azure Show me the Function App we just deployed in the dev environment. What are its current configuration settings and status?
+```
+
+</details>
+
+This will show you the Function App details, including:
+- Function App name and URL
+- Runtime configuration (Python 3.11)
+- App settings that were configured
+- Deployment status
 
 Alternatively, use the Azure MCP Server:
 
@@ -370,28 +391,6 @@ Expected response (may show error about ApproveThis URL not configured, which is
 This is normal - the function needs the `APPROVETHIS_API_URL` to be configured, which will be done in Lab 8.
 
 </details>
-
-### 5.6 Configure Secrets (Preview for Lab 8)
-
-The functions need certain secrets to work properly. These will be fully configured in Lab 8, but let's understand what's needed:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-**Copilot Mode**: `Ask`
-```
-@workspace What secrets and environment variables need to be configured in the Azure Function App for the approval functions to work? Where should these be set?
-```
-
-</details>
-
-**Secrets needed:**
-- `APPROVETHIS_API_URL`: URL of the deployed ApproveThis application
-- `APPROVETHIS_API_KEY`: API key for authentication
-- `GITHUB_TOKEN`: GitHub PAT for API calls
-
-> [!NOTE]
-> In Lab 8, you'll configure these secrets as part of implementing the complete approval workflow.
 
 ---
 

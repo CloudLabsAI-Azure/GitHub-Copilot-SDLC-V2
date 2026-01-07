@@ -119,3 +119,9 @@ tmp/
 temp/
 *.tmp
 *.temp
+
+# Azure Functions specific
+approvethis/azure-functions/local.settings.json
+approvethis/azure-functions/.python_packages/
+approvethis/azure-functions/bin/
+approvethis/azure-functions/obj/
