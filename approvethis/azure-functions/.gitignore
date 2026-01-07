@@ -1,0 +1,19 @@
+# Azure Functions
+local.settings.json
+__pycache__/
+*.py[cod]
+*$py.class
+.python_packages/
+.venv/
+bin/
+obj/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
