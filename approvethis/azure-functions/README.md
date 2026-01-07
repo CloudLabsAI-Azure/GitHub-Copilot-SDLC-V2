@@ -61,6 +61,37 @@ Receives approval/denial decisions from the ApproveThis application and communic
 }
 ```
 
+### 3. trigger-workflow
+
+**Endpoint:** `POST /api/workflow/trigger`
+
+Triggers a workflow_dispatch event in a GitHub repository. This is called after an approval is granted to initiate the approved workflow.
+
+**Request Payload:**
+```json
+{
+    "repository": "owner/repo",
+    "workflow_id": "deploy.yml",
+    "ref": "main",
+    "inputs": {
+        "environment": "production",
+        "version": "1.2.3"
+    }
+}
+```
+
+**Response:**
+```json
+{
+    "success": true,
+    "workflow_run_id": "12345",
+    "message": "Workflow 'deploy.yml' triggered successfully in owner/repo",
+    "repository": "owner/repo",
+    "workflow": "deploy.yml",
+    "ref": "main"
+}
+```
+
 ## Configuration
 
 The functions require the following environment variables:
@@ -131,6 +162,20 @@ curl -X POST http://localhost:7071/api/approval/response \
   }'
 ```
 
+Test the trigger-workflow function:
+```bash
+curl -X POST http://localhost:7071/api/workflow/trigger \
+  -H "Content-Type: application/json" \
+  -d '{
+    "repository": "owner/repo",
+    "workflow_id": "deploy.yml",
+    "ref": "main",
+    "inputs": {
+      "environment": "production"
+    }
+  }'
+```
+
 ## Deployment
 
 The functions are deployed using:
@@ -142,7 +187,7 @@ See Lab 7 instructions for detailed deployment steps.
 ## Architecture
 
 ```
-GitHub Actions Workflow
+GitHub Actions Workflow (waiting)
         |
         | (1) Request approval
         v
@@ -156,9 +201,13 @@ ApproveThis Application
         v
 approval-response Function
         |
-        | (4) Notify GitHub
+        | (4a) If approved
         v
-GitHub Actions Workflow (continues/stops)
+trigger-workflow Function
+        |
+        | (4b) Trigger workflow_dispatch
+        v
+GitHub Actions Workflow (continues)
 ```
 
 ## Security

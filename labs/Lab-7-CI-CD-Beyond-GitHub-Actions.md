@@ -93,7 +93,7 @@ The Azure Functions for ApproveThis are located in `approvethis/azure-functions/
 
 **Copilot Mode**: `Ask`
 ```
-@workspace Explain the structure of the Azure Functions in approvethis/azure-functions/. What are the two functions and what does each one do?
+@workspace Explain the structure of the Azure Functions in approvethis/azure-functions/. What are the three functions and what does each one do?
 ```
 
 </details>
@@ -101,6 +101,7 @@ The Azure Functions for ApproveThis are located in `approvethis/azure-functions/
 **Expected findings:**
 - **request-approval**: Receives workflow dispatch requests from GitHub Actions and forwards them to ApproveThis
 - **approval-response**: Receives approval/denial decisions from ApproveThis and communicates back to GitHub Actions
+- **trigger-workflow**: Triggers a GitHub workflow_dispatch event after an approval is granted
 
 ### 2.2 Analyze the Request-Approval Function
 
@@ -272,7 +273,7 @@ Watch the workflow execution:
 **Expected outputs:**
 - Function App name
 - Function App URL
-- Function endpoints for request-approval and approval-response
+- Function endpoints for request-approval, approval-response, and trigger-workflow
 
 ### 4.4 Verify Deployment with Azure Extension or MCP
 
@@ -357,9 +358,10 @@ Now let's deploy the function code:
 After deployment completes:
 
 1. In the Azure Functions extension panel, expand your Function App
-2. You should see two functions:
+2. You should see three functions:
    - `request-approval`
    - `approval-response`
+   - `trigger-workflow`
 3. Right-click on each function and select **Copy Function Url** to get the endpoint URLs
 
 ### 5.5 Test the Functions (Optional)
