@@ -18,7 +18,6 @@ Expected Request Payload:
 Response:
 {
     "success": true,
-    "workflow_run_id": "12345",
     "message": "Workflow triggered successfully"
 }
 """
@@ -79,6 +78,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             )
         
         # Get GitHub token from environment
+        # Token requires 'repo' scope for private repos or 'public_repo' for public repos
         github_token = os.environ.get('GITHUB_TOKEN')
         
         if not github_token:
@@ -86,14 +86,17 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             return func.HttpResponse(
                 json.dumps({
                     "error": "Function not properly configured",
-                    "details": "GITHUB_TOKEN environment variable not set"
+                    "details": "GITHUB_TOKEN environment variable not set. Token requires 'repo' or 'public_repo' scope."
                 }),
                 status_code=500,
                 mimetype="application/json"
             )
         
         # Prepare GitHub API request
-        api_url = f'https://api.github.com/repos/{repository}/actions/workflows/{workflow_id}/dispatches'
+        # Properly encode repository path to prevent injection attacks
+        from urllib.parse import quote
+        encoded_repo = quote(repository, safe='')
+        api_url = f'https://api.github.com/repos/{encoded_repo}/actions/workflows/{workflow_id}/dispatches'
         
         headers = {
             'Authorization': f'Bearer {github_token}',
@@ -121,26 +124,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             # Success - workflow triggered (GitHub returns 204 No Content)
             logging.info(f'Workflow triggered successfully: {workflow_id} in {repository}')
             
-            # Try to get the latest run ID for this workflow
-            # Note: There may be a slight delay before the run appears
-            runs_url = f'https://api.github.com/repos/{repository}/actions/workflows/{workflow_id}/runs'
-            runs_response = requests.get(
-                runs_url,
-                headers=headers,
-                params={'per_page': 1},
-                timeout=30
-            )
-            
-            workflow_run_id = None
-            if runs_response.status_code == 200:
-                runs_data = runs_response.json()
-                if runs_data.get('workflow_runs'):
-                    workflow_run_id = runs_data['workflow_runs'][0]['id']
+            # Note: The workflow_dispatch API doesn't return a run ID directly.
+            # The run may not appear immediately due to GitHub's processing delay.
+            # Applications should poll the runs API separately if they need the run ID.
             
             return func.HttpResponse(
                 json.dumps({
                     "success": True,
-                    "workflow_run_id": workflow_run_id,
                     "message": f"Workflow '{workflow_id}' triggered successfully in {repository}",
                     "repository": repository,
                     "workflow": workflow_id,

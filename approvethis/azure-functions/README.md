@@ -84,7 +84,6 @@ Triggers a workflow_dispatch event in a GitHub repository. This is called after 
 ```json
 {
     "success": true,
-    "workflow_run_id": "12345",
     "message": "Workflow 'deploy.yml' triggered successfully in owner/repo",
     "repository": "owner/repo",
     "workflow": "deploy.yml",
