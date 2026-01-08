@@ -9,7 +9,14 @@ function_storage_name = "stapprovethisfndev001"
 
 # App Service and Function names must be globally unique
 app_service_name  = "app-approvethis-dev-001"
-function_app_name = "func-terraform-dev-001"
+function_app_name = "func-approvethis-dev-001"
 
 # Database URL (use environment variable in production)
 # database_url = "postgresql://user:pass@host:5432/dbname"
+
+# ApproveThis API configuration (will be set after app deployment)
+# approvethis_api_url = "https://app-approvethis-dev-001.azurewebsites.net"
+# approvethis_api_key = "your-api-key-here"
+
+# GitHub token for API communication (use environment variable)
+# github_token = "ghp_your_token_here"

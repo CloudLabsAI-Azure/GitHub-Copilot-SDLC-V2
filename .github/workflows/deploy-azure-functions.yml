@@ -1,0 +1,111 @@
+name: Deploy Azure Functions Infrastructure
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy"
+        required: true
+        type: choice
+        options:
+          - dev
+          - production
+
+permissions:
+  contents: read
+
+jobs:
+  terraform-apply-functions:
+    name: Deploy Azure Functions - ${{ github.event.inputs.environment }}
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment }}
+
+    env:
+      TF_VERSION: "1.6.0"
+      ENVIRONMENT: ${{ github.event.inputs.environment }}
+
+    defaults:
+      run:
+        working-directory: approvethis/terraform/environments/${{ github.event.inputs.environment }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Azure Login
+        if: ${{ secrets.AZURE_CREDENTIALS != '' }}
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+        continue-on-error: true
+
+      - name: Check Azure Credentials
+        id: check_azure
+        run: |
+          if [ "${{ secrets.AZURE_CREDENTIALS }}" == "" ]; then
+            echo "configured=false" >> $GITHUB_OUTPUT
+            echo "⚠️ Azure credentials not configured"
+            echo "This workflow requires Azure credentials to deploy Azure Functions"
+            exit 1
+          else
+            echo "configured=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Terraform Init
+        if: steps.check_azure.outputs.configured == 'true'
+        id: init
+        run: terraform init
+
+      - name: Terraform Plan
+        if: steps.check_azure.outputs.configured == 'true'
+        id: plan
+        run: |
+          terraform plan -no-color -out=tfplan -target=module.terraform_function
+        env:
+          TF_VAR_storage_account_name: ${{ secrets.TF_VAR_STORAGE_ACCOUNT_NAME || 'stapprovethisdev001' }}
+          TF_VAR_function_storage_name: ${{ secrets.TF_VAR_FUNCTION_STORAGE_NAME || 'stapprovethisfndev001' }}
+          TF_VAR_app_service_name: ${{ secrets.TF_VAR_APP_SERVICE_NAME || 'app-approvethis-dev-001' }}
+          TF_VAR_function_app_name: ${{ secrets.TF_VAR_FUNCTION_APP_NAME || 'func-approvethis-dev-001' }}
+          TF_VAR_database_url: ${{ secrets.TF_VAR_DATABASE_URL || '' }}
+
+      - name: Terraform Apply
+        if: steps.check_azure.outputs.configured == 'true'
+        id: apply
+        run: |
+          terraform apply -auto-approve tfplan
+        env:
+          TF_VAR_storage_account_name: ${{ secrets.TF_VAR_STORAGE_ACCOUNT_NAME || 'stapprovethisdev001' }}
+          TF_VAR_function_storage_name: ${{ secrets.TF_VAR_FUNCTION_STORAGE_NAME || 'stapprovethisfndev001' }}
+          TF_VAR_app_service_name: ${{ secrets.TF_VAR_APP_SERVICE_NAME || 'app-approvethis-dev-001' }}
+          TF_VAR_function_app_name: ${{ secrets.TF_VAR_FUNCTION_APP_NAME || 'func-approvethis-dev-001' }}
+          TF_VAR_database_url: ${{ secrets.TF_VAR_DATABASE_URL || '' }}
+
+      - name: Terraform Output
+        if: steps.check_azure.outputs.configured == 'true'
+        id: output
+        run: terraform output -json
+
+      - name: Display Results
+        if: steps.check_azure.outputs.configured == 'true'
+        run: |
+          echo "## Azure Functions Deployment Results for ${{ env.ENVIRONMENT }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Function App Outputs" >> $GITHUB_STEP_SUMMARY
+          echo '```json' >> $GITHUB_STEP_SUMMARY
+          echo '${{ steps.output.outputs.stdout }}' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "1. Deploy function code using Azure Functions VS Code extension" >> $GITHUB_STEP_SUMMARY
+          echo "2. Configure secrets in Azure Portal (APPROVETHIS_API_KEY, GITHUB_TOKEN)" >> $GITHUB_STEP_SUMMARY
+          echo "3. Test the functions using the URLs in the outputs above" >> $GITHUB_STEP_SUMMARY
+
+      - name: Deployment Status
+        if: steps.apply.outcome == 'failure'
+        run: exit 1

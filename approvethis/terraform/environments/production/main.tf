@@ -47,6 +47,7 @@ module "app_service" {
   tags = local.common_tags
 }
 
+# Azure Function for approval workflow integration
 module "terraform_function" {
   source = "../../modules/azure-function"
 
@@ -56,6 +57,14 @@ module "terraform_function" {
   app_service_plan_name    = "asp-terraform-prod"
   function_app_name        = var.function_app_name
   sku_name                 = "P1V2"
+  
+  # Configuration for approval workflow functions
+  approvethis_api_url = var.approvethis_api_url
+  approvethis_api_key = var.approvethis_api_key
+  github_token        = var.github_token
+  
+  # Allow requests from GitHub Actions and ApproveThis
+  cors_allowed_origins = ["https://github.com", "https://*.azurewebsites.net"]
 
   tags = local.common_tags
 }
