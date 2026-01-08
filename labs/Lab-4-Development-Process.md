@@ -105,6 +105,10 @@ Include steps for updating the configuration to switch between mock and real pro
 
 ## Step 2: Implementing the GitHub Provider with Agent Mode
 
+# TODO Convert this to using a Coding Agent example. We can have the user take the plan created and delegate it to a Coding Agent. This can all be triggered directly from VS code so let's show them how it works. Then teach them about Agent HQ and the Coding Agent capabilities in GH.
+
+
+
 Let's implement the real GitHub provider using Agent mode.
 
 ### 2.1 Start Agent Mode Implementation
@@ -243,23 +247,6 @@ To have Copilot generate a commit message for your changes:
 1. Open the `Source Control panel` (`Ctrl+Shift+G`)
 2. Click into the **commit message** input box
 3. Click the **Generate Commit Message** button (similar to ✨) at the end of the input box.
-
-**Example output:**
-```
-feat(providers): implement real GitHub API provider
-
-- Implemented all methods from GitHubProvider interface
-- Added rate limiting with exponential backoff
-- Included comprehensive error handling and logging
-- Environment-based authentication via GITHUB_TOKEN
-- Added caching for frequently accessed data
-- Updated requirements.txt with PyGithub dependency
-
-Breaking changes: None
-Testing: Manual testing against live GitHub API
-
-Resolves AB#123, AB#124, AB#125
-```
 
 ### 5.2 Sync Our Changes
 

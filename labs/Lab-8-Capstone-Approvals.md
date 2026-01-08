@@ -1,102 +1,6 @@
-# FROM LAB 4
-
-## Step 3: Using Edit Mode for Targeted Changes
-
-Now let's handle that urgent bug report using Edit mode.
-
-### 3.1 Understand the Bug
-
-The bug report states: "Users are seeing an error when trying to view workflows for empty repositories."
-
-Open Copilot Chat in Edit mode and investigate:
-
-<details>
-<summary>💡 Example prompt for Edit mode</summary>
-
-```
-@workspace In Edit mode: Find where workflows are retrieved and displayed in the application. Add error handling for repositories that have no workflows. The specific files that likely need changes are in app/blueprints/main/routes.py.
-```
-
-</details>
-
-### 3.2 Apply Targeted Fix
-
-Edit mode will show you the specific changes needed. For example, adding a check:
-
-```python
-@main.route('/workflows/<owner>/<repo>')
-@login_required
-def workflows(owner, repo):
-    provider = get_github_provider()
-    try:
-        workflows = provider.list_workflows(owner, repo)
-        if not workflows:
-            flash('This repository has no workflows configured.', 'info')
-            workflows = []
-    except Exception as e:
-        flash(f'Error retrieving workflows: {str(e)}', 'error')
-        workflows = []
-    
-    return render_template('workflows.html', workflows=workflows, owner=owner, repo=repo)
-```
-
-**Benefits of Edit Mode:**
-- You specified the exact file to modify
-- Changes are surgical and focused
-- Easy to review the diff
-- Doesn't touch unrelated code
-
-### 3.3 Verify the Fix
-
-Test the bug fix:
-
-1. Navigate to a repository with no workflows
-2. Verify the friendly message appears instead of an error
-3. Confirm the page still works for repositories with workflows
-
-## Step 4: Multitasking with Copilot
-
-Let's demonstrate how to switch contexts seamlessly with Copilot.
-
-### 4.1 Start a Feature in Agent Mode
-
-Begin implementing another provider method:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Implement the list_workflow_runs() method in app/providers/github.py. Include pagination support for repositories with many runs.
-```
-
-</details>
-
-### 4.2 Pause for Context Switch
-
-While Agent is working (or you're reviewing its suggestions), a colleague asks you to quickly fix a typo in the README.
-
-**Switch to Edit mode** without losing your Agent context:
-
-<details>
-<summary>💡 Example prompt in Edit mode</summary>
-
-```
-In Edit mode: Fix the typo in README.md line 42 where "mananagement" should be "management"
-```
-
-</details>
-
-### 4.3 Return to Original Context
-
-After fixing the typo, return to Agent mode's conversation thread and continue reviewing the `list_workflow_runs()` implementation.
-
-> [!TIP]
-> 💡 Copilot maintains separate conversation contexts for Ask, Edit, and Agent modes. You can switch between them without losing your place!
-
-
 # Exercise 8 - Capstone Challenge: ApproveThis Requires Approvals!
 
-**Duration**: 60+ minutes
+**Duration**: 60 minutes
 
 ## 🎯 Learning Objectives
 
@@ -108,17 +12,41 @@ By the end of this lab, you will be able to:
 - Make architectural decisions with AI guidance
 - Deliver a production-ready feature end-to-end
 
-## 📸 Scenario: The Signature Feature of ApproveThis
+## 🏢 The Approval Challenge at ShipIt Industries
 
-🏢 Your manager at ShipIt Industries calls you into her office with exciting news:
+Erica messages you and asks if you can stop by her desk for a moment.
 
-> "The team loves what you've built so far! But here's the irony: we have an application called **ApproveThis** that doesn't actually have approval workflows yet! 
+> **Erica**: "You've done excellent work on ApproveThis. The GitHub integration is solid, tests are comprehensive, infrastructure is deployed, and things are running pretty smoothly.
 >
-> Management has been asking when we can start using the approval feature. They want all production workflow dispatches to require approval from a GlobalAdmin before they execute. This is critical for our compliance and security policies.
+> Now it's time to implement the feature I'm sure you've been expecting: **actual workflow approvals**! The app is named ApproveThis for a reason, after all.
 >
-> I know this is a complex feature, but you've proven yourself throughout this project. I'm confident you can implement this with Copilot's help. You have the rest of the sprint to get it done. Show me what you can do!"
+> Here's the sitch: Right now, any LeadDeveloper can dispatch any workflow. But some workflows are critical - production deployments, database migrations, security updates. We need an approval system. There's mainly 2 different scenarios we need to support:
+> 
+> Workflows triggered by users via the ApproveThis UI
+> - Certain workflows require approval before they run
+> - Developers can request dispatches, but they go into 'pending approval' state
+> - Approvers (GlobalAdmins or designated approvers) can review and approve/reject
+> - Once approved, the workflow actually dispatches
+> - Full audit trail of who requested, who approved, when, and why
+>
+> Workflows triggered via GitHub Actions
+> - Some workflows are triggered automatically via GitHub Actions (e.g., on push to main)
+> - GitHub environments can require approvals before proceeding with allowing workflow jobs to run
+> - The action creates a pending dispatch request in ApproveThis
+> - Approvers review and approve/reject in ApproveThis
+> - Once approved, the GitHub Action job continues
+> - Full audit trail as above
 
-This is your chance to shine! You'll implement the complete approval workflow feature that gives ApproveThis its name. And the best part? You have GitHub Copilot as your partner throughout the entire process.
+> I'm giving you full autonomy on this. You've learned all the tools - planning with MCP, development with Agent mode, testing, deployment. Put it all together. Show me what you can do."
+
+With that, Erica returns to her work and you head back to your desk. It's time to get cracking on these approval workflows!
+
+> [!IMPORTANT]
+> **This lab is intentionally less prescriptive.** You'll make decisions, choose approaches, and solve problems independently. Use Copilot as your assistant, but you're the developer in charge.
+>
+> After reading through the high-level requirements, plan your approach. Break the work into manageable pieces. Implement, test, document, and deploy the feature end-to-end.
+>
+> The goal is to simulate real-world development where you own a feature from requirements to production.
 
 ---
 
@@ -129,10 +57,14 @@ This is your chance to shine! You'll implement the complete approval workflow fe
 ApproveThis needs a complete approval workflow system with these capabilities:
 
 **For Users with DISPATCH_WORKFLOW Permission (LeadDeveloper role):**
-- Request workflow dispatch (creates a "pending approval" dispatch request)
+- Request workflow dispatch
+    - Creates a "pending approval" dispatch request
+    - Use existing Azure function to trigger dispatch after approval
 - View status of their approval requests
 - Receive notification when requests are approved/rejected
+    - For the purposes of this lab, notifications can be simple console logs or in-app messages
 - Cancel pending requests
+    - Should not be able to cancel other users' requests
 
 **For Users with MANAGE_APPROVALS Permission (GlobalAdmin role):**
 - View all pending approval requests
@@ -141,496 +73,63 @@ ApproveThis needs a complete approval workflow system with these capabilities:
 - View approval history
 
 **System Requirements:**
-- All workflow dispatches **must** go through approval (no direct dispatch)
+- Workflow dispatches **must** go through approval if touching production systems
+    - For this lab, assume any workflow configured with a "production" environment requires approval
 - Approval status tracked in DispatchRequest model
 - Audit trail: who approved/rejected, when, and why
 - Approved dispatches automatically trigger the workflow
 - Proper RBAC enforcement throughout
 
----
+## 🧐 Tips & Recommendations
 
-## Step 1: Planning with Copilot and Azure DevOps MCP
+This section provides tips and suggestions to help you succeed. How you approach the implementation is up to you!
 
-Start by using the planning techniques from Lab 3.
+### Getting Started
 
-### 1.1 Create Work Items for the Feature
+Before writing any code, revisit the existing code if necessary:
 
-<details>
-<summary>💡 Example prompt</summary>
+- **Explore the models** — Check `app/models/dispatch_request.py`. You may find that approval-related fields already exist from the original design!
+- **Review existing patterns** — Look at how other blueprints handle RBAC, routes, and templates
+- **Use the MCP tools** — Azure DevOps MCP can help you create and track work items as you go
 
-```
-@workspace @azure-devops Based on the approval workflow requirements, help me create a comprehensive set of user stories in Azure DevOps. Consider:
-- User stories for requesting approval
-- User stories for approving/rejecting
-- Technical tasks for model updates
-- Technical tasks for route implementation
-- Technical tasks for UI development
-- Testing tasks
-- Documentation tasks
-Group them logically and identify dependencies.
-```
+### Key Areas to Address
 
-</details>
+| Area | What to Consider |
+|------|------------------|
+| **Database** | Does `DispatchRequest` need new fields? Status tracking? Audit trail columns? |
+| **API Endpoints** | Create, list, approve, reject, cancel — think about which permissions each requires |
+| **UI** | Request form, pending approvals dashboard, user's request history |
+| **Security** | RBAC enforcement, preventing self-approval, input validation |
+| **Testing** | Unit tests for model logic, API tests, E2E workflow tests |
+| **Documentation** | User guide, API docs, README updates |
 
-### 1.2 Create Technical Design Document
+### Tips for Working with Copilot
 
-Use Copilot to draft the technical approach:
+- **Be specific** — Tell Copilot exactly what you want: endpoints, fields, permissions
+- **Iterate** — Start with the model, then routes, then UI; build incrementally
+- **Ask for reviews** — Have Copilot review your code for security issues
+- **Use `@workspace`** to give Copilot context about the entire project
 
-<details>
-<summary>💡 Example prompt</summary>
+> [!WARNING]
+> Do not use `@workspace` when using `Plan` or `Agent` mode. At the time of writing, using `@workspace` in those modes can prevent Copilot from using its full autonomous critical thinking capabilities.
 
-```
-@workspace Create a technical design document for the approval workflow feature. Include:
-1. Database schema changes (if any needed)
-2. New API endpoints required
-3. UI screens and flows
-4. Sequence diagrams for approval process
-5. Security considerations
-6. Testing strategy
-Save as docs/Approval-Workflow-Design.md
-```
+### Potential API Structure
 
-</details>
+Consider endpoints like:
+- `POST /api/approvals/requests` — Create pending request
+- `GET /api/approvals/pending` — Admin view of pending requests
+- `GET /api/approvals/my-requests` — User's own requests
+- `POST /api/approvals/<id>/approve` — Approve (admin only)
+- `POST /api/approvals/<id>/reject` — Reject with reason (admin only)
+- `DELETE /api/approvals/<id>` — Cancel own pending request
 
-### 1.3 Review Existing Models
+### Don't Forget
 
-Examine the DispatchRequest model to see what's already available:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Review app/models/dispatch_request.py. Does it already have fields for approvals (approved_by, approved_at, rejection_reason, etc.)? What fields might we need to add?
-```
-
-</details>
-
-> [!TIP]
-> 💡 The DispatchRequest model likely already has approval-related fields from the original design! This is a key discovery that will save implementation time.
-
----
-
-## Step 2: Implementing the Database Layer
-
-### 2.1 Update the DispatchRequest Model (if needed)
-
-If the model needs additional fields:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Update app/models/dispatch_request.py to support the approval workflow. Ensure it has:
-- approved_at (timestamp)
-- approved_by_id (foreign key to User)
-- rejection_reason (text)
-- status (pending/approved/rejected/completed/failed)
-Add any other fields necessary for complete audit trail.
-```
-
-</details>
-
-### 2.2 Create Database Migration
-
-Generate a migration for your changes:
-
-```bash
-cd approvethis
-flask db migrate -m "Add approval workflow fields to DispatchRequest"
-flask db upgrade
-```
-
-If you need help with the migration:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace The migration in migrations/versions/[latest].py needs to be reviewed. Verify it correctly adds/modifies the approval fields for DispatchRequest.
-```
-
-</details>
-
-### 2.3 Add Model Methods for Approval Logic
-
-Add helper methods to the model:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Add methods to the DispatchRequest model in app/models/dispatch_request.py:
-- approve(user) - Mark as approved by given user
-- reject(user, reason) - Mark as rejected with reason
-- can_be_approved_by(user) - Check if user has permission to approve
-- is_pending() - Check if request is pending approval
-Include proper validation and timestamp updates.
-```
-
-</details>
-
----
-
-## Step 3: Implementing API Endpoints
-
-Create the backend API for approval operations.
-
-### 3.1 Create Approval Routes
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Implement API routes for approval workflow in app/blueprints/api/routes.py or create a new approvals blueprint. Include:
-
-POST /api/approvals/requests - Create new dispatch request (pending approval)
-GET /api/approvals/pending - List all pending approvals (admin only)
-GET /api/approvals/my-requests - List current user's requests
-POST /api/approvals/<id>/approve - Approve a request (admin only)
-POST /api/approvals/<id>/reject - Reject a request with reason (admin only)
-DELETE /api/approvals/<id> - Cancel own pending request
-
-Include:
-- Proper RBAC checks using @permission_required decorator
-- Input validation
-- Error handling
-- Success/error responses in JSON
-- Logging of approval actions
-```
-
-</details>
-
-### 3.2 Implement Dispatch Trigger on Approval
-
-When a request is approved, it should trigger the workflow:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace When a dispatch request is approved, we need to:
-1. Update the dispatch request status to 'approved'
-2. Trigger the actual workflow dispatch via the GitHub provider
-3. Update status to 'completed' or 'failed' based on result
-4. Log the action for audit trail
-
-Implement this logic in the approve endpoint. Use the existing GitHub provider pattern from app/providers/.
-```
-
-</details>
-
-### 3.3 Add Notification Hooks (Optional Enhancement)
-
-For extra credit, add notifications:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Add notification hooks for approval events:
-- When request is created (notify admins)
-- When request is approved (notify requester)
-- When request is rejected (notify requester with reason)
-
-Use a simple notification system (email, webhook, or in-app notifications).
-```
-
-</details>
-
----
-
-## Step 4: Building the User Interface
-
-Create the UI components for the approval workflow.
-
-### 4.1 Create Approval Request Form
-
-Build the form for requesting dispatch with approval:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Create a UI form for requesting workflow dispatch with approval in app/templates/. The form should:
-- Show workflow details (name, repository, branch)
-- Allow input of workflow parameters
-- Clearly indicate this will create an approval request (not immediate dispatch)
-- Submit to the new API endpoint
-- Follow the existing template patterns and styling
-Save as app/templates/workflows/request_dispatch.html
-```
-
-</details>
-
-### 4.2 Create Pending Approvals Dashboard
-
-For GlobalAdmin users:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Create a pending approvals dashboard for GlobalAdmin users. Display:
-- List of all pending dispatch requests
-- Request details: user, workflow, repository, timestamp
-- Approve and Reject buttons
-- Modal for entering rejection reason
-- Real-time status updates (optional: use AJAX/fetch)
-Follow existing template conventions and styling.
-Save as app/templates/approvals/pending.html
-```
-
-</details>
-
-### 4.3 Create My Requests Page
-
-For users to track their own requests:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Create a "My Dispatch Requests" page showing:
-- All requests by current user
-- Status (pending, approved, rejected, completed, failed)
-- Timestamp of request and approval/rejection
-- For rejected: show rejection reason
-- For pending: option to cancel
-- For approved/completed: link to workflow run
-Save as app/templates/approvals/my_requests.html
-```
-
-</details>
-
-### 4.4 Update Navigation
-
-Add links to the new pages in the navigation:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Update app/templates/base.html or navigation template to add:
-- "Request Dispatch" option in workflows dropdown (for LeadDeveloper+)
-- "Pending Approvals" in main nav (for GlobalAdmin only)
-- "My Requests" in user dropdown (for LeadDeveloper+)
-Use proper RBAC checks to show/hide based on permissions.
-```
-
-</details>
-
----
-
-## Step 5: Testing the Feature
-
-Comprehensive testing is critical for a feature this important!
-
-### 5.1 Unit Tests for Model Logic
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Create unit tests for the approval methods in DispatchRequest model:
-- test_approve_request
-- test_reject_request  
-- test_can_be_approved_by_with_permission
-- test_can_be_approved_by_without_permission
-- test_cannot_approve_own_request
-- test_status_transitions
-Save as tests/test_models/test_dispatch_request_approval.py
-```
-
-</details>
-
-### 5.2 API Endpoint Tests
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Create API tests for approval endpoints:
-- Test creating dispatch request creates pending approval
-- Test admin can approve pending request
-- Test admin can reject with reason
-- Test non-admin cannot approve
-- Test user can view their own requests
-- Test user cannot approve their own request
-- Test approved request triggers workflow dispatch
-Use pytest fixtures from conftest.py for authenticated clients.
-Save as tests/test_routes/test_approvals.py
-```
-
-</details>
-
-### 5.3 End-to-End Tests with Playwright
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Create E2E Playwright tests for the complete approval workflow:
-1. Developer logs in and requests workflow dispatch
-2. Request appears as pending in developer's "My Requests"
-3. Developer logs out, GlobalAdmin logs in
-4. Admin sees request in "Pending Approvals"
-5. Admin approves the request
-6. Developer logs back in and sees "Approved" status
-7. Workflow is dispatched (verify via API or mock)
-
-Also create rejection flow test:
-1. Developer requests dispatch
-2. Admin rejects with reason "Invalid parameters"
-3. Developer sees rejected status with reason
-
-Save as tests/e2e/test_approval_workflow.py
-```
-
-</details>
-
-### 5.4 Run All Tests
-
-Execute the complete test suite:
-
-```bash
-cd approvethis
-pytest tests/ -v --cov=app --cov-report=html
-```
-
-Ensure you meet the 80% coverage requirement!
-
----
-
-## Step 6: Code Review and Security
-
-Before deployment, perform thorough review.
-
-### 6.1 Copilot Code Review
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Perform a comprehensive code review of the approval workflow implementation. Focus on:
-- Security: Can users approve their own requests? Can non-admins approve?
-- RBAC: Are all endpoints properly protected?
-- SQL Injection: Is user input validated?
-- XSS: Are outputs properly escaped in templates?
-- Authorization bypass: Are there ways to circumvent approval?
-- Audit trail: Is every action logged?
-```
-
-</details>
-
-### 6.2 Test Permission Boundaries
-
-Explicitly test security boundaries:
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Create security tests that attempt to bypass approvals:
-- Viewer trying to approve requests
-- Developer approving their own request
-- Direct API calls without authentication
-- Manipulating request IDs to approve others' requests
-- SQL injection in rejection reason field
-These should all fail! Save as tests/test_security_approvals.py
-```
-
-</details>
-
----
-
-## Step 7: Documentation
-
-Document the feature for users and developers.
-
-### 7.1 User Guide
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Create a user guide for the approval workflow feature:
-- How to request a workflow dispatch
-- How to track request status
-- How to cancel a pending request
-- (For admins) How to review and approve/reject requests
-- Screenshots or ASCII diagrams of the workflow
-Save as docs/Approval-Workflow-User-Guide.md
-```
-
-</details>
-
-### 7.2 API Documentation
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Generate API documentation for the approval endpoints in OpenAPI/Swagger format. Include:
-- Endpoint paths and methods
-- Request/response schemas
-- Authentication requirements
-- Permission requirements
-- Example requests and responses
-Save as docs/api/approvals-api.yaml
-```
-
-</details>
-
-### 7.3 Update Main README
-
-<details>
-<summary>💡 Example prompt</summary>
-
-```
-@workspace Update the main README.md in approvethis/ to include:
-- Overview of the approval workflow feature
-- Link to user guide
-- Link to API documentation
-- Note about MANAGE_APPROVALS permission requirement
-```
-
-</details>
-
----
-
-## Step 8: Deployment
-
-Deploy your feature to the dev environment.
-
-### 8.1 Create Database Migration in Dev
-
-Ensure migrations are applied:
-
-```bash
-# In dev environment
-flask db upgrade
-```
-
-### 8.2 Deploy via GitHub Actions
-
-Trigger deployment workflow:
-
-1. Commit all changes
-2. Push to feature branch
-3. Create pull request
-4. Deploy to dev environment via GitHub Actions
-5. Verify deployment successful
-
-### 8.3 Manual Verification in Dev
-
-Test the deployed feature:
-
-- [ ] Login as developer, request a dispatch
-- [ ] Login as admin, see pending request
-- [ ] Approve the request
-- [ ] Verify workflow was triggered
-- [ ] Test rejection flow
-- [ ] Verify audit logs
+- **Database migrations** — Run `flask db migrate` and `flask db upgrade` after model changes
+- **RBAC checks** — Use the existing `@permission_required` decorator pattern
+- **Workflow dispatch** — When approved, trigger the actual workflow via the GitHub provider
+- **Test coverage** — Aim for 80% coverage on new code
+- **Security testing** — Explicitly test that unauthorized actions are blocked
 
 ---
 
