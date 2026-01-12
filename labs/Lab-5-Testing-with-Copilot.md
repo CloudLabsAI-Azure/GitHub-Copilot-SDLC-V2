@@ -120,7 +120,7 @@ Now that we have our plan we're all set to systematically create the tests. Just
 >
 > BUT, we just had some urgent work come up that we're going to need you to get working on as soon as you have this initial version of ApproveThis set up and tested.
 >
-> So..... can you please try to expidite the testing setup? We need to get this done quickly so we can move on to the next priority. Once you have the testing infrastructure in place, just document any issues you run into and we can address them later after the urgent work is done.
+> So..... can you please try to expedite the testing setup? We need to get this done quickly so we can move on to the next priority. Once you have the testing infrastructure in place, just document any issues you run into and we can address them later after the urgent work is done.
 >
 > Thanks!"
 
