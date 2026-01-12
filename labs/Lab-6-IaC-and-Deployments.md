@@ -64,7 +64,7 @@ terraform/
 
 ### 1.2 Understand the App Service Module
 
-Ok great! We now have a basic understnding of the module structure. Given that the App Service is where the ApproveThis Flask application will be deployed let's dive deeper into that module.
+Ok great! We now have a basic understanding of the module structure. Given that the App Service is where the ApproveThis Flask application will be deployed let's dive deeper into that module.
 
 We can have Copilot give us a more in depth explanation of the App Service module. 
 
