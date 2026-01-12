@@ -30,3 +30,23 @@ variable "database_url" {
   sensitive   = true
   default     = ""
 }
+
+variable "approvethis_api_url" {
+  description = "URL of the ApproveThis application API"
+  type        = string
+  default     = ""
+}
+
+variable "approvethis_api_key" {
+  description = "API key for authenticating with ApproveThis"
+  type        = string
+  sensitive   = true
+  default     = ""
+}
+
+variable "github_token" {
+  description = "GitHub Personal Access Token for API communication"
+  type        = string
+  sensitive   = true
+  default     = ""
+}

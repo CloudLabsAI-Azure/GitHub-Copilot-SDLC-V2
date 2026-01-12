@@ -1,6 +1,6 @@
 # Azure Function Module
-# This module will create an Azure Function App for executing Terraform operations
-# To be implemented in lab exercises
+# This module creates an Azure Function App for the ApproveThis approval workflow
+# The functions facilitate communication between GitHub Actions and the ApproveThis application
 
 resource "azurerm_resource_group" "function" {
   name     = var.resource_group_name
@@ -26,7 +26,7 @@ resource "azurerm_service_plan" "function" {
   tags                = var.tags
 }
 
-resource "azurerm_linux_function_app" "terraform_executor" {
+resource "azurerm_linux_function_app" "approval_functions" {
   name                       = var.function_app_name
   resource_group_name        = azurerm_resource_group.function.name
   location                   = azurerm_resource_group.function.location
@@ -39,15 +39,27 @@ resource "azurerm_linux_function_app" "terraform_executor" {
     application_stack {
       python_version = "3.11"
     }
+    
+    cors {
+      allowed_origins = var.cors_allowed_origins
+      support_credentials = false
+    }
   }
 
-  app_settings = {
-    "FUNCTIONS_WORKER_RUNTIME"       = "python"
-    "APPINSIGHTS_INSTRUMENTATIONKEY" = var.app_insights_key
-    # Additional settings will be configured in lab exercises
-  }
+  app_settings = merge(
+    {
+      "FUNCTIONS_WORKER_RUNTIME"       = "python"
+      "APPINSIGHTS_INSTRUMENTATIONKEY" = var.app_insights_key
+      "APPROVETHIS_API_URL"            = var.approvethis_api_url
+      "APPROVETHIS_API_KEY"            = var.approvethis_api_key
+      "GITHUB_TOKEN"                   = var.github_token
+      "WEBSITE_RUN_FROM_PACKAGE"       = "1"
+    },
+    var.additional_app_settings
+  )
 
-  # Lab exercise: Implement function code deployment
-  # Lab exercise: Configure authentication
-  # Lab exercise: Set up Terraform execution environment
+  # Enable system-assigned managed identity for secure access to Azure resources
+  identity {
+    type = "SystemAssigned"
+  }
 }

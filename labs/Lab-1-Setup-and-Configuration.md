@@ -64,7 +64,7 @@ Clone your assigned repository to your local machine:
 
 ```bash
 git clone <your-repository-url>
-cd copilot-advanced-workshop-sdlc
+cd <your-repository-name>
 ```
 
 ### 1.3 Explore the Repository Structure
@@ -72,7 +72,7 @@ cd copilot-advanced-workshop-sdlc
 Take a moment to familiarize yourself with the repository layout:
 
 ```
-copilot-advanced-workshop-sdlc/
+<your-repository-name>/
 ├── approvethis/          # Main Flask application
 │   ├── app/              # Application code
 │   ├── migrations/       # Database migrations
@@ -82,8 +82,6 @@ copilot-advanced-workshop-sdlc/
 ├── labs/                 # Workshop lab exercises
 └── README.md             # Main documentation
 ```
-
----
 
 ## Step 2: ApproveThis Application Setup
 
@@ -139,6 +137,7 @@ FLASK_APP=run.py
 FLASK_ENV=development
 SECRET_KEY=dev-secret-key-change-in-production
 DATABASE_URL=sqlite:///approvethis.db
+FLASK_RUN_PORT=5001
 ```
 
 > [!IMPORTANT]
@@ -161,9 +160,9 @@ flask seed all
 ```
 
 This creates three default users with different permission levels:
-- **viewer** / password: `viewer` - Read-only access
-- **developer** / password: `developer` - Can dispatch workflows
-- **admin** / password: `admin` - Full administrative access
+- **viewer** / password: `viewer123` - Read-only access
+- **developer** / password: `developer123` - Can dispatch workflows
+- **admin** / password: `admin123` - Full administrative access
 
 ### 2.7 Run the Application
 
@@ -175,38 +174,38 @@ flask run
 
 You should see output similar to:
 ```
- * Running on http://127.0.0.1:5000
+ * Running on http://127.0.0.1:5001
  * Restarting with stat
- * Debugger is active!
+ * Debugger is active
 ```
 
 ### 2.8 Verify Application Access
 
 Open your browser and navigate to:
 ```
-http://localhost:5000
+http://localhost:5001
 ```
 
 You should see the ApproveThis login page! 🎉
 
----
-
 ## Step 3: GitHub Copilot Configuration
 
 Let's ensure GitHub Copilot is properly configured in your development environment.
+
+> [!TIP]
+> 💡 Refer to the [Glossary](../docs/Glossary.md) anytime you encounter unfamiliar terminology.
 
 ### 3.1 Verify Copilot Installation
 
 Open VS Code (or your preferred IDE with Copilot support) and verify:
 
 1. **GitHub Copilot extension is installed**
-   - Open Extensions (`Ctrl+Shift+X` / `Cmd+Shift+X`)
+   - Open the Extensions panel
    - Search for "GitHub Copilot"
    - Ensure it's installed and enabled
 
 2. **GitHub Copilot Chat is installed**
    - The GitHub Copilot Chat extension should also be installed
-   - This enables the chat interface for conversational AI assistance
 
 ### 3.2 Sign In to GitHub
 
@@ -217,30 +216,14 @@ Ensure you're signed in to the correct GitHub account:
 3. Choose "Sign in with GitHub"
 4. Authorize if prompted
 
-> [!NOTE]
-> If your organization provided a specific GitHub account for training, use those credentials. Otherwise, use your personal account with Copilot access.
-
-### 3.3 Understand Copilot Chat Modes
-
-GitHub Copilot Chat offers different modes for different tasks:
-
-- **Ask Mode** (💬): Ask questions and get explanations without making changes
-- **Edit Mode** (✏️): Make targeted changes to specific files you identify  
-- **Agent Mode** (🤖): Let Copilot explore your codebase and make autonomous decisions
-- **Plan Mode** (📋): Preview what changes Copilot would make before executing
-
-Throughout this workshop, you'll use all these modes for different scenarios.
-
-> [!TIP]
-> 💡 Refer to the [Glossary](../docs/Glossary.md) anytime you encounter unfamiliar terminology.
-
-### 3.4 Test Copilot
+### 3.3 Test Copilot
 
 Open the Copilot Chat panel (`Ctrl+Shift+I` / `Cmd+Shift+I`) and try asking:
 
 <details>
 <summary>💡 Example prompt to test Copilot</summary>
 
+**Copilot Mode**: `Ask`
 ```
 What is this repository about? Give me a brief overview.
 ```
@@ -248,8 +231,6 @@ What is this repository about? Give me a brief overview.
 </details>
 
 Copilot should provide a summary of the ApproveThis application and repository structure.
-
----
 
 ## Step 4: Exploring the Application
 
@@ -261,7 +242,7 @@ Try logging in with each of the three default users to see the permission differ
 
 **Viewer Account:**
 - Username: `viewer`
-- Password: `viewer`
+- Password: `viewer123`
 - Permissions: Read-only access
 
 After logging in, note what you can see:
@@ -271,7 +252,7 @@ After logging in, note what you can see:
 
 **Developer Account:**
 - Username: `developer`  
-- Password: `developer`
+- Password: `developer123`
 - Permissions: View + Dispatch workflows
 
 Notice the additional capability:
@@ -279,7 +260,7 @@ Notice the additional capability:
 
 **Admin Account:**
 - Username: `admin`
-- Password: `admin`  
+- Password: `admin123`  
 - Permissions: Full access including user management and approvals
 
 The admin role has access to all features, including future approval management.
@@ -296,8 +277,6 @@ Explore the main sections:
 > [!NOTE]
 > Currently, the application displays **mock data**. In later labs, you'll implement the real GitHub API integration to show live data.
 
----
-
 ## Step 5: Verify Pre-Configured Secrets
 
 Your repository comes pre-configured with necessary secrets for Azure deployments. Let's verify they're in place.
@@ -311,9 +290,6 @@ Your repository comes pre-configured with necessary secrets for Azure deployment
 - `AZURE_CLIENT_ID`
 - `AZURE_TENANT_ID`  
 - `AZURE_SUBSCRIPTION_ID`
-- `ARM_CLIENT_ID`
-- `ARM_CLIENT_SECRET`
-- `ARM_TENANT_ID`
 
 > [!IMPORTANT]
 > **Do not modify or delete these secrets.** They are pre-configured by your instructor and will be used in Lab 6 for Terraform deployments to Azure.
@@ -335,8 +311,6 @@ Congratulations! You've successfully completed the setup for the GitHub Copilot 
 - [x] Repository secrets verified as present
 - [x] Understanding of the ShipIt Industries scenario
 
----
-
 ## 🤔 Reflection Questions
 
 Take a moment to consider:
@@ -344,8 +318,6 @@ Take a moment to consider:
 1. What differences did you notice between the three user roles (Viewer, Developer, Admin)?
 2. How might GitHub Copilot help you understand a new codebase faster than traditional methods?
 3. What aspects of the ApproveThis application seem complete vs. incomplete based on your initial exploration?
-
----
 
 ## 🎓 Key Takeaways
 
@@ -355,12 +327,8 @@ Take a moment to consider:
 - **Mock data** enables development and testing before live integrations are complete
 - The **ApproveThis application** follows Flask best practices including the Application Factory pattern and Blueprint organization
 
----
-
-## 🔜 Coming Up Next
+## Coming Up Next
 
 In **Lab 2: Your Assignment**, you'll step into your role at ShipIt Industries and use GitHub Copilot to explore the ApproveThis codebase. You'll discover what's been implemented, identify gaps, and plan your next steps—all with AI assistance. Get ready to become familiar with a new codebase faster than ever before!
-
----
 
 **[Continue to Lab 2: Your Assignment →](Lab-2-Your-Assignment.md)**
