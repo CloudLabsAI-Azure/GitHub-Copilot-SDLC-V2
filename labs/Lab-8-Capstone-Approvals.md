@@ -131,6 +131,19 @@ Consider endpoints like:
 - **Test coverage** — Aim for 80% coverage on new code
 - **Security testing** — Explicitly test that unauthorized actions are blocked
 
+### Bonus Challenges 🎉!
+
+> [!IMPORTANT]
+> Do not attempt the bonus challenges until you have fully completed the core requirements above.
+
+If you complete the core requirements early and wish to push your skills further, consider tackling these bonus challenges:
+
+- Add the ability to export all audit events to CSV, excel, or JSON
+- Implement email notifications for approvals/rejections using a mock email service
+- Create a dashboard view with statistics on approval times, rejection rates, etc.
+
+If you want to push it even farther, consider implementing all of these features in tandem! Remember, you can use Copilot Coding Agent or local background Agent sessions to implement multiple features simultaneously.
+
 ---
 
 ## 🏆 Challenge Complete!
