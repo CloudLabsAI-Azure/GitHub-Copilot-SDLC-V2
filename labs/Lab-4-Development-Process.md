@@ -32,15 +32,7 @@ Let's implement the real GitHub API provider following ShipIt's development work
 
 Before diving into code, let's use Copilot's Plan mode to create a structured implementation approach.
 
-### 1.1 Create a Feature Branch
-
-First, create a feature branch for your implementation work:
-
-```bash
-git checkout -b feature/github-provider-implementation
-```
-
-### 1.2 Open Copilot Chat in Plan Mode
+### 1.1 Open Copilot Chat in Plan Mode
 
 1. Open the Copilot Chat panel
 2. Click the mode selector dropdown at the bottom of the chat
@@ -48,7 +40,7 @@ git checkout -b feature/github-provider-implementation
 
 Plan mode is designed to help you think through implementation strategies before writing code. It creates a structured outline that you can review and refine.
 
-### 1.3 Request an Implementation Plan
+### 1.2 Request an Implementation Plan
 
 Ask Copilot to create a detailed implementation plan for the GitHub provider task in ADO:
 
@@ -65,7 +57,7 @@ I need to implement the real GitHub provider. The work item is in Azure DevOps u
 
 </details>
 
-### 1.4 Review the Generated Plan
+### 1.3 Review the Generated Plan
 
 Copilot will generate a structured implementation plan. Review it for:
 
@@ -83,7 +75,7 @@ Copilot will generate a structured implementation plan. Review it for:
 - Are the steps actionable?
 - Is the scope appropriate for the task?
 
-### 1.5 Refine the Plan as Needed
+### 1.4 Refine the Plan as Needed
 
 If the plan needs adjustments, ask Copilot to refine specific sections:
 
@@ -122,7 +114,10 @@ Before we trigger the agent, let's understand what makes it special:
 
 Think of the Coding Agent as a junior developer on your team—you assign it a task with clear instructions, it goes off to work independently, and you can check in on progress or provide guidance as needed.
 
-### 2.2 Delegating the Task with @cloud
+### 2.2 Delegating the Task from Chat
+
+> [!IMPORTANT]
+> Currently Coding Agent sessions triggered from VS Code can only branch from the default branch (e.g., `main` or `master`).
 
 Now let's delegate the GitHub provider implementation to the Coding Agent directly from VS Code.
 
@@ -221,7 +216,7 @@ Mission Control provides a **unified, real-time dashboard** for all your Copilot
 
 ### 2.5 Real-Time Steering from Mission Control
 
-One of the most powerful features of Copilot Coding Agent is **real-time steering**—the ability to provide guidance while the agent is actively working, not just after it completes.
+One of the most powerful features of Copilot Coding Agent is **real-time steering**. The ability to provide guidance while the agent is actively working, not just after it completes.
 
 #### How to Steer Your Coding Agent
 
@@ -259,7 +254,7 @@ From Mission Control on GitHub.com:
 
 ### 2.6 Reviewing the Coding Agent's Work
 
-Once the Coding Agent completes its task (or you decide it's made enough progress), it's time to review the pull request.
+Once the Coding Agent completes its task, it's time to review the pull request.
 
 #### Where to Review
 
@@ -294,17 +289,16 @@ Once the Coding Agent completes its task (or you decide it's made enough progres
 - No obvious missing pieces
 
 > [!IMPORTANT]
-> Even though the Coding Agent is highly capable, you are still responsible for the final code quality. Always review carefully before merging—the agent is a powerful assistant, not a replacement for human judgment.
+> Even though the Coding Agent is highly capable, you are still responsible for the final code quality. Always review carefully before merging. The agent is a powerful assistant, not a replacement for human judgment.
 
 ### 2.7 Testing the Implementation
 
 Let's test the GitHub provider implementation to ensure it works correctly:
 
 1. **Check out the agent's branch** in VS Code:
-   ```bash
-   git fetch
-   git checkout <agent-branch-name>
-   ```
+    - Open the GitHub Pull Requests panel
+    - Click on `Copilot on My Behalf`
+    - Select the PR created by the agent
 
 2. **Install any new dependencies**:
    ```bash
@@ -324,15 +318,12 @@ Let's test the GitHub provider implementation to ensure it works correctly:
 
 5. **Check the logs** for any errors or warnings
 
-> [!TIP]
-> If you encounter issues during testing, you can provide feedback to the agent in the Mission Control chat or make small fixes yourself. The agent's work is a starting point that you can iterate on.
-
 ### 2.8 Iterating with the Coding Agent
 
 If the initial implementation needs adjustments:
 
-1. **Provide feedback in Mission Control**: Tell the agent what needs to change via the chat interface
-2. **Let the agent iterate**: It can make additional commits to address your feedback
+1. **Provide feedback in Mission Control**: Tell the agent what needs to change via the chat input. This is the same input that you used for real-time steering.
+2. **Add review comments on the PR**: Use GitHub's review tools to leave specific comments on lines of code that need changes. When you are done with the review, tag `@copilot` in your review summary to have Coding Agent address the comments.
 3. **Alternatively, make fixes yourself**: For minor issues, it may be faster to make the change directly in the PR
 
 The beauty of the Coding Agent is that it can iterate just like a human developer—you provide feedback, it makes adjustments, and you review again.
@@ -340,6 +331,8 @@ The beauty of the Coding Agent is that it can iterate just like a human develope
 ## Step 3: Documenting Changes
 
 One of the areas were Copilot really shines is in generating documentation. Historically this has been a tedious task that many developers skip or do poorly. However, with Copilot we can generate high quality documentation quickly and easily.
+
+Copilot does a good job of following documentation best practices automatically, but you can also provide specific instructions to ensure it meets your team's standards.
 
 ### 3.1 Generate Docstrings
 
@@ -357,7 +350,7 @@ Add comprehensive docstrings to all methods in app/providers/github.py following
 
 ### 3.2 Create API Documentation
 
-Generate user-facing documentation:
+Now let's add some user-facing documentation for our GitHub provider:
 
 <details>
 <summary>💡 Example prompt</summary>
