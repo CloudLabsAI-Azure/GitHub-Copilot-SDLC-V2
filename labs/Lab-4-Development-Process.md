@@ -143,7 +143,7 @@ There are 2 different ways to delegate to the Coding Agent:
    - Open a draft pull request to track progress
 
 > [!TIP]
-> The `@cloud` mention tells Copilot to delegate the task to the autonomous Coding Agent rather than trying to implement it locally in your VS Code workspace. This is perfect for complex, multi-file tasks like our GitHub provider implementation.
+> You can also type out your prompt, then click the arrow on the right of the input box and select `Cloud` from the options to trigger a Coding Agent session.
 
 ### 2.3 Understanding the Agent Panel on GitHub.com
 
