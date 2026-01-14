@@ -1,4 +1,4 @@
-# GitHub Copilot Advanced Workshop: SDLC Integration
+# GitHub Copilot Advanced Workshop: Copilot throughout the SDLC
 
 A hands-on training repository designed to help developers learn how to effectively integrate **GitHub Copilot** throughout the entire **Software Development Lifecycle (SDLC)**.
 

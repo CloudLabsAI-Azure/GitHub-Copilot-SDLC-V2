@@ -24,6 +24,7 @@ permissions:
 
 jobs:
   terraform-plan:
+    if: github.event.pull_request.draft == false
     name: Terraform Plan - ${{ github.event.inputs.environment || 'dev' }}
     runs-on: ubuntu-latest
 

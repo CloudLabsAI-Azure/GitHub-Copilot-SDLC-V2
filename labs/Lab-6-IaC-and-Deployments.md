@@ -124,15 +124,14 @@ If you have any changes that haven't been committed yet and should be included i
 > 2. Click into the **commit message** input box
 > 3. Click the **Generate Commit Message** button (similar to ✨) at the end of the input box.
 
-### 3.2 Open a Pull Request
+### 3.2 Ready the Pull Request
 
-1. Navigate to your repository on GitHub
-2. Have Copilot help you draft a PR description that summarizes your changes and their purpose
-3. Create the pull request
+1. Navigate to your repository on GitHub.com and access your PR
+2. Click the `Ready for review` button to mark the PR as ready
 
 ### 3.3 Watch the Terraform Plan Run
 
-Once your PR is created:
+Once your PR is updated, the "Terraform Plan" workflow should trigger automatically:
 
 1. Navigate to the **Actions** tab in your repository
 2. You should see a "Terraform Plan" workflow running

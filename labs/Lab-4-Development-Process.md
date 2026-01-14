@@ -408,27 +408,9 @@ Review Copilot's suggestions and apply the ones that make sense:
 
 Now that we've reviewed the Coding Agent's implementation, tested it, documented it, and had Copilot review the code, it's time to finalize our work.
 
-### 5.1 Merge or Update the Coding Agent's PR
+### 5.1 Generating Commit Messages
 
-Depending on your workflow, you have several options:
-
-**Option 1: Merge the Coding Agent's PR as-is**
-- If all tests pass and the code review looks good, you can merge the agent's PR directly
-- The agent created a proper branch and PR, just like a human team member would
-
-**Option 2: Make Additional Changes**
-- Check out the agent's branch locally
-- Make any final tweaks or improvements
-- Commit your changes to the same branch
-- The PR will automatically update
-
-**Option 3: Continue with the Draft**
-- Keep the PR as a draft if you want to add more features
-- Continue iterating with the Coding Agent or make changes yourself
-
-### 5.2 Generating Commit Messages
-
-If you're making additional commits on top of the Coding Agent's work, Copilot can help you create detailed commit messages that follow best practices.
+If you've made additional commits on top of the Coding Agent's work, Copilot can help you create detailed commit messages that follow best practices.
 
 To have Copilot generate a commit message for your changes:
 
@@ -438,16 +420,11 @@ To have Copilot generate a commit message for your changes:
 4. Click the **Generate Commit Message** button (sparkle icon ✨) at the end of the input box
 5. Review and edit the generated message as needed
 
-### 5.3 Sync Our Changes
+### 5.2 Sync Our Changes
 
-For this lab, we'll keep the PR as a draft and not merge it yet. We'll be working with PRs in a later lab where we'll explore the full code review and approval process.
+For this lab, we'll keep the PR as a draft and not merge it yet. We will be using the PR to demonstrate deployments in the a later lab so make sure all your changes are pushed to GitHub.
 
-1. **Ensure all your changes are committed** to the feature branch (either the agent's branch or your own)
-2. **Push the branch** if you made local changes:
-   ```bash
-   git push
-   ```
-3. **Verify the PR is updated** on GitHub.com
+1. Push any additional commits you've made locally to the Coding Agent's branch
 
 > [!NOTE]
 > The Coding Agent's PR is already on GitHub since it works in the cloud. You only need to push if you made additional local changes on top of the agent's work.
