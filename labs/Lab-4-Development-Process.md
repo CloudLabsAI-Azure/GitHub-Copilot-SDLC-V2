@@ -18,11 +18,11 @@ Erica reviews your planning work and gives you the green light to start implemen
 
 > **Erica**: "Great planning! The work items look solid, and I love the detailed acceptance criteria. Now let's build it!
 >
-> For the GitHub provider, I'd recommend having Copilot help you come up with an implementation plan, and then delegate the implementation to a Copilot Coding Agent using @cloud in VS Code. This is a complex task that will touch multiple files, add dependencies, and needs to follow our established patterns—perfect for a coding agent to handle autonomously.
+> For the GitHub provider, I'd recommend having Copilot help you come up with an implementation plan, and then delegate the implementation to a Copilot Coding Agent. This is a complex task that will touch multiple files, add dependencies, and needs to follow our established patterns which is perfect for a coding agent to handle autonomously.
 >
-> You can trigger the coding agent right from Copilot Chat and monitor its progress in real-time on GitHub.com using Mission Control. While it's working, you can learn about the Agent Panel and how to steer the agent's work.
+> You can trigger the coding agent right from Copilot Chat and monitor its progress in real-time on GitHub.com using Mission Control. While it's working, you'll want to brush up on Mission Control and the Agent Panel so you can steer the agent as needed.
 >
-> Oh, and don't forget to request a Copilot Code Review before you open a PR. It catches a lot of issues early."
+> Oh, and make sure you Copilot for Code Review throughout the process to ensure quality. Let me know if you have any questions!"
 
 Let's implement the real GitHub API provider following ShipIt's development workflow!
 
@@ -115,46 +115,32 @@ Before we trigger the agent, let's understand what makes it special:
 
 **Key Characteristics:**
 - Runs autonomously in a secure GitHub cloud environment (not on your machine)
-- Works even when VS Code is closed or your machine is off
 - Creates a draft pull request with its changes
 - Can be monitored and steered in real-time from GitHub.com
 - Provides detailed session logs and progress tracking
+- Frees you up to focus on other tasks while it works
 
 Think of the Coding Agent as a junior developer on your team—you assign it a task with clear instructions, it goes off to work independently, and you can check in on progress or provide guidance as needed.
 
-### 2.2 Prerequisites
+### 2.2 Delegating the Task with @cloud
 
-Before delegating to the Coding Agent, ensure you have:
+Now let's delegate the GitHub provider implementation to the Coding Agent directly from VS Code.
 
-1. **GitHub Copilot subscription** (Pro, Business, or Enterprise)
-2. **GitHub Pull Requests extension** installed in VS Code
-3. **Coding Agent enabled** for your account (check with your admin if unsure)
-4. The **implementation plan** from Step 1 still available in your Copilot Chat
+There are 2 different ways to delegate to the Coding Agent:
 
-### 2.3 Delegating the Task with @cloud
+#### Method 1: Continuing from the Implementation Plan
 
-Now let's delegate the GitHub provider implementation to the Coding Agent directly from VS Code using `@cloud`.
+1. **While still in `Plan` Mode**, click the down arrow next to `Start Implementation` at the bottom of the plan:
+2. Select `Continue in Cloud` to delegate the task to the Coding Agent
 
-1. **Ensure your implementation plan from Step 1 is visible** in the Copilot Chat panel. If you closed it, you can retrieve it by asking Copilot to show the previous plan.
+#### Method 2: Using @cloud in Copilot Chat
 
-2. **Open Copilot Chat** and use `@cloud` to delegate the task to the Coding Agent:
-
-<details>
-<summary>💡 Example delegation prompt</summary>
+1. In Copilot Chat, enter a prompt starting with `@cloud`
+2. Describe the task you want the Coding Agent to perform, referencing the implementation plan you created earlier
 
 ```
-@cloud implement the GitHub provider based on the implementation plan we created. Please:
-
-1. Implement all the methods from the plan
-2. Add the PyGithub dependency
-3. Include proper error handling and rate limiting
-4. Follow the patterns in the existing codebase
-5. Update configuration as needed
-
-Use the detailed implementation plan we created earlier as your guide. Create a draft pull request when you're done.
+@cloud implement the GitHub provider based on the implementation plan we created above.
 ```
-
-</details>
 
 3. **Submit the prompt**. Copilot will confirm the delegation and the Coding Agent will:
    - Create a new branch for the work
@@ -164,50 +150,39 @@ Use the detailed implementation plan we created earlier as your guide. Create a 
 > [!TIP]
 > The `@cloud` mention tells Copilot to delegate the task to the autonomous Coding Agent rather than trying to implement it locally in your VS Code workspace. This is perfect for complex, multi-file tasks like our GitHub provider implementation.
 
-### 2.4 Understanding the Agent Panel on GitHub.com
+### 2.3 Understanding the Agent Panel on GitHub.com
 
-Once you've delegated the task, the Coding Agent starts working independently. You can monitor its progress on GitHub.com using the **Agent Panel**.
+Once you've delegated the task, the Coding Agent starts working independently. One of the methods you can use to monitor its progress on GitHub.com is the **Agent Panel**.
 
 #### Accessing the Agent Panel
 
 1. **Navigate to GitHub.com** in your browser
-2. Go directly to **[github.com/copilot/agents](https://github.com/copilot/agents)** or look for the **Copilot** menu in the top navigation
-3. The **Agent Panel** will show all your active and historical coding agent sessions
+2. Open your repository for this lab
+3. Click on the **Agent Panel** in the top right of the page (it's next to the Copilot icon)
 
 #### What You'll See in the Agent Panel
 
-The Agent Panel provides a unified view of all your Copilot Coding Agent tasks:
+The Agent Panel provides a simplified view of all your Copilot Coding Agent tasks:
 
 **Key Information:**
 
-1. **Active Sessions**
+1. **Active/Recent Sessions**
    - Current status (Working, Completed, Failed)
-   - Time elapsed and estimated completion
-   - Associated repository and branch
+   - Time elapsed
+   - Associated repository
 
-2. **Session History**
-   - All past agent sessions
-   - Outcomes and pull requests created
-   - Ability to review what the agent did
-
-3. **Quick Actions**
-   - View the draft pull request
-   - Open in VS Code or Codespaces
+2. **Quick Actions**
+   - Click into any active session to view details
    - Access session logs
-   - Steer or stop the agent
+   - `View All` to view all Coding Agent sessions in Mission Control
+   - Quickly start a Coding Agent task with the prompt input. 
+     - You can specify the repo, branch, and custom agent before submitting
 
-> [!NOTE]
-> The Agent Panel is especially powerful when running multiple coding agent tasks in parallel. You can delegate several independent tasks (e.g., "add tests," "update documentation," "implement feature X") and monitor them all from one dashboard.
+### 2.4 Exploring Mission Control
 
-### 2.5 Exploring Mission Control
+The other method of monitoring and controlling Coding Agent sessions is **Mission Control**. This is GitHub's centralized dashboard for managing all your AI coding agent tasks. This is where the real power of autonomous agents shines!
 
-While the Coding Agent is working, let's explore **Mission Control**—GitHub's centralized dashboard for managing all your AI coding agent tasks. This is where the real power of autonomous agents shines!
-
-#### Accessing Mission Control
-
-Mission Control is the same interface as the Agent Panel, accessible at:
-- **[github.com/copilot/agents](https://github.com/copilot/agents)**
-- Or through the **Copilot** menu in GitHub.com navigation
+You can access Mission Control at **[github.com/copilot/agents](https://github.com/copilot/agents)**.
 
 #### Mission Control Features
 
@@ -244,7 +219,7 @@ Mission Control provides a **unified, real-time dashboard** for all your Copilot
 - **Historical tracking**: Review past agent sessions to learn from their approach
 - **Team coordination**: See what coding agents are working on across your team
 
-### 2.6 Real-Time Steering from Mission Control
+### 2.5 Real-Time Steering from Mission Control
 
 One of the most powerful features of Copilot Coding Agent is **real-time steering**—the ability to provide guidance while the agent is actively working, not just after it completes.
 
@@ -282,7 +257,7 @@ From Mission Control on GitHub.com:
 - **Intervene early**: If you see issues developing, steer immediately
 - **Trust but verify**: The agent is capable, but your domain knowledge is valuable
 
-### 2.7 Reviewing the Coding Agent's Work
+### 2.6 Reviewing the Coding Agent's Work
 
 Once the Coding Agent completes its task (or you decide it's made enough progress), it's time to review the pull request.
 
@@ -321,7 +296,7 @@ Once the Coding Agent completes its task (or you decide it's made enough progres
 > [!IMPORTANT]
 > Even though the Coding Agent is highly capable, you are still responsible for the final code quality. Always review carefully before merging—the agent is a powerful assistant, not a replacement for human judgment.
 
-### 2.8 Testing the Implementation
+### 2.7 Testing the Implementation
 
 Let's test the GitHub provider implementation to ensure it works correctly:
 
@@ -352,7 +327,7 @@ Let's test the GitHub provider implementation to ensure it works correctly:
 > [!TIP]
 > If you encounter issues during testing, you can provide feedback to the agent in the Mission Control chat or make small fixes yourself. The agent's work is a starting point that you can iterate on.
 
-### 2.9 Iterating with the Coding Agent
+### 2.8 Iterating with the Coding Agent
 
 If the initial implementation needs adjustments:
 
