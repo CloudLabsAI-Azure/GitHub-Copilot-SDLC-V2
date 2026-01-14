@@ -217,10 +217,10 @@ While the Coding Agent is working, let's explore **Mission Control**—GitHub's 
 #### Accessing Mission Control
 
 1. **Navigate to GitHub.com** in your browser
-2. **Click on your profile icon** in the top right
-3. Select **"Mission Control"** from the dropdown menu (or directly visit: `https://github.com/mission-control`)
+2. Go directly to **[github.com/copilot/agents](https://github.com/copilot/agents)** or click on **Copilot** in the top navigation
+3. Look for the **"Agents"** or **"Mission Control"** section in the navigation
 
-Alternatively, you can access Mission Control from any GitHub page by clicking the **Agents Panel** button (looks like a robot icon) that appears in the GitHub interface.
+Alternatively, you can access agent tasks from the GitHub interface by looking for the agents or task management options in the Copilot menu.
 
 #### Understanding the Mission Control Dashboard
 
