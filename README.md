@@ -133,6 +133,7 @@ See [Lab 1: Setup and Configuration](labs/Lab-1-Setup-and-Configuration.md) for 
 - Git
 - GitHub Copilot access (individual or business)
 - VS Code with GitHub Copilot extension (recommended)
+- Azure Functions extension for VS Code (recommended)
 
 ### Quick Start
 
