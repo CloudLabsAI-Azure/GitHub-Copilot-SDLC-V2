@@ -112,7 +112,7 @@ import os
 from playwright.sync_api import Browser
 
 # Base URL for the application
-BASE_URL = os.getenv("BASE_URL", "http://localhost:5000")
+BASE_URL = os.getenv("BASE_URL", "http://localhost:5001")
 
 # Browser configuration
 BROWSER_CONFIG = {

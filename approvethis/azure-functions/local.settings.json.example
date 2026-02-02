@@ -3,7 +3,7 @@
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "python",
-    "APPROVETHIS_API_URL": "http://localhost:5000",
+    "APPROVETHIS_API_URL": "http://localhost:5001",
     "APPROVETHIS_API_KEY": "your-api-key-here",
     "GITHUB_TOKEN": "your-github-token-here"
   },

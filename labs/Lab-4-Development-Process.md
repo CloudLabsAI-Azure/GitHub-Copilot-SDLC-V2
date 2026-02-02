@@ -112,7 +112,7 @@ Before we trigger the agent, let's understand what makes it special:
 - Provides detailed session logs and progress tracking
 - Frees you up to focus on other tasks while it works
 
-Think of the Coding Agent as a junior developer on your team—you assign it a task with clear instructions, it goes off to work independently, and you can check in on progress or provide guidance as needed.
+Think of the Coding Agent as a junior developer on your team. You assign it a task with clear instructions, it goes off to work independently, and you can check in on progress or provide guidance as needed.
 
 ### 2.2 Delegating the Task from Chat
 
@@ -209,7 +209,7 @@ Mission Control provides a **unified, real-time dashboard** for all your Copilot
 
 **Why Mission Control Matters:**
 
-- **No more tab juggling**: Everything you need is in one place—no hunting through issues, PRs, and comments
+- **No more tab juggling**: Everything you need is in one place. No hunting through issues, PRs, and comments
 - **Real-time visibility**: See exactly what your agents are doing as they work
 - **Historical tracking**: Review past agent sessions to learn from their approach
 - **Team coordination**: See what coding agents are working on across your team
@@ -243,7 +243,7 @@ From Mission Control on GitHub.com:
 - **Priority Adjustments**: When you need to refocus the agent's efforts
 
 > [!IMPORTANT]
-> Real-time steering makes human-AI collaboration truly iterative. You don't need to wait for the agent to finish, review everything, and request changes—you can guide the work as it happens, saving significant time.
+> Real-time steering makes human-AI collaboration truly iterative. You don't need to wait for the agent to finish, review everything, and request changes. You can guide the work as it happens, saving significant time.
 
 #### Best Practices for Steering
 
@@ -326,7 +326,7 @@ If the initial implementation needs adjustments:
 2. **Add review comments on the PR**: Use GitHub's review tools to leave specific comments on lines of code that need changes. When you are done with the review, tag `@copilot` in your review summary to have Coding Agent address the comments.
 3. **Alternatively, make fixes yourself**: For minor issues, it may be faster to make the change directly in the PR
 
-The beauty of the Coding Agent is that it can iterate just like a human developer—you provide feedback, it makes adjustments, and you review again.
+The beauty of the Coding Agent is that it can iterate just like a human developer. You provide feedback, it makes adjustments, and you review again.
 
 ## Step 3: Documenting Changes
 
@@ -467,7 +467,7 @@ Take a moment to consider:
 - **Real-time steering** allows you to guide agents as they work from Mission Control, not just after completion
 - **Autonomous agents** can handle complex, multi-file tasks while you focus on architecture and review
 - **Transparency and trust** come from detailed session logs showing agent reasoning and decisions
-- **Human oversight remains critical**—agents are powerful assistants, not replacements for developer judgment
+- **Human oversight remains critical** as agents are powerful assistants, not replacements for developer judgment
 - **Governance policies** (from `.github/copilot-instructions.md`) ensure agents follow team standards automatically
 
 ## Coming Up Next

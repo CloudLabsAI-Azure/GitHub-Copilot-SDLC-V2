@@ -88,16 +88,16 @@ This section provides tips and suggestions to help you succeed. How you approach
 
 Before writing any code, revisit the existing code if necessary:
 
-- **Explore the models** — Check `app/models/dispatch_request.py`. You may find that approval-related fields already exist from the original design!
-- **Review existing patterns** — Look at how other blueprints handle RBAC, routes, and templates
-- **Use the MCP tools** — Azure DevOps MCP can help you create and track work items as you go
+- **Explore the models** - Check `app/models/dispatch_request.py`. You may find that approval-related fields already exist from the original design!
+- **Review existing patterns** - Look at how other blueprints handle RBAC, routes, and templates
+- **Use the MCP tools** - Azure DevOps MCP can help you create and track work items as you go
 
 ### Key Areas to Address
 
 | Area | What to Consider |
 |------|------------------|
 | **Database** | Does `DispatchRequest` need new fields? Status tracking? Audit trail columns? |
-| **API Endpoints** | Create, list, approve, reject, cancel — think about which permissions each requires |
+| **API Endpoints** | Create, list, approve, reject, cancel. Think about which permissions each requires |
 | **UI** | Request form, pending approvals dashboard, user's request history |
 | **Security** | RBAC enforcement, preventing self-approval, input validation |
 | **Testing** | Unit tests for model logic, API tests, E2E workflow tests |
@@ -105,9 +105,9 @@ Before writing any code, revisit the existing code if necessary:
 
 ### Tips for Working with Copilot
 
-- **Be specific** — Tell Copilot exactly what you want: endpoints, fields, permissions
-- **Iterate** — Start with the model, then routes, then UI; build incrementally
-- **Ask for reviews** — Have Copilot review your code for security issues
+- **Be specific** - Tell Copilot exactly what you want: endpoints, fields, permissions
+- **Iterate** - Start with the model, then routes, then UI; build incrementally
+- **Ask for reviews** - Have Copilot review your code for security issues
 - **Use `@workspace`** to give Copilot context about the entire project
 
 > [!WARNING]
@@ -116,20 +116,20 @@ Before writing any code, revisit the existing code if necessary:
 ### Potential API Structure
 
 Consider endpoints like:
-- `POST /api/approvals/requests` — Create pending request
-- `GET /api/approvals/pending` — Admin view of pending requests
-- `GET /api/approvals/my-requests` — User's own requests
-- `POST /api/approvals/<id>/approve` — Approve (admin only)
-- `POST /api/approvals/<id>/reject` — Reject with reason (admin only)
-- `DELETE /api/approvals/<id>` — Cancel own pending request
+- `POST /api/approvals/requests` - Create pending request
+- `GET /api/approvals/pending` - Admin view of pending requests
+- `GET /api/approvals/my-requests` - User's own requests
+- `POST /api/approvals/<id>/approve` - Approve (admin only)
+- `POST /api/approvals/<id>/reject` - Reject with reason (admin only)
+- `DELETE /api/approvals/<id>` - Cancel own pending request
 
 ### Don't Forget
 
-- **Database migrations** — Run `flask db migrate` and `flask db upgrade` after model changes
-- **RBAC checks** — Use the existing `@permission_required` decorator pattern
-- **Workflow dispatch** — When approved, trigger the actual workflow via the GitHub provider
-- **Test coverage** — Aim for 80% coverage on new code
-- **Security testing** — Explicitly test that unauthorized actions are blocked
+- **Database migrations** - Run `flask db migrate` and `flask db upgrade` after model changes
+- **RBAC checks** - Use the existing `@permission_required` decorator pattern
+- **Workflow dispatch** - When approved, trigger the actual workflow via the GitHub provider
+- **Test coverage** - Aim for 80% coverage on new code
+- **Security testing** - Explicitly test that unauthorized actions are blocked
 
 ### Bonus Challenges 🎉!
 

@@ -112,7 +112,7 @@ Welcome to the ApproveThis workshop documentation! This directory contains compr
 ## 💡 Tips for Using These Documents
 
 1. **Glossary First**: If you encounter unfamiliar terms, check the Glossary
-2. **Lab References**: Each guide indicates which labs use it—refer to it when you reach that lab
+2. **Lab References**: Each guide indicates which labs use it. Refer to it when you reach that lab
 3. **Copy-Paste Carefully**: When copying commands or configuration, adjust paths and values for your environment
 4. **Troubleshooting**: Most guides include troubleshooting sections for common issues
 5. **Ask Copilot**: Use `@workspace` to ask Copilot about these documents: "Summarize the MCP Configuration Guide"

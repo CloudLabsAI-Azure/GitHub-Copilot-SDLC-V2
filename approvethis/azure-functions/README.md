@@ -122,7 +122,7 @@ These are configured via Application Settings in the Azure Function App.
      "Values": {
        "AzureWebJobsStorage": "UseDevelopmentStorage=true",
        "FUNCTIONS_WORKER_RUNTIME": "python",
-       "APPROVETHIS_API_URL": "http://localhost:5000",
+       "APPROVETHIS_API_URL": "http://localhost:5001",
        "APPROVETHIS_API_KEY": "your-api-key",
        "GITHUB_TOKEN": "your-github-token"
      }

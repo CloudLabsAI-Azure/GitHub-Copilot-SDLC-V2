@@ -15,7 +15,7 @@ By the end of this lab, you will be able to:
 
 Welcome to your first day at **ShipIt Industries**! 🏢
 
-Due to rapid internal growth, ShipIt Industries has found it increasingly difficult to manage their various CI/CD processes. Deployments and jobs are scattered across multiple environments—GitHub Actions, Azure deployments, Azure Functions, and more—with no single place to view or control them.
+Due to rapid internal growth, ShipIt Industries has found it increasingly difficult to manage their various CI/CD processes. Deployments and jobs are scattered across multiple environments, GitHub Actions, Azure deployments, Azure Functions, and more with no single place to view or control them.
 
 To solve this, management has greenlit the development of an internal application called **ApproveThis**. This tool will centralize job and deployment management into a single, unified interface. Key requirements include:
 
@@ -26,8 +26,6 @@ To solve this, management has greenlit the development of an internal applicatio
 - **Audit Trail**: Track who executed what, when, and why
 
 **Your Role**: The initial version of ApproveThis was built by another developer who has since left the company. Management has assigned you to take over the application and implement the remaining functionality. You'll use GitHub Copilot throughout the entire software development lifecycle to complete this mission.
-
-Let's help ShipIt Industries ship it—safely and with approval! 🚀
 
 > [!IMPORTANT]
 > This workshop focuses on **advanced GitHub Copilot scenarios** throughout the SDLC. Unlike fundamentals workshops, you'll explore:
@@ -294,7 +292,7 @@ Your repository comes pre-configured with necessary secrets for Azure deployment
 > [!IMPORTANT]
 > **Do not modify or delete these secrets.** They are pre-configured by your instructor and will be used in Lab 6 for Terraform deployments to Azure.
 
-You won't need to access the values—just confirm they exist.
+You won't need to access the values, just confirm they exist.
 
 ---
 
@@ -305,7 +303,7 @@ Congratulations! You've successfully completed the setup for the GitHub Copilot 
 ### ✅ Success Criteria
 
 - [x] Repository cloned successfully  
-- [x] ApproveThis application running locally on http://localhost:5000
+- [x] ApproveThis application running locally on http://localhost:5001
 - [x] GitHub Copilot active and responding in your IDE
 - [x] Successfully logged in to the application with different roles
 - [x] Repository secrets verified as present
@@ -329,6 +327,6 @@ Take a moment to consider:
 
 ## Coming Up Next
 
-In **Lab 2: Your Assignment**, you'll step into your role at ShipIt Industries and use GitHub Copilot to explore the ApproveThis codebase. You'll discover what's been implemented, identify gaps, and plan your next steps—all with AI assistance. Get ready to become familiar with a new codebase faster than ever before!
+In **Lab 2: Your Assignment**, you'll step into your role at ShipIt Industries and use GitHub Copilot to explore the ApproveThis codebase. You'll discover what's been implemented, identify gaps, and plan your next steps. Get ready to become familiar with a new codebase faster than ever before!
 
 **[Continue to Lab 2: Your Assignment →](Lab-2-Your-Assignment.md)**

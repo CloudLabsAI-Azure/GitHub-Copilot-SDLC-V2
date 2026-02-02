@@ -135,7 +135,7 @@ The provider pattern abstracts GitHub API calls, making it easy to:
    ```
 
 8. **Access the application:**
-   Open your browser and navigate to: `http://127.0.0.1:5000`
+   Open your browser and navigate to: `http://127.0.0.1:5001`
 
 ### Default Login Credentials
 
@@ -164,7 +164,7 @@ All API endpoints require authentication and appropriate permissions.
 
 ```bash
 # Login first to get a session cookie, then:
-curl -X POST http://localhost:5000/api/repos/acme-corp/web-app/workflows/1002/dispatch \
+curl -X POST http://localhost:5001/api/repos/acme-corp/web-app/workflows/1002/dispatch \
   -H "Content-Type: application/json" \
   -d '{"ref": "main", "inputs": {}}'
 ```

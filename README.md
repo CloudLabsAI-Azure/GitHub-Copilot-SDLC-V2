@@ -4,7 +4,7 @@ A hands-on training repository designed to help developers learn how to effectiv
 
 ## 🎯 Workshop Overview
 
-This workshop provides practical, lab-based exercises that demonstrate how GitHub Copilot can accelerate development across all phases of the SDLC—from requirements and design through implementation, testing, and deployment.
+This workshop provides practical, lab-based exercises that demonstrate how GitHub Copilot can accelerate development across all phases of the SDLC. From requirements and design through implementation, testing, and deployment.
 
 ### Learning Objectives
 
@@ -23,7 +23,7 @@ Throughout this workshop, you'll be working in a real-world scenario:
 
 > **The Situation at ShipIt Industries**
 >
-> Due to rapid internal growth, ShipIt Industries has found it increasingly difficult to manage their various CI/CD processes. Deployments and jobs are scattered across multiple environments—GitHub Actions, Azure deployments, Azure Functions, and more—with no single place to view or control them.
+> Due to rapid internal growth, ShipIt Industries has found it increasingly difficult to manage their various CI/CD processes. Deployments and jobs are scattered across multiple environments, GitHub Actions, Azure deployments, Azure Functions, and more with no single place to view or control them.
 >
 > To solve this, management has greenlit the development of an internal application called **ApproveThis**. This tool will centralize job and deployment management into a single, unified interface. Key requirements include:
 > - **Visibility**: View all jobs and deployments from one location
@@ -37,7 +37,7 @@ Throughout this workshop, you'll be working in a real-world scenario:
 
 ## 🛠️ The Learning Application: ApproveThis
 
-The workshop centers around building out **ApproveThis**—a job/workflow/process scheduling and approval tool built with **Python** and **Flask**.
+The workshop centers around building out **ApproveThis**, a job/workflow/process scheduling and approval tool built with **Python** and **Flask**.
 
 ### Application Overview
 

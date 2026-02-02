@@ -325,7 +325,7 @@ Take a moment to consider:
 - **Documentation prevents knowledge loss** - Capturing issues in `ISSUES.md` ensures problems aren't forgotten
 - **pytest-playwright unifies test commands** - All test types run with the same `pytest` command for consistency
 - **Plan mode creates shareable artifacts** - Test plans serve as documentation and can guide future development
-- **Testing is no longer a bottleneck**—AI assistance makes comprehensive test coverage achievable under time pressure
+- **Testing is no longer a bottleneck** — AI assistance makes comprehensive test coverage achievable under time pressure
 
 ## 🔜 Coming Up Next
 
