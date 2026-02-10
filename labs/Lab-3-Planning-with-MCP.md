@@ -62,76 +62,57 @@ Let's set up the Azure DevOps MCP server to connect Copilot with Azure Boards.
 Before proceeding, ensure you have:
 - Access to an Azure DevOps organization (your instructor will provide details)
 - VS Code with GitHub Copilot and Copilot Chat extensions installed
-- Node.js installed (for the MCP server runtime)
 
-### 2.2 Install Azure DevOps MCP Server
+### 2.2 Install the Azure DevOps MCP Server
 
-The Azure DevOps MCP server is distributed as an npm package. Install it globally:
+The Azure DevOps MCP server by Microsoft is available in the GitHub MCP Registry and can be installed directly from VS Code:
 
-```bash
-npm install -g @modelcontextprotocol/server-azure-devops
-```
+1. Open the **Extensions** panel (`Ctrl+Shift+X` / `Cmd+Shift+X`)
+2. Click the **filter icon** in the search bar and select **MCP Server**
+   - If this is your first time using the MCP server gallery, follow the on-screen prompts to enable it
+3. Search for `Azure DevOps` in the search bar
+4. Select the **Azure DevOps** MCP server by **microsoft** from the results
+5. Click **Install**
+6. 
 
-> [!TIP]
-> 💡 If you don't have Node.js installed, download it from [nodejs.org](https://nodejs.org/). The LTS version is recommended.
-
-### 2.3 Create Azure DevOps Personal Access Token (PAT)
-
-You'll need a PAT to authenticate with Azure DevOps:
-
-1. Navigate to your Azure DevOps organization
-2. Click your profile icon → **Personal access tokens**
-3. Click **+ New Token**
-4. Configure the token:
-   - **Name**: `Copilot MCP Integration`
-   - **Organization**: Select your organization
-   - **Expiration**: Choose an appropriate timeframe (e.g., 30 days for training)
-   - **Scopes**: Select **Work Items** (Read & Write)
-5. Click **Create** and **copy the token value**
-
-> [!IMPORTANT]
-> Store your PAT securely! You'll need it in the next step. Once you close the dialog, you cannot retrieve it again.
-
-### 2.4 Configure MCP in VS Code
-
-Configure the MCP server in your VS Code settings:
-
-1. Open VS Code Settings (`Ctrl+,` / `Cmd+,`)
-2. Search for "MCP"
-3. Click "Edit in settings.json"
-
-Add the Azure DevOps MCP configuration:
+This will automatically create the server configuration in your `.vscode/mcp.json` file with the recommended `npx`-based setup:
 
 ```json
 {
-  "github.copilot.chat.mcp.servers": {
-    "azure-devops": {
-      "command": "node",
-      "args": [
-        "C:\\Users\\YourUsername\\AppData\\Roaming\\npm\\node_modules\\@modelcontextprotocol\\server-azure-devops\\dist\\index.js"
-      ],
-      "env": {
-        "AZURE_DEVOPS_ORG_URL": "https://dev.azure.com/YourOrganization",
-        "AZURE_DEVOPS_PAT": "your-personal-access-token-here"
-      }
+  "inputs": [
+    {
+      "id": "ado_org",
+      "type": "promptString",
+      "description": "Azure DevOps organization name  (e.g. 'contoso')"
+    }
+  ],
+  "servers": {
+    "ado": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@azure-devops/mcp", "${input:ado_org}"]
     }
   }
 }
 ```
 
-**Adjust the following:**
-- **Path to index.js**: Use the global npm modules path (run `npm root -g` to find it)
-- **AZURE_DEVOPS_ORG_URL**: Your Azure DevOps organization URL
-- **AZURE_DEVOPS_PAT**: The PAT you created in step 2.3
+> [!NOTE]
+> The `npx` command automatically downloads and runs the latest version of the Azure DevOps MCP server — no global install required. When the server starts, VS Code will prompt you for your Azure DevOps organization name.
 
-> [!TIP]
-> 💡 For detailed platform-specific configuration steps, see the [Azure DevOps MCP Guide](../docs/Azure-DevOps-MCP-Guide.md).
+### 2.3 Start the Server and Authenticate
 
-### 2.5 Restart VS Code
+1. After installation, the server should automatically start. If it doesn't, you can start it manually:
+   - Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`)
+   - Search for `MCP: Start Server` and select the Azure DevOps server from the list
+   - Click the settings icon next to the server in the MCP panel and select **Start Server**
+2. When prompted, enter your **Azure DevOps organization name** (e.g., `contoso`)
+3. If prompted, confirm that you **trust** the MCP server
+4. The first time an ADO tool is invoked, your **browser will open** prompting you to sign in with your Microsoft account — use the credentials associated with your Azure DevOps organization
 
-Close and reopen VS Code to activate the MCP server.
+> [!IMPORTANT]
+> The Azure DevOps MCP server uses browser-based Microsoft authentication. No Personal Access Token (PAT) is required. Ensure you sign in with the account that has access to your organization's Azure DevOps instance.
 
-### 2.6 Verify MCP Connection
+### 2.4 Verify MCP Connection
 
 Test the connection in Copilot Chat:
 
@@ -266,13 +247,119 @@ For work item #123 (GitHub provider - list_repositories), add technical details 
 
 ShipIt Industries has development standards. Let's ensure Copilot respects them.
 
-### 4.1 Create Copilot Instructions File
+### 4.1 Copilot Instructions File Review
 
-# TODO: Update this section to have the users skim through the `copilot-instructions.md` file to see how it is structured and what policies are included. Then guide them through connecting to whatever external MCP server is relevant to the policies (either a Copilot Space or some documentation hub)
+It's always important to review existing instructions in the `.github/copilot-instructions.md` file to understand what policies and guidelines are already in place in the repository. This file may contain coding standards, documentation requirements, testing guidelines, and other required policies that Copilot will use as context when generating suggestions.
 
-# TODO: Add example prompts for checking that Copilot is following the policies in the instructions file.
+**Review the instructions file:**
 
-### 4.2 Generate Technical Design Documentation
+1. Open `.github/copilot-instructions.md` in VS Code
+2. Skim through the file and note the following sections:
+   - **Project Overview** - High-level description of the ApproveThis application
+   - **Architecture** - Application structure and file organization
+   - **Key Patterns** - Provider Pattern, RBAC with Permission Bit Flags, Execution Providers
+   - **Development Workflow** - Setup commands, test users, and database migrations
+   - **Code Conventions** - Guidelines for adding routes, models, and provider implementations
+   - **Testing Strategy** - Testing frameworks and directory structure
+
+3. Pay attention to how the instructions define:
+   - Where new code should be placed
+   - Which patterns to follow (e.g., Provider Pattern, RBAC decorators)
+   - Required imports and conventions
+
+> [!NOTE]
+> Copilot automatically reads this file when generating suggestions for your project. Well-structured instructions help Copilot produce code that aligns with your team's standards from the start.
+
+### 4.2 Incorporating Governance Standards through Copilot Spaces
+
+While the `copilot-instructions.md` file defines standards at the repository level, ShipIt Industries also maintains **organization-wide** governance policies, coding standards, security requirements, and review guidelines that apply across all repositories.
+
+These policies live in a **Copilot Space**, a shared knowledge context that Copilot can reference alongside your codebase. Think of it as a centralized policy library that Copilot can consult when generating suggestions, ensuring consistency across the entire organization.
+
+#### Enable Copilot Spaces in Your IDE
+
+A Copilot Space has already been created with ShipIt's governance policies. To access Spaces from VS Code, you need to install the GitHub MCP server and enable the `copilot_spaces` toolset.
+
+1. If you haven't already installed the GitHub MCP server:
+   - Open the **Extensions** panel (`Ctrl+Shift+X` / `Cmd+Shift+X`)
+   - Click the **filter icon** in the search bar and select **MCP Server**
+   - Search for `github` and select the **GitHub MCP Server**
+   - Click **Install**
+
+2. Enable the Copilot Spaces toolset:
+   - Open **VS Code Settings** (`Ctrl+,` / `Cmd+,`)
+   - Search for `GitHub MCP toolsets`
+   - Locate the **GitHub > Copilot > Chat > GitHub MCP Server: Toolsets** setting
+   - Add `copilot_spaces` to the list of enabled toolsets
+
+> [!IMPORTANT]
+> The `copilot_spaces` toolset is **not included** by default. You must explicitly enable it through the settings as described above.
+
+3. Verify the Spaces tools are available:
+   - Open the **Copilot Chat** panel and select **Agent** mode
+   - Click the **tools icon** (wrench) in the chat input box
+   - Expand the list of tools for **GitHub**
+   - Confirm that `get_copilot_space` and `list_copilot_spaces` are listed and enabled
+
+#### Access the Governance Space
+
+Copilot Spaces are accessed in VS Code through **Agent mode** by referencing the Space by name in your prompt. Copilot will automatically use the MCP tools to find and retrieve context from the Space.
+
+1. Open **Copilot Chat** and ensure you are in **Agent** mode
+2. Reference the governance Space in your prompt — Copilot will use the `list_copilot_spaces` and `get_copilot_space` tools to locate and load the Space's context automatically
+
+<details>
+<summary>💡 Example prompt to verify Space access</summary>
+
+**Copilot Mode**: `Agent`
+```
+Using the Copilot Space 'ShipIt Governance' owned by our organization, summarize the coding standards and governance policies defined in the Space.
+```
+
+</details>
+
+> [!TIP]
+> 💡 You don't need to remember the exact Space name. You can also use a natural language description and Copilot will search for matching Spaces. For example: `Summarize the governance policies from the Copilot Space for ShipIt coding standards.`
+
+Copilot should return information about ShipIt's organization-wide standards, such as:
+- Required code review approvals
+- Security and authentication guidelines
+- Documentation requirements for new features
+- Testing coverage thresholds
+
+#### Validate Policy Compliance
+
+Now let's verify that Copilot respects both the repository-level instructions and the organization-wide governance policies when generating suggestions.
+
+<details>
+<summary>💡 Example prompt to check policy compliance</summary>
+
+**Copilot Mode**: `Agent`
+```
+Based on both the repository's copilot-instructions.md and the governance policies from the ShipIt Governance Copilot Space, what patterns and standards must I follow when implementing the real GitHub provider? Are there any conflicts between the two?
+```
+
+</details>
+
+Copilot will cross-reference both sources and highlight:
+- Repository-specific patterns (Provider Pattern, RBAC decorators)
+- Organization-wide requirements (security policies, testing standards)
+- Any areas where both align or where additional attention is needed
+
+<details>
+<summary>💡 Example prompt to test governance awareness</summary>
+
+**Copilot Mode**: `Agent`
+```
+I want to add a new route that exposes repository data from the GitHub API. Based on the governance standards from the ShipIt Governance Space and the repository instructions, what security considerations, authentication requirements, and permission checks must be in place before I implement this?
+```
+
+</details>
+
+> [!NOTE]
+> Copilot Spaces give organizations a way to enforce standards **across repositories** without duplicating instructions in every repo. When combined with repository-level `copilot-instructions.md`, you get a layered policy model — organization-wide governance plus project-specific conventions.
+
+### 4.3 Generate Technical Design Documentation
 
 You can even have Copilot draft a technical design document for the GitHub provider implementation that adheres to your organization's standards:
 
@@ -298,7 +385,7 @@ Outstanding! You've successfully integrated GitHub Copilot with external project
 
 - [x] Understood what Model Context Protocol (MCP) is and its benefits
 - [x] Installed and configured Azure DevOps MCP server
-- [x] Created Personal Access Token for Azure DevOps authentication
+- [x] Authenticated with Azure DevOps via browser-based sign-in
 - [x] Queried existing work items through Copilot
 - [x] Created user stories for GitHub provider implementation
 - [x] Established governance policies in `.github/copilot-instructions.md`
