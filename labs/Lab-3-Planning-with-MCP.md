@@ -111,6 +111,8 @@ This will automatically create the server configuration in your `.vscode/mcp.jso
 
 > [!IMPORTANT]
 > The Azure DevOps MCP server uses browser-based Microsoft authentication. No Personal Access Token (PAT) is required. Ensure you sign in with the account that has access to your organization's Azure DevOps instance.
+> 
+> If you have issues with Copilot accessing your Azure DevOps instance, try asking Copilot to help you diagnose the problem. It's possible that you might need to modify your `mcp.json` configuration...
 
 ### 2.4 Verify MCP Connection
 
