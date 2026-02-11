@@ -42,44 +42,8 @@ To solve this, management has greenlit the development of an internal applicatio
 
 Your training repository has been **pre-created and pre-configured** for this workshop.
 
-### 1.1 Obtain Your Repository URL
+# TODO Insert Spektra specific instructions for accessing the pre-provisioned repository, e.g.
 
-Your instructor will provide you with your unique training repository URL. It will look something like:
-```
-https://github.com/YourOrg/copilot-workshop-sdlc-yourname
-```
-
-> [!NOTE]
-> **Do NOT create a new repository from a template.** Each participant receives a pre-configured repository with:
-> - Azure credentials for Terraform deployments
-> - Azure subscription information  
-> - Required secrets for workflow execution
-> - All necessary configurations
-
-### 1.2 Clone the Repository
-
-Clone your assigned repository to your local machine:
-
-```bash
-git clone <your-repository-url>
-cd <your-repository-name>
-```
-
-### 1.3 Explore the Repository Structure
-
-Take a moment to familiarize yourself with the repository layout:
-
-```
-<your-repository-name>/
-├── approvethis/          # Main Flask application
-│   ├── app/              # Application code
-│   ├── migrations/       # Database migrations
-│   ├── terraform/        # Infrastructure as Code
-│   └── requirements.txt  # Python dependencies
-├── docs/                 # Documentation and guides
-├── labs/                 # Workshop lab exercises
-└── README.md             # Main documentation
-```
 
 ## Step 2: ApproveThis Application Setup
 
@@ -95,13 +59,6 @@ cd approvethis
 
 Create and activate a Python virtual environment:
 
-**On macOS/Linux:**
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-**On Windows:**
 ```bash
 python -m venv venv
 venv\Scripts\activate

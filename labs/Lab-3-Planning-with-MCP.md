@@ -45,8 +45,9 @@ This lab introduces a powerful Copilot capability: **connecting to external tool
 
 ### 1.2 MCP Servers for This Workshop
 
-In this workshop, you'll work with three MCP servers:
+In this workshop, you'll work with four MCP servers:
 
+- **GitHub MCP** - Integrate with GitHub data (pull requests, issues, Copilot Spaces, etc.)
 - **Azure DevOps MCP** (This lab) - Connect to Azure Boards for work item management
 - **Azure MCP** (Lab 6) - Query and manage Azure resources
 - **Terraform MCP** (Lab 6) - Understand infrastructure state and plan changes
@@ -105,7 +106,8 @@ This will automatically create the server configuration in your `.vscode/mcp.jso
    - Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`)
    - Search for `MCP: Start Server` and select the Azure DevOps server from the list
    - Click the settings icon next to the server in the MCP panel and select **Start Server**
-2. When prompted, enter your **Azure DevOps organization name** (e.g., `contoso`)
+2. When prompted, enter your **Azure DevOps organization name**: `GitHub-Copilot-SDLC`
+   - You may not be prompted for this input. If that is the case see the comment below about manually adding the input to `mcp.json`
 3. If prompted, confirm that you **trust** the MCP server
 4. The first time an ADO tool is invoked, your **browser will open** prompting you to sign in with your Microsoft account — use the credentials associated with your Azure DevOps organization
 
@@ -114,29 +116,13 @@ This will automatically create the server configuration in your `.vscode/mcp.jso
 > 
 > If you have issues with Copilot accessing your Azure DevOps instance, try asking Copilot to help you diagnose the problem. It's possible that you might need to modify your `mcp.json` configuration...
 
-### 2.4 Verify MCP Connection
-
-Test the connection in Copilot Chat:
-
-<details>
-<summary>💡 Example ADO MCP prompt</summary>
-
-**Copilot Mode**: `Agent`
-```
-List the work items assigned to me in the current iteration.
-```
-
-</details>
-
-If configured correctly, Copilot will query Azure DevOps and return your work items!
-
 ## Step 3: Planning Features with External Context
 
-Now that Copilot can access Azure DevOps, let's use it for real-world planning.
+Now that the MCP is set up, let's use it for real-world planning.
 
 ### 3.1 Query Existing Work Items
 
-Check if there are work items related to ApproveThis:
+Let's verify that Copilot can access the Azure Boards. Check if there are work items related to ApproveThis:
 
 <details>
 <summary>💡 Example prompt for checking work items</summary>
