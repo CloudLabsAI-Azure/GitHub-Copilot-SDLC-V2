@@ -36,7 +36,7 @@ To adjust the zoom level for the environment page, click the **A↕: 100%** icon
 
 ![Use the Split Window Feature](../../media/new/zoom.png)
 
-### Login to GitHub
+## Login to GitHub
 
 1. In the **Lab VM**, open the **Microsoft Edge** browser from the desktop.
 
@@ -78,3 +78,30 @@ To adjust the zoom level for the environment page, click the **A↕: 100%** icon
 
    ![](../../media/new/home.png)
 
+## Login to DevOps Organization
+
+1. Navigate to the below URL to sign in to Azure DevOps
+
+   ```
+   https://aex.dev.azure.com
+   ```
+
+1. You'll see the **Sign in** tab. Here, enter your Azure Entra credentials and click **Next (2)**.
+
+   - **Email/Username:** <inject key="AzureAdUserEmail"></inject> **(1)**
+
+       ![Enter Your Username](../../media/new/email.png)
+
+1. Next, provide your Temporary Password and click on **Sign in (2)**
+
+   - **Temporary Access Pass:** <inject key="AzureAdUserPassword"></inject> **(1)**
+
+      ![Enter Your Password](../../media/new/pass.png)
+
+1. On the **Stay Signed in?** pop-up, click on No.
+
+    ![](../../media/new/stay.png)
+
+1. On the **We need a few more details** page, click on **Continue** with the default settings.
+
+1. On the DevOps organization page, you will see the pre-created organization and project created. Use this Project for further exercises.
