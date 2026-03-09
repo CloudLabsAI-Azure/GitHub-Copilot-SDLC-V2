@@ -87,18 +87,18 @@ Your training repository has been **pre-created and pre-configured** for this wo
 1. Run the below commands to clone the parent repository in your newly created repoistory.
 
    ```
-   git clone https://github.com/Coveros/hol-copilot-advanced-lab.git
-   cd hol-copilot-advanced-lab
+   git clone https://github.com/CloudLabsAI-Azure/GitHub-Copilot-SDLC-V2.git
+   cd GitHub-Copilot-SDLC-V2
    git remote remove origin
-   git remote add origin https://github.com/Cloudlabs-Enterprises/approve-this-2119197.git
-   git push -u origin main
+   git remote add origin https://github.com/Cloudlabs-Enterprises/approve-this-2119197
+   git push -u origin main --force
    ```
 
 1. On the **GitHub Sign In** pop-up, click **Sign in with your browser**.
 
 1. On the **Authorize Git Crdential Manager**, click **Authorize git-ecosystem**.
 
-1. 
+1. You will now see the repository setup is done.
 
 # TODO Insert Spektra specific instructions for accessing the pre-provisioned repository, e.g.
 
@@ -109,9 +109,31 @@ Now let's get the ApproveThis application running locally.
 
 ### 2.1 Navigate to Application Directory
 
-```bash
-cd approvethis
-```
+1. Open the Visual Studio Code shortcut from the desktop of your Lab VM.
+   
+1. Once the IDE opens, click on the arrow < or Welcome on the top left corner of the tab Getting Started with VS Code.
+
+1. In the File option, click on New Folder.
+
+1. Select the **GitHub-Copilot-SDLC-V2** foler and click **Select folder**.
+
+1. Now you will see another screen Do you trust the authors of the files in this folder?. Select the checkbox (1) Trust the authors of all files in the parent folder 'Odl-user-lab' and then click on Yes, I trust the authors (2).
+
+1. If you see Signed out option instead of GitHub Copilot icon. Follow the below Steps:
+
+   - Click the GitHub Copilot icon 🤖 Signed out (1) and then click on Enable more AI Features (2) to login.
+   - Now, on Enable more features tab, click on Continue with GitHub.
+   - Now, in the browser click on Continue to Autherize Visual Studio Code.
+   - On next window, click on Authrize Visual-Studio-Code.
+   - You will see a popup asking This site is trying to open Visual Studio Code. Enable the CheckBox (1) and then click on Open (2). It will take you to the VS Code.
+
+1. Open a new terminal and run the below command.
+
+   ```bash
+   cd approvethis
+   ```
+
+1. 
 
 ### 2.2 Create Python Virtual Environment
 
@@ -127,79 +149,83 @@ venv\Scripts\activate
 
 ### 2.3 Install Dependencies
 
-Install the required Python packages:
+1. Install the required Python packages:
 
-```bash
-pip install -r requirements.txt
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-This will install Flask, SQLAlchemy, Flask-Login, and other dependencies needed for the application.
+1. This will install Flask, SQLAlchemy, Flask-Login, and other dependencies needed for the application.
 
 ### 2.4 Configure Environment Variables
 
-Create your local environment configuration:
+1. Create your local environment configuration:
 
-```bash
-cp .env.example .env
-```
+   ```bash
+   cp .env.example .env
+   ```
 
-Open the `.env` file and review the default settings. For local development, the defaults should work fine:
+1. Open the `.env` file and review the default settings. For local development, the defaults should work fine:
 
-```bash
-FLASK_APP=run.py
-FLASK_ENV=development
-SECRET_KEY=dev-secret-key-change-in-production
-DATABASE_URL=sqlite:///approvethis.db
-FLASK_RUN_PORT=5001
-```
+   ```bash
+   FLASK_APP=run.py
+   FLASK_ENV=development
+   SECRET_KEY=dev-secret-key-change-in-production
+   DATABASE_URL=sqlite:///approvethis.db
+   FLASK_RUN_PORT=5001
+   ```
 
 > [!IMPORTANT]
 > The `SECRET_KEY` shown here is for development only. In production, this would be a secure, randomly generated value.
 
 ### 2.5 Initialize the Database
 
-Run database migrations to create the schema:
+1. Run database migrations to create the schema:
 
-```bash
-flask db upgrade
-```
+   ```bash
+   flask db upgrade
+   ```
 
 ### 2.6 Seed the Database
 
-Populate the database with initial data (roles and sample users):
+1. Populate the database with initial data (roles and sample users):
 
-```bash
-flask seed all
-```
+   ```bash
+   flask seed all
+   ```
 
-This creates three default users with different permission levels:
-- **viewer** / password: `viewer123` - Read-only access
-- **developer** / password: `developer123` - Can dispatch workflows
-- **admin** / password: `admin123` - Full administrative access
+1. This creates three default users with different permission levels:
+   - **viewer** / password: `viewer123` - Read-only access
+   - **developer** / password: `developer123` - Can dispatch workflows
+   - **admin** / password: `admin123` - Full administrative access
 
 ### 2.7 Run the Application
 
-Start the Flask development server:
+1. Start the Flask development server:
 
-```bash
-flask run
-```
+   ```bash
+   flask run
+   ```
 
-You should see output similar to:
-```
- * Running on http://127.0.0.1:5001
- * Restarting with stat
- * Debugger is active
-```
+1. You should see output similar to:
+   
+   ```
+    * Running on http://127.0.0.1:5001
+    * Restarting with stat
+    * Debugger is active
+   ```
 
 ### 2.8 Verify Application Access
 
-Open your browser and navigate to:
-```
-http://localhost:5001
-```
+1. Open your browser and navigate to:
+   
+   ```
+   http://localhost:5001
+   ```
 
-You should see the ApproveThis login page! 🎉
+1. You should see the ApproveThis login page! 🎉
+
+   
 
 ## Step 3: GitHub Copilot Configuration
 
