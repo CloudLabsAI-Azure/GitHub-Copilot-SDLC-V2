@@ -82,6 +82,24 @@ Your training repository has been **pre-created and pre-configured** for this wo
 
    ![](../../media/new/home.png)
 
+1. Now navigate to the **approve-this-DID** repository which is newly created.
+
+1. Run the below commands to clone the parent repository in your newly created repoistory.
+
+   ```
+   git clone https://github.com/Coveros/hol-copilot-advanced-lab.git
+   cd hol-copilot-advanced-lab
+   git remote remove origin
+   git remote add origin https://github.com/Cloudlabs-Enterprises/approve-this-2119197.git
+   git push -u origin main
+   ```
+
+1. On the **GitHub Sign In** pop-up, click **Sign in with your browser**.
+
+1. On the **Authorize Git Crdential Manager**, click **Authorize git-ecosystem**.
+
+1. 
+
 # TODO Insert Spektra specific instructions for accessing the pre-provisioned repository, e.g.
 
 
