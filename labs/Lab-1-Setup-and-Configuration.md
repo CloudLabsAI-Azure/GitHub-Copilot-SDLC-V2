@@ -42,11 +42,25 @@ To solve this, management has greenlit the development of an internal applicatio
 
 Your training repository has been **pre-created and pre-configured** for this workshop.
 
-1. Navigate to the below URL to sign in to Azure DevOps
+1. In the **Lab VM**, open the **Microsoft Edge** browser from the desktop.
+
+   ![](../../media/lab-vm-ms-edge.png)
+
+1. In a new tab, navigate to the **GitHub login** page by copying and pasting the following URL into the address bar:
 
    ```
-   https://aex.dev.azure.com
+   https://github.com/login
    ```
+
+1. On the **Sign in to GitHub** tab, enter the provided **GitHub username** in the input field, and click on **Sign in with your identity provider** **(2)**.
+
+    - Email/Username: <inject key="GitHub User Name" enableCopy="true"/> **(1)**
+
+      ![](../../media/23-7-25-g1.png)
+
+1. Click on **Continue** on the **Single sign-on to CloudLabs Organizations** page to proceed.
+
+    ![](../../media/23-7-25-g2.png)
 
 1. You'll see the **Sign in** tab. Here, enter your Azure Entra credentials and click **Next (2)**.
 
@@ -64,9 +78,9 @@ Your training repository has been **pre-created and pre-configured** for this wo
 
     ![](../../media/new/stay.png)
 
-1. On the **We need a few more details** page, click on **Continue** with the default settings.
+1. You are now successfully logged in to **GitHub** and have been redirected to the **GitHub homepage**.
 
-1. On the DevOps organization page, you will see the pre-created organization and project created. Use this Project for further exercises.
+   ![](../../media/new/home.png)
 
 # TODO Insert Spektra specific instructions for accessing the pre-provisioned repository, e.g.
 
