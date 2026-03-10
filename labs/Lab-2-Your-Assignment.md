@@ -58,60 +58,67 @@ Let's start by getting a high-level understanding of the application architectur
 > [!TIP]
 > Using Ask mode is the go to when working with Copilot to learn about a codebase.
 
-Open Copilot Chat and use the `@workspace` participant to ask about the overall structure:
+1. Open Copilot Chat and use the `@workspace` participant to ask about the overall structure:
 
-<details>
-<summary>💡 Example prompt</summary>
+    <details>
+    <summary>💡 Example prompt</summary>
 
-**Copilot Mode**: `Ask`
-```
-@workspace Can you explain the overall structure of this Python Flask application? What are the main components and how are they organized?
-```
+    **Copilot Mode**: `Ask`
+    ```
+    @workspace Can you explain the overall structure of this Python Flask application? What are the main components and how are they organized?
+    ```
 
-</details>
+    </details>
 
-**Things to observe:**
-- Copilot will describe the application factory pattern
-- Blueprint-based organization (auth, main, api, jobs)
-- Provider abstraction layer
-- RBAC with Role and Permission models
-- Database models and migrations
+    ![](../../media/step-1-1-prompt.png)
+
+1. **Things to observe:**
+    - Copilot will describe the application factory pattern
+    - Blueprint-based organization (auth, main, api, jobs)
+    - Provider abstraction layer
+    - RBAC with Role and Permission models
+    - Database models and migrations
 
 ### 1.2 Understand the Application Factory Pattern
 
-The ApproveThis application uses the **Application Factory Pattern**. If you're unfamiliar with this pattern, ask Copilot to explain it:
+1. The ApproveThis application uses the **Application Factory Pattern**. If you're unfamiliar with this pattern, ask Copilot to explain it:
 
-<details>
-<summary>💡 Example prompt</summary>
+   <details>
+   <summary>💡 Example prompt</summary>
 
-**Copilot Mode**: `Ask`
-```
-What is the Application Factory pattern and how is it implemented in this Flask application? Why is it beneficial?
-```
+   **Copilot Mode**: `Ask`
+   ```
+   What is the Application Factory pattern and how is it implemented in this Flask application? Why is it beneficial?
+   ```
 
-</details>
+   </details>
+
+   ![](../../media/step-1-2-prompt.png)
 
 ### 1.3 Explore the Blueprint Organization
 
-Whether you've worked with Flask and Blueprints before or not, it's helpful to understand how **this** application is organized. Even if it's a common practice in Flask, every project has its own conventions.
+1. Whether you've worked with Flask and Blueprints before or not, it's helpful to understand how **this** application is organized. Even if it's a common practice in Flask, every project has its own conventions.
 
-Let's ask Copilot to detail the blueprints used in the application:
+1. Let's ask Copilot to detail the blueprints used in the application:
 
-<details>
-<summary>💡 Example prompt</summary>
+   <details>
+   <summary>💡 Example prompt</summary>
 
-**Copilot Mode**: `Ask`
-```
-@workspace What blueprints exist in this application and what is each responsible for?
-```
+   **Copilot Mode**: `Ask`
+   ```
+   @workspace What blueprints exist in this application and what is each responsible for?
+   ```
 
-</details>
+   </details>
 
-**Expected blueprints:**
-- `auth` - Authentication and login
-- `main` - Main application routes and views
-- `api` - RESTful API endpoints
-- `jobs` - Job definition and execution management
+   ![](../../media/step-1-3-prompt.png)
+
+1. **Expected blueprints:**
+   
+   - `auth` - Authentication and login
+   - `main` - Main application routes and views
+   - `api` - RESTful API endpoints
+   - `jobs` - Job definition and execution management
 
 ## Step 2: Understanding the Provider Pattern
 
@@ -119,46 +126,52 @@ One of the key architectural decisions in ApproveThis is the **provider pattern*
 
 ### 2.1 Discover the Provider Abstraction
 
-Navigate to `approvethis/app/providers/` and explore the files:
+1. Navigate to `approvethis/app/providers/` and explore the files:
 
-**Key insights:**
-- `base.py` - Abstract base class defining the provider interface
-- `mock.py` - Mock GitHub implementation returning sample data
-- `github.py` - Placeholder for real GitHub API integration (not yet implemented!)
+1. **Key insights:**
+   - `base.py` - Abstract base class defining the provider interface
+   - `mock.py` - Mock GitHub implementation returning sample data
+   - `github.py` - Placeholder for real GitHub API integration (not yet implemented!)
+  
+   ![](../../media/step-2-1.png)
 
 ### 2.2 Examine the Base Provider Interface
 
-Open `approvethis/app/providers/base.py` and review the abstract methods:
+1. Open `approvethis/app/providers/base.py` and review the abstract methods:
 
-```python
-class GitHubProvider(ABC):
-    @abstractmethod
-    def list_repositories(self): pass
+   ```python
+   class GitHubProvider(ABC):
+       @abstractmethod
+       def list_repositories(self): pass
     
-    @abstractmethod
-    def list_workflows(self, owner, repo): pass
+       @abstractmethod
+       def list_workflows(self, owner, repo): pass
     
-    @abstractmethod
-    def list_workflow_runs(self, owner, repo, workflow_id=None): pass
+       @abstractmethod
+       def list_workflow_runs(self, owner, repo, workflow_id=None): pass
     
-    @abstractmethod
-    def get_workflow_run(self, owner, repo, run_id): pass
+       @abstractmethod
+       def get_workflow_run(self, owner, repo, run_id): pass
     
-    @abstractmethod
-    def dispatch_workflow(self, owner, repo, workflow_id, ref, inputs): pass
-```
+       @abstractmethod
+       def dispatch_workflow(self, owner, repo, workflow_id, ref, inputs): pass
+   ```
 
-If you're unsure about the provider pattern, you can ask Copilot to help you understand it:
+   ![](../../media/step-2-2.png)
 
-<details>
-<summary>💡 Example prompt</summary>
+1. If you're unsure about the provider pattern, you can ask Copilot to help you understand it:
 
-**Copilot Mode**: `Ask`
-```
-@workspace Explain the provider pattern used in app/providers/. What is the purpose of this design pattern?
-```
+   <details>
+   <summary>💡 Example prompt</summary>
 
-</details>
+   **Copilot Mode**: `Ask`
+   ```
+   @workspace Explain the provider pattern used in app/providers/. What is the purpose of this design pattern?
+   ```
+
+   </details>
+
+   ![](../../media/step-2-2-prompt.png)
 
 > [!NOTE]
 > The provider pattern allows switching between mock data (for development) and real API calls (for production) without changing application code. This is a helpful pattern for external service integration.
@@ -169,53 +182,61 @@ Now let's find what needs to be completed. Copilot excels at finding TODOs, NotI
 
 ### 3.1 Find NotImplementedError Instances
 
-Ask Copilot to locate unimplemented functionality:
+1. Ask Copilot to locate unimplemented functionality:
 
-> [!TIP]
-> Use Copilot with `@workspace` to search for any of the things mentioned above.
+   > [!TIP]
+   > Use Copilot with `@workspace` to search for any of the things mentioned above.
+   
+   ![](../../media/step-3-1-prompt.png)
 
-**Potential findings:**
-- `app/utils/form_builder.py` - TODO comments for parsing yaml
-- `app/providers/github.py` - All methods raise `NotImplementedError`
-- `app/providers/execution/azure_function.py` - Placeholder for Azure Function execution
-- Potentially missing routes for job execution
+1. **Potential findings:**
+   - `app/utils/form_builder.py` - TODO comments for parsing yaml
+   - `app/providers/github.py` - All methods raise `NotImplementedError`
+   - `app/providers/execution/azure_function.py` - Placeholder for Azure Function execution
+   - Potentially missing routes for job execution
 
 ### 3.2 Examine the GitHub Provider Placeholder
 
-Open `approvethis/app/providers/github.py`:
+1. Open `approvethis/app/providers/github.py`:
 
-```python
-class RealGitHubProvider(GitHubProvider):
-    def list_repositories(self):
-        raise NotImplementedError("Real GitHub provider not yet implemented")
+   ```python
+   class RealGitHubProvider(GitHubProvider):
+       def list_repositories(self):
+           raise NotImplementedError("Real GitHub provider not yet implemented")
     
-    def list_workflows(self, owner, repo):
-        raise NotImplementedError("Real GitHub provider not yet implemented")
-    # ... etc
-```
+       def list_workflows(self, owner, repo):
+           raise NotImplementedError("Real GitHub provider not yet implemented")
+       # ... etc
+   ```
 
-This is a key feature that needs implementation!
+   ![](../../media/step-3-2.png)
+
+1. This is a key feature that needs implementation!
 
 ### 3.3 Explore the Jobs Blueprint
 
-Check if the jobs blueprint has complete routes:
+1. Check if the jobs blueprint has complete routes:
 
-<details>
-<summary>💡 Example prompt</summary>
+   <details>
+   <summary>💡 Example prompt</summary>
 
-**Copilot Mode**: `Ask`
-```
-@workspace Does the jobs blueprint in app/blueprints/jobs/ have routes implemented? What functionality is available vs. what's missing?
-```
+   **Copilot Mode**: `Ask`
+   ```
+   @workspace Does the jobs blueprint in app/blueprints/jobs/ have routes implemented? What functionality is available vs. what's missing?
+   ```
 
-</details>
+   </details>
 
-Look at the models in `app/models/`:
-- `job_definition.py` - Defines job templates
-- `job_execution.py` - Tracks job execution history
-- `execution_target.py` - Defines where jobs can execute
+   ![](../../media/step-3-3-prompt.png)
 
-These models exist, but may not have complete route or UI support yet.
+1. Look at the models in `app/models/`:
+   - `job_definition.py` - Defines job templates
+   - `job_execution.py` - Tracks job execution history
+   - `execution_target.py` - Defines where jobs can execute
+  
+   ![](../../media/step-3-3.png)
+
+1. These models exist, but may not have complete route or UI support yet.
 
 ## Step 4: Understanding RBAC Implementation
 
@@ -223,59 +244,65 @@ ApproveThis implements Role-Based Access Control. Let's understand how it works.
 
 ### 4.1 Explore Permission Definitions
 
-Open `approvethis/app/models/role.py` and examine the `Permission` class:
+1. Open `approvethis/app/models/role.py` and examine the `Permission` class:
 
-```python
-class Permission:
-    VIEW_REPOS = 1
-    VIEW_WORKFLOWS = 2
-    VIEW_RUNS = 4
-    DISPATCH_WORKFLOW = 8
-    MANAGE_APPROVALS = 16
-    MANAGE_USERS = 32
-    ADMIN = 64
-```
+   ```python
+   class Permission:
+       VIEW_REPOS = 1
+       VIEW_WORKFLOWS = 2
+       VIEW_RUNS = 4
+       DISPATCH_WORKFLOW = 8
+       MANAGE_APPROVALS = 16
+       MANAGE_USERS = 32
+       ADMIN = 64
+   ```
 
-This class uses powers of 2 to define permissions. We don't know exactly why yet, so let's ask Copilot to help explain it to us:
+   ![](../../media/step-4-1.png)
 
-<details>
-<summary>💡 Example prompt</summary>
+1. This class uses powers of 2 to define permissions. We don't know exactly why yet, so let's ask Copilot to help explain it to us:
 
-**Copilot Mode**: `Ask`
-```
-Explain how the Permission class in app/models/role.py implements permission flags. Why use powers of 2?
-```
+   <details>
+   <summary>💡 Example prompt</summary>
 
-</details>
+   **Copilot Mode**: `Ask`
+   ```
+   Explain how the Permission class in app/models/role.py implements permission flags. Why use powers of 2?
+   ```
+
+   </details>
+
+   ![](../../media/step-4-1-prompt.png)
 
 <!-- > [!TIP]
 > 💡 Using powers of 2 allows combining multiple permissions with bitwise operations. A role can have permissions 1 + 2 + 4 = 7, representing VIEW_REPOS, VIEW_WORKFLOWS, and VIEW_RUNS. -->
 
 ### 4.2 Review Default Roles
 
-The `Role.insert_roles()` method creates three default roles:
+1. The `Role.insert_roles()` method creates three default roles:
 
-- **Viewer**: VIEW_REPOS, VIEW_WORKFLOWS, VIEW_RUNS
-- **LeadDeveloper**: Previous + DISPATCH_WORKFLOW  
-- **GlobalAdmin**: All permissions including MANAGE_APPROVALS
+   - **Viewer**: VIEW_REPOS, VIEW_WORKFLOWS, VIEW_RUNS
+   - **LeadDeveloper**: Previous + DISPATCH_WORKFLOW  
+   - **GlobalAdmin**: All permissions including MANAGE_APPROVALS
 
-Notice that `MANAGE_APPROVALS` permission exists but isn't fully utilized yet. Keep this in mind for later!
+1. Notice that `MANAGE_APPROVALS` permission exists but isn't fully utilized yet. Keep this in mind for later!
 
 ### 4.3 Check Permission Enforcement
 
-Ask Copilot how permissions are enforced:
+1. Ask Copilot how permissions are enforced:
 
-<details>
-<summary>💡 Example prompt</summary>
+   <details>
+   <summary>💡 Example prompt</summary>
 
-**Copilot Mode**: `Ask`
-```
-@workspace How are permissions checked in the application routes? Show me examples of permission enforcement.
-```
+   **Copilot Mode**: `Ask`
+   ```
+   @workspace How are permissions checked in the application routes? Show me examples of permission enforcement.
+   ```
 
-</details>
+   </details>
 
-Look for the `@permission_required` decorator usage in route files.
+   ![](../../media/step-4-3-prompt.png)
+
+1. Look for the `@permission_required` decorator usage in route files.
 
 ---
 
