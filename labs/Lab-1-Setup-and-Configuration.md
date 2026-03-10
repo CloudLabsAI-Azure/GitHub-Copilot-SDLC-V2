@@ -1,4 +1,4 @@
-<img width="925" height="491" alt="image" src="https://github.com/user-attachments/assets/88833452-7a25-4884-8e77-ec77db68ddeb" /># Exercise 1 - Setup and Configuration
+# Exercise 1 - Setup and Configuration
 
 **Duration**: 20 minutes
 
