@@ -44,7 +44,7 @@ Your training repository has been **pre-created and pre-configured** for this wo
 
 1. In the **Lab VM**, open the **Microsoft Edge** browser from the desktop.
 
-   ![](../../media/lab-vm-ms-edge.png)
+   ![](../media/lab-vm-ms-edge.png)
 
 1. In a new tab, navigate to the **GitHub login** page by copying and pasting the following URL into the address bar:
 
@@ -56,35 +56,35 @@ Your training repository has been **pre-created and pre-configured** for this wo
 
     - Email/Username: <inject key="GitHub User Name" enableCopy="true"/> **(1)**
 
-      ![](../../media/23-7-25-g1.png)
+      ![](../media/23-7-25-g1.png)
 
 1. Click on **Continue** on the **Single sign-on to CloudLabs Organizations** page to proceed.
 
-    ![](../../media/23-7-25-g2.png)
+    ![](../media/23-7-25-g2.png)
 
 1. You'll see the **Sign in** tab. Here, enter your Azure Entra credentials and click **Next (2)**.
 
    - **Email/Username:** <inject key="AzureAdUserEmail"></inject> **(1)**
 
-       ![Enter Your Username](../../media/email.png)
+       ![Enter Your Username](../media/email.png)
 
 1. Next, provide your Temporary Password and click on **Sign in (2)**
 
    - **Temporary Access Pass:** <inject key="AzureAdUserPassword"></inject> **(1)**
 
-      ![Enter Your Password](../../media/pass.png)
+      ![Enter Your Password](../media/pass.png)
 
 1. On the **Stay Signed in?** pop-up, click on No.
 
-    ![](../../media/stay.png)
+    ![](../media/stay.png)
 
 1. You are now successfully logged in to **GitHub** and have been redirected to the **GitHub homepage**.
 
-   ![](../../media/home.png)
+   ![](../media/home.png)
 
 1. Now navigate to the **approve-this-DID** repository which is newly created.
 
-   ![](../../media/approve-this-repo.png)
+   ![](../media/approve-this-repo.png)
 
 1. Run the below commands to clone the parent repository in your newly created repoistory.
 
@@ -113,19 +113,19 @@ Now let's get the ApproveThis application running locally.
 
 1. Open the **Visual Studio Code** shortcut from the desktop of your **Lab VM**.
 
-   ![](../../media/vs.png)
+   ![](../media/vs.png)
 
 1. In the File option, click on New Folder.
 
-   ![](../../media/new-folder.png)
+   ![](../media/new-folder.png)
 
 1. Select the **GitHub-Copilot-SDLC-V2** foler and click **Select folder**.
 
-   ![](../../media/select-folder.png)
+   ![](../media/select-folder.png)
 
 1. Now you will see another screen Do you trust the authors of the files in this folder?. Select the checkbox (1) Trust the authors of all files in the parent folder 'Odl-user-lab' and then click on Yes, I trust the authors (2).
 
-   ![](../../media/vsc-trust-folder.png)
+   ![](../media/vsc-trust-folder.png)
 
 1. Open a new terminal and run the below command.
 
@@ -223,7 +223,7 @@ Now let's get the ApproveThis application running locally.
 
 1. You should see the ApproveThis login page! 🎉
 
-   ![](../../media/approve-this-login-page.png)
+   ![](../media/approve-this-login-page.png)
 
 ## Step 3: GitHub Copilot Configuration
 
@@ -241,7 +241,7 @@ Open VS Code (or your preferred IDE with Copilot support) and verify:
    - Search for "GitHub Copilot"
    - Ensure it's installed and enabled
   
-   ![](../../media/vsc-ghc-chat-ext.png)
+   ![](../media/vsc-ghc-chat-ext.png)
 
 ### 3.2 Sign In to GitHub
 
@@ -249,23 +249,23 @@ Ensure you're signed in to the correct GitHub account:
 
 1. Click the GitHub Copilot icon **🤖 Signed out (1)** and then click on **Enable more AI Features (2)** to login.
 
-   ![](../../media/enable-more-ai-featu.png)
+   ![](../media/enable-more-ai-featu.png)
 
 1. Now, on Enable more features tab, click on **Continue with GitHub**. 
 
-   ![](../../media/enable-continue-with-gh.png)
+   ![](../media/enable-continue-with-gh.png)
 
 1. Now, in the browser click on **Continue** to Autherize Visual Studio Code. 
 
-   ![](../../media/new/21.png)
+   ![](../media/21.png)
 
 1. On next window, click on **Authrize Visual-Studio-Code**.
 
-   ![](../../media/new/22a.png)
+   ![](../media/22a.png)
 
 1. You will see a popup asking **This site is trying to open Visual Studio Code**. Enable the **CheckBox** (1) and then click on **Open** (2). It will take you to the VS Code. 
 
-   ![](../../media/auth-vs-code-open.png)
+   ![](../media/auth-vs-code-open.png)
 
 ### 3.3 Test Copilot
 
@@ -281,11 +281,11 @@ Ensure you're signed in to the correct GitHub account:
 
    </details>
 
-   ![](../../media/lab-01-ask-prompt.png)
+   ![](../media/lab-01-ask-prompt.png)
 
 1. Copilot should provide a summary of the ApproveThis application and repository structure.
 
-   ![](../../media/lab-01-ask-prompt-response.png)
+   ![](../media/lab-01-ask-prompt-response.png)
 
 ## Step 4: Exploring the Application
 
@@ -329,7 +329,7 @@ Explore the main sections:
 3. **Workflows** - Available workflows per repository
 4. **Runs** - Workflow execution history
 
-   ![](../../media/approve-this-main-page.png)
+   ![](../media/approve-this-main-page.png)
 
 > [!NOTE]
 > Currently, the application displays **mock data**. In later labs, you'll implement the real GitHub API integration to show live data.
@@ -347,7 +347,7 @@ Your repository comes pre-configured with necessary secrets for Azure deployment
    - `AZURE_TENANT_ID`  
    - `AZURE_SUBSCRIPTION_ID`
   
-   ![](../../media/github-repo-sercrets.png)
+   ![](../media/github-repo-sercrets.png)
 
 > [!IMPORTANT]
 > **Do not modify or delete these secrets.** They are pre-configured by your instructor and will be used in Lab 6 for Terraform deployments to Azure.
