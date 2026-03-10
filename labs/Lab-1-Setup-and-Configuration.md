@@ -255,6 +255,26 @@ Ensure you're signed in to the correct GitHub account:
 3. Choose "Sign in with GitHub"
 4. Authorize if prompted
 
+- Click the GitHub Copilot icon **🤖 Signed out (1)** and then click on **Enable more AI Features (2)** to login.
+
+     ![](../../media/enable-more-ai-featu.png)
+
+- Now, on Enable more features tab, click on **Continue with GitHub**. 
+
+     ![](../../media/enable-continue-with-gh.png)
+
+- Now, in the browser click on **Continue** to Autherize Visual Studio Code. 
+
+     ![](../../media/new/21.png)
+
+- On next window, click on **Authrize Visual-Studio-Code**.
+
+     ![](../../media/new/22a.png)
+
+- You will see a popup asking **This site is trying to open Visual Studio Code**. Enable the **CheckBox** (1) and then click on **Open** (2). It will take you to the VS Code. 
+
+     ![](../../media/auth-vs-code-open.png)
+
 ### 3.3 Test Copilot
 
 Open the Copilot Chat panel (`Ctrl+Shift+I` / `Cmd+Shift+I`) and try asking:
