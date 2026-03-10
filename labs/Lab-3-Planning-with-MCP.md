@@ -64,38 +64,85 @@ Before proceeding, ensure you have:
 - Access to an Azure DevOps organization (your instructor will provide details)
 - VS Code with GitHub Copilot and Copilot Chat extensions installed
 
+1. Navigate to the below URL to sign in to Azure DevOps
+
+   ```
+   https://aex.dev.azure.com
+   ```
+
+1. You'll see the **Sign in** tab. Here, enter your Azure Entra credentials and click **Next (2)**.
+
+   - **Email/Username:** <inject key="AzureAdUserEmail"></inject> **(1)**
+
+       ![Enter Your Username](../media/email.png)
+
+1. Next, provide your Temporary Password and click on **Sign in (2)**
+
+   - **Temporary Access Pass:** <inject key="AzureAdUserPassword"></inject> **(1)**
+
+      ![Enter Your Password](../media/pass.png)
+
+1. On the **Stay Signed in?** pop-up, click on **No**.
+
+    ![](../media/stay.png)
+
+1. On the **We need a few more details** page, click on **Continue** with the default settings.
+
+   ![](../media/devops-continue.png)
+
+1. On the DevOps organization page, you will see the pre-created organization and project created. Use this Project for further exercises.
+
+   ![](../media/devops-org-project.png)
+
+
 ### 2.2 Install the Azure DevOps MCP Server
 
 The Azure DevOps MCP server by Microsoft is available in the GitHub MCP Registry and can be installed directly from VS Code:
 
-1. Open the **Extensions** panel (`Ctrl+Shift+X` / `Cmd+Shift+X`)
-2. Click the **filter icon** in the search bar and select **MCP Server**
-   - If this is your first time using the MCP server gallery, follow the on-screen prompts to enable it
-3. Search for `Azure DevOps` in the search bar
-4. Select the **Azure DevOps** MCP server by **microsoft** from the results
-5. Click **Install**
-6. 
+1. Open the **Extensions** panel (`Ctrl+Shift+X` / `Cmd+Shift+X`), click the **filter icon** in the search bar and select **MCP Server** and click **Install**
 
-This will automatically create the server configuration in your `.vscode/mcp.json` file with the recommended `npx`-based setup:
+   ![](../media/vsc-ext-filder-mcp-server.png)
 
-```json
-{
-  "inputs": [
-    {
-      "id": "ado_org",
-      "type": "promptString",
-      "description": "Azure DevOps organization name  (e.g. 'contoso')"
-    }
-  ],
-  "servers": {
-    "ado": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@azure-devops/mcp", "${input:ado_org}"]
-    }
-  }
-}
-```
+1. On the MCP Servers panel, click **Enable MCP Servers Marketplace**
+
+   ![](../media/vsc-enable-mcp-servers.png)
+
+1. On the *Enable MCP Servers Marketplace?* pop-up, click **Enable**
+
+   ![](../media/vsc-enable-mcp-servers-enable.png)
+
+1. Search for **Azure DevOps** in the search bar and install the **Azure DevOps** MCP server by **microsoft** from the results
+
+   ![](../media/vsc-mcp-install-azure-ado.png)
+
+1. Enter the Azure DevOps organization name as **GitHub-Copilot-SDLC** when prompted and press **Enter**
+
+   ![](../media/vsc-mcp-azure-ado-org-name.png)
+
+1. Enter the same Azure DevOps organization name as **GitHub-Copilot-SDLC** when prompted to repeat to enable specific domains and press **Enter**
+
+   ![](../media/vsc-mcp-azure-ado-org-name-repeat.png)
+
+1. This will automatically create the server configuration in your `.vscode/mcp.json` file with the recommended `npx`-based setup:
+
+   ```json
+   {
+     "inputs": [
+       {
+         "id": "ado_org",
+         "type": "promptString",
+         "description": "Azure DevOps organization name  (e.g. 'contoso')"
+       }
+     ],
+     "servers": {
+       "ado": {
+         "type": "stdio",
+         "command": "npx",
+         "args": ["-y", "@azure-devops/mcp", "${input:ado_org}"]
+       }
+     }
+   }
+   ```
 
 > [!NOTE]
 > The `npx` command automatically downloads and runs the latest version of the Azure DevOps MCP server — no global install required. When the server starts, VS Code will prompt you for your Azure DevOps organization name.
@@ -122,114 +169,138 @@ Now that the MCP is set up, let's use it for real-world planning.
 
 ### 3.1 Query Existing Work Items
 
-Let's verify that Copilot can access the Azure Boards. Check if there are work items related to ApproveThis:
+1. Let's verify that Copilot can access the Azure Boards. Check if there are work items related to ApproveThis (use Copilot **Agent** mode):
 
-<details>
-<summary>💡 Example prompt for checking work items</summary>
+   <details>
+   <summary>💡 Example prompt for checking work items</summary>
 
-**Copilot Mode**: `Agent`
-```
-Search for work items in ADO related to "ApproveThis" or "GitHub provider integration". What's the current status?
-```
+   **Copilot Mode**: `Agent`
+   ```
+   Search for work items in ADO related to "ApproveThis" or "GitHub provider integration". What's the current status?
+   ```
 
-</details>
+   </details>
 
-You might find:
-- Existing user stories from the previous developer
-- Bug reports or technical debt items
-- Feature requests from stakeholders
-- OR you might find nothing, which lets us know we need to create new work items!
+   ![](../media/step-3-1-prompt.png)
+
+1. When prompted, click **Allow in this Session** for the Copilot Agent to search for the specific work items.
+
+   ![](../media/step-3-1-prompt-response.png)
+
+1. You might find:
+   - Existing user stories from the previous developer
+   - Bug reports or technical debt items
+   - Feature requests from stakeholders
+   - OR you might find nothing, which lets us know we need to create new work items!
+  
+   ![](../media/step-3-1-prompt-response-final.png)
 
 ### 3.2 Create User Stories for ApproveThis Features
 
-Since it doesn't look like there are existing work items, let's have Copilot help us prioritize and create them.
+1. Since it doesn't look like there are existing work items, let's have Copilot help us prioritize and create them.
 
-Remember that Erica mentioned several features that need implementation:
-- Real GitHub API integration
-- Approval workflow system
-- E2E testing
-- Multi-platform CI/CD
+1. Remember that Erica mentioned several features that need implementation:
+   - Real GitHub API integration
+   - Approval workflow system
+   - E2E testing
+   - Multi-platform CI/CD
 
-Use Copilot `Ask` mode to help create a prioritized list of what needs to be implemented:
+1. Use Copilot **Ask** mode to help create a prioritized list of what needs to be implemented:
 
-<details>
-<summary>💡 Example prompt to create features list</summary>
+   <details>
+   <summary>💡 Example prompt to create features list</summary>
 
-**Copilot Mode**: `Ask`
-```
-We need to create user stories for the following features in Azure DevOps:
+   **Copilot Mode**: `Ask`
+   ```
+   We need to create user stories for the following features in Azure DevOps:
 
-- Real GitHub API integration (provider implementation)
-- Job execution routes and UI
-- E2E testing
-- Approval workflow implementation
-- Azure Function execution provider
-- Additional CI/CD platform integrations
+   - Real GitHub API integration (provider implementation)
+   - Job execution routes and UI
+   - E2E testing
+   - Approval workflow implementation
+   - Azure Function execution provider
+   - Additional CI/CD platform integrations
 
-Can you help me prioritize these features based on dependencies and complexity and provide an overall outline for each user story? This will be used with the Azure DevOps MCP to create the work items.
-```
+   Can you help me prioritize these features based on dependencies and complexity and provide an overall outline for each user story? This will be used with the Azure DevOps MCP to create the work items.
+   ```
 
-**Key dependencies:**
-- GitHub provider must work before dispatch approvals make sense
-- Job execution framework should be functional before adding approval gates
-- RBAC is already implemented and can be leveraged
+   **Key dependencies:**
+   - GitHub provider must work before dispatch approvals make sense
+   - Job execution framework should be functional before adding approval gates
+   - RBAC is already implemented and can be leveraged
 
-</details>
+   </details>
 
-With our prioritized list, let's create user stories in Azure DevOps for the items Copilot helped us come up with.
+   ![](../media/step-3-2-prompt.png)
+
+1. With our prioritized list, let's create user stories in Azure DevOps for the items Copilot helped us come up with.
 
 > [!IMPORTANT]
 > As we need to make use of the ADO MCP to create the work items the best approach is to use `Agent` mode. This will allow Copilot to interact with ADO directly through the MCP connection.
 >
 > Ensure you have the ADO MCP tools enabled for Agent mode in the tool configuration dropdown.
 
-<details>
-<summary>💡 Example prompt for creating ADO work items</summary>
+1. Use Copilot **Agent** mode to help create create user stories in Azure DevOps for each feature:
 
-**Copilot Mode**: `Agent`
-```
-Now that we have the prioritized feature list and outline, can you help me create user stories in Azure DevOps for each feature? Include requirements and acceptance criteria based on existing models and patterns in the codebase.
+   <details>
+   <summary>💡 Example prompt for creating ADO work items</summary>
 
-For tasks that will be implemented later and that rely on other features yet to be implemented, make note of that in the description.
+   **Copilot Mode**: `Agent`
+   ```
+   Now that we have the prioritized feature list and outline, can you help me create user stories in Azure DevOps for each feature? Include requirements and acceptance criteria based on existing models and patterns in the codebase.
 
-Do not include any direct implementation details in the user stories; focus on what needs to be done from a feature perspective.
-```
+   For tasks that will be implemented later and that rely on other features yet to be implemented, make note of that in the description.
 
-</details>
+   Do not include any direct implementation details in the user stories; focus on what needs to be done from a feature perspective.
+   ```
 
-Copilot will:
-1. Analyze all relevant code files and models
-2. Identify the methods that need implementation
-3. Generate user story titles and descriptions
-4. Submit the work items to Azure DevOps
+   </details>
+
+   ![](../media/step-3-2-prompt-02.png)
+
+1. When prompted, click **Allow in this Session** fpr the Copilot Agent mode to create to the user stories in Azure DevOps.
+
+   ![](../media/step-3-2-allow-session.png)
+
+1. The Copilot Agent may ask you to authenticate to Azure DevOps to create these user stories. **Allow** the Copilot Agent to create the user stories post authentication.
+
+   ![](../media/step-3-2-follow-steps.png)
+
+1. Copilot will:
+   - Analyze all relevant code files and models
+   - Identify the methods that need implementation
+   - Generate user story titles and descriptions
+   - Submit the work items to Azure DevOps
+  
+   ![](../media/step-3-2-ado-work-items.png)
 
 > [!TIP]
 > To enhance Copilot's capabilities when planning out features, consider making use of [custom agents](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents) that are specifically designed to help with project management tasks. This can further streamline the process of creating and managing work items.
 
 ### 3.3 Review and Refine User Stories
 
-Review the created work items in Azure DevOps.
+1. Review the created work items in Azure DevOps.
 
-**Remember**, Copilot is a powerful assistant, but it's important to validate and refine the generated content to ensure it meets your team's standards.
+1. **Remember**, Copilot is a powerful assistant, but it's important to validate and refine the generated content to ensure it meets your team's standards.
 
-If you see anything that needs adjustment, you can either edit the work items directly in Azure DevOps or ask Copilot to help refine them:
+1. If you see anything that needs adjustment, you can either edit the work items directly in Azure DevOps or ask Copilot to help refine them:
 
-<details>
-<summary>💡 Example prompt to modify a work item</summary>
+   <details>
+   <summary>💡 Example prompt to modify a work item</summary>
 
-> [!NOTE]
-> **This prompt is strictly an example. The actual work item IDs will vary based on your Azure DevOps instance and the work items created by Copilot.**
+   > [!NOTE]
+   > **This prompt is strictly an example. The actual work item IDs will vary based on your Azure DevOps instance and the work items created by Copilot.**
 
-**Copilot Mode**: `Agent`
-```
-For work item #123 (GitHub provider - list_repositories), add technical details about:
-- Required GitHub API endpoint
-- Authentication approach
-- Rate limiting considerations
-- Error handling requirements
-```
+   **Copilot Mode**: `Agent`
+   ```
+   For work item #123 (GitHub provider - list_repositories), add technical details about:
+   - Required GitHub API endpoint
+   - Authentication approach
+   - Rate limiting considerations
+   - Error handling requirements
+   ```
 
-</details>
+   </details>
 
 ## Step 4: Governance Policy Integration
 
@@ -242,7 +313,11 @@ It's always important to review existing instructions in the `.github/copilot-in
 **Review the instructions file:**
 
 1. Open `.github/copilot-instructions.md` in VS Code
-2. Skim through the file and note the following sections:
+
+   ![](../media/step-4-1.png)
+   
+1. Skim through the file and note the following sections:
+   
    - **Project Overview** - High-level description of the ApproveThis application
    - **Architecture** - Application structure and file organization
    - **Key Patterns** - Provider Pattern, RBAC with Permission Bit Flags, Execution Providers
@@ -250,7 +325,8 @@ It's always important to review existing instructions in the `.github/copilot-in
    - **Code Conventions** - Guidelines for adding routes, models, and provider implementations
    - **Testing Strategy** - Testing frameworks and directory structure
 
-3. Pay attention to how the instructions define:
+1. Pay attention to how the instructions define:
+   
    - Where new code should be placed
    - Which patterns to follow (e.g., Provider Pattern, RBAC decorators)
    - Required imports and conventions
@@ -268,24 +344,30 @@ These policies live in a **Copilot Space**, a shared knowledge context that Copi
 
 A Copilot Space has already been created with ShipIt's governance policies. To access Spaces from VS Code, you need to install the GitHub MCP server and enable the `copilot_spaces` toolset.
 
-1. If you haven't already installed the GitHub MCP server:
-   - Open the **Extensions** panel (`Ctrl+Shift+X` / `Cmd+Shift+X`)
-   - Click the **filter icon** in the search bar and select **MCP Server**
-   - Search for `github` and select the **GitHub MCP Server**
-   - Click **Install**
+1. Open the **Extensions** panel (`Ctrl+Shift+X` / `Cmd+Shift+X`), click the **filter icon** in the search bar and select **GitHub** and click **Install**
+
+   ![](../media/vsc-ext-filder-mcp-server-gh.png)
 
 2. Enable the Copilot Spaces toolset:
+   
    - Open **VS Code Settings** (`Ctrl+,` / `Cmd+,`)
    - Search for `GitHub MCP toolsets`
    - Locate the **GitHub > Copilot > Chat > GitHub MCP Server: Toolsets** setting
    - Add `copilot_spaces` to the list of enabled toolsets
+  
+   ![](../media/vsc-settings-enable-copilot-spaces.png)
 
-> [!IMPORTANT]
-> The `copilot_spaces` toolset is **not included** by default. You must explicitly enable it through the settings as described above.
+   > [!IMPORTANT]
+   > The `copilot_spaces` toolset is **not included** by default. You must explicitly enable it through the settings as described above.
+
+1. Add `copilot_spaces` to the list of enabled toolsets and click **OK**.
+
+   ![](../media/vsc-settings-enable-copilot-spaces-add.png)
 
 3. Verify the Spaces tools are available:
    - Open the **Copilot Chat** panel and select **Agent** mode
    - Click the **tools icon** (wrench) in the chat input box
+     ![](../media/vsc-settings-tool-sets.png)
    - Expand the list of tools for **GitHub**
    - Confirm that `get_copilot_space` and `list_copilot_spaces` are listed and enabled
 
@@ -296,72 +378,72 @@ Copilot Spaces are accessed in VS Code through **Agent mode** by referencing the
 1. Open **Copilot Chat** and ensure you are in **Agent** mode
 2. Reference the governance Space in your prompt — Copilot will use the `list_copilot_spaces` and `get_copilot_space` tools to locate and load the Space's context automatically
 
-<details>
-<summary>💡 Example prompt to verify Space access</summary>
+   <details>
+   <summary>💡 Example prompt to verify Space access</summary>
 
-**Copilot Mode**: `Agent`
-```
-Using the Copilot Space 'ShipIt Governance' owned by our organization, summarize the coding standards and governance policies defined in the Space.
-```
+   **Copilot Mode**: `Agent`
+   ```
+   Using the Copilot Space 'ShipIt Governance' owned by our organization, summarize the coding standards and governance policies defined in the Space.
+   ```
 
-</details>
+   </details>
 
 > [!TIP]
 > 💡 You don't need to remember the exact Space name. You can also use a natural language description and Copilot will search for matching Spaces. For example: `Summarize the governance policies from the Copilot Space for ShipIt coding standards.`
 
-Copilot should return information about ShipIt's organization-wide standards, such as:
-- Required code review approvals
-- Security and authentication guidelines
-- Documentation requirements for new features
-- Testing coverage thresholds
+1. Copilot should return information about ShipIt's organization-wide standards, such as:
+   - Required code review approvals
+   - Security and authentication guidelines
+   - Documentation requirements for new features
+   - Testing coverage thresholds
 
 #### Validate Policy Compliance
 
-Now let's verify that Copilot respects both the repository-level instructions and the organization-wide governance policies when generating suggestions.
+1. Now let's verify that Copilot respects both the repository-level instructions and the organization-wide governance policies when generating suggestions.
 
-<details>
-<summary>💡 Example prompt to check policy compliance</summary>
+   <details>
+   <summary>💡 Example prompt to check policy compliance</summary>
 
-**Copilot Mode**: `Agent`
-```
-Based on both the repository's copilot-instructions.md and the governance policies from the ShipIt Governance Copilot Space, what patterns and standards must I follow when implementing the real GitHub provider? Are there any conflicts between the two?
-```
+   **Copilot Mode**: `Agent`
+   ```
+   Based on both the repository's copilot-instructions.md and the governance policies from the ShipIt Governance Copilot Space, what patterns and standards must I follow when implementing the real GitHub provider? Are there any conflicts between the two?
+   ```
 
-</details>
+   </details>
 
-Copilot will cross-reference both sources and highlight:
-- Repository-specific patterns (Provider Pattern, RBAC decorators)
-- Organization-wide requirements (security policies, testing standards)
-- Any areas where both align or where additional attention is needed
+1. Copilot will cross-reference both sources and highlight:
+   - Repository-specific patterns (Provider Pattern, RBAC decorators)
+   - Organization-wide requirements (security policies, testing standards)
+   - Any areas where both align or where additional attention is needed
 
-<details>
-<summary>💡 Example prompt to test governance awareness</summary>
+   <details>
+   <summary>💡 Example prompt to test governance awareness</summary>
 
-**Copilot Mode**: `Agent`
-```
-I want to add a new route that exposes repository data from the GitHub API. Based on the governance standards from the ShipIt Governance Space and the repository instructions, what security considerations, authentication requirements, and permission checks must be in place before I implement this?
-```
+   **Copilot Mode**: `Agent`
+   ```
+   I want to add a new route that exposes repository data from the GitHub API. Based on the governance standards from the ShipIt Governance Space and the repository instructions, what security considerations, authentication requirements, and permission checks must be in place before I implement this?
+   ```
 
-</details>
+   </details>
 
 > [!NOTE]
 > Copilot Spaces give organizations a way to enforce standards **across repositories** without duplicating instructions in every repo. When combined with repository-level `copilot-instructions.md`, you get a layered policy model — organization-wide governance plus project-specific conventions.
 
 ### 4.3 Generate Technical Design Documentation
 
-You can even have Copilot draft a technical design document for the GitHub provider implementation that adheres to your organization's standards:
+1. You can even have Copilot draft a technical design document for the GitHub provider implementation that adheres to your organization's standards:
 
-<details>
-<summary>💡 Example design doc generation prompt</summary>
+   <details>
+   <summary>💡 Example design doc generation prompt</summary>
 
-**Copilot Mode**: `Agent`
-```
-Please create a technical design document for the future GitHub provider implementation. Include architecture diagrams (in Mermaid), API endpoints used, authentication flow, and testing strategy.
-```
+   **Copilot Mode**: `Agent`
+   ```
+   Please create a technical design document for the future GitHub provider implementation. Include architecture diagrams (in Mermaid), API endpoints used, authentication flow, and testing strategy.
+   ```
 
-</details>
+   </details>
 
-Copilot will generate comprehensive documentation that you can refine and commit to the repository.
+1. Copilot will generate comprehensive documentation that you can refine and commit to the repository.
 
 ---
 
