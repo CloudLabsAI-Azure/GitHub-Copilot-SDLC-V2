@@ -1,4 +1,4 @@
-# Exercise 1 - Setup and Configuration
+<img width="925" height="491" alt="image" src="https://github.com/user-attachments/assets/88833452-7a25-4884-8e77-ec77db68ddeb" /># Exercise 1 - Setup and Configuration
 
 **Duration**: 20 minutes
 
@@ -66,23 +66,25 @@ Your training repository has been **pre-created and pre-configured** for this wo
 
    - **Email/Username:** <inject key="AzureAdUserEmail"></inject> **(1)**
 
-       ![Enter Your Username](../../media/new/email.png)
+       ![Enter Your Username](../../media/email.png)
 
 1. Next, provide your Temporary Password and click on **Sign in (2)**
 
    - **Temporary Access Pass:** <inject key="AzureAdUserPassword"></inject> **(1)**
 
-      ![Enter Your Password](../../media/new/pass.png)
+      ![Enter Your Password](../../media/pass.png)
 
 1. On the **Stay Signed in?** pop-up, click on No.
 
-    ![](../../media/new/stay.png)
+    ![](../../media/stay.png)
 
 1. You are now successfully logged in to **GitHub** and have been redirected to the **GitHub homepage**.
 
-   ![](../../media/new/home.png)
+   ![](../../media/home.png)
 
 1. Now navigate to the **approve-this-DID** repository which is newly created.
+
+   ![](../../media/approve-this-repo.png)
 
 1. Run the below commands to clone the parent repository in your newly created repoistory.
 
@@ -109,23 +111,21 @@ Now let's get the ApproveThis application running locally.
 
 ### 2.1 Navigate to Application Directory
 
-1. Open the Visual Studio Code shortcut from the desktop of your Lab VM.
-   
-1. Once the IDE opens, click on the arrow < or Welcome on the top left corner of the tab Getting Started with VS Code.
+1. Open the **Visual Studio Code** shortcut from the desktop of your **Lab VM**.
+
+   ![](../../media/vs.png)
 
 1. In the File option, click on New Folder.
 
+   ![](../../media/new-folder.png)
+
 1. Select the **GitHub-Copilot-SDLC-V2** foler and click **Select folder**.
+
+   ![](../../media/select-folder.png)
 
 1. Now you will see another screen Do you trust the authors of the files in this folder?. Select the checkbox (1) Trust the authors of all files in the parent folder 'Odl-user-lab' and then click on Yes, I trust the authors (2).
 
-1. If you see Signed out option instead of GitHub Copilot icon. Follow the below Steps:
-
-   - Click the GitHub Copilot icon 🤖 Signed out (1) and then click on Enable more AI Features (2) to login.
-   - Now, on Enable more features tab, click on Continue with GitHub.
-   - Now, in the browser click on Continue to Autherize Visual Studio Code.
-   - On next window, click on Authrize Visual-Studio-Code.
-   - You will see a popup asking This site is trying to open Visual Studio Code. Enable the CheckBox (1) and then click on Open (2). It will take you to the VS Code.
+   ![](../../media/vsc-trust-folder.png)
 
 1. Open a new terminal and run the below command.
 
@@ -133,16 +133,14 @@ Now let's get the ApproveThis application running locally.
    cd approvethis
    ```
 
-1. 
-
 ### 2.2 Create Python Virtual Environment
 
-Create and activate a Python virtual environment:
+1. Create and activate a Python virtual environment:
 
-```bash
-python -m venv venv
-venv\Scripts\activate
-```
+   ```bash
+   python -m venv venv
+   venv\Scripts\activate
+   ```
 
 > [!TIP]
 > 💡 You should see `(venv)` in your terminal prompt after activation, indicating the virtual environment is active.
@@ -225,7 +223,7 @@ venv\Scripts\activate
 
 1. You should see the ApproveThis login page! 🎉
 
-   
+   ![](../../media/approve-this-login-page.png)
 
 ## Step 3: GitHub Copilot Configuration
 
@@ -238,58 +236,56 @@ Let's ensure GitHub Copilot is properly configured in your development environme
 
 Open VS Code (or your preferred IDE with Copilot support) and verify:
 
-1. **GitHub Copilot extension is installed**
-   - Open the Extensions panel
+1. **GitHub Copilot Chat extension is installed**
+   - Open the **Extensions** panel
    - Search for "GitHub Copilot"
    - Ensure it's installed and enabled
-
-2. **GitHub Copilot Chat is installed**
-   - The GitHub Copilot Chat extension should also be installed
+  
+   ![](../../media/vsc-ghc-chat-ext.png)
 
 ### 3.2 Sign In to GitHub
 
 Ensure you're signed in to the correct GitHub account:
 
-1. Click on the account icon in the bottom-left corner
-2. Select "Sign in to Sync Settings"
-3. Choose "Sign in with GitHub"
-4. Authorize if prompted
+1. Click the GitHub Copilot icon **🤖 Signed out (1)** and then click on **Enable more AI Features (2)** to login.
 
-- Click the GitHub Copilot icon **🤖 Signed out (1)** and then click on **Enable more AI Features (2)** to login.
+   ![](../../media/enable-more-ai-featu.png)
 
-     ![](../../media/enable-more-ai-featu.png)
+1. Now, on Enable more features tab, click on **Continue with GitHub**. 
 
-- Now, on Enable more features tab, click on **Continue with GitHub**. 
+   ![](../../media/enable-continue-with-gh.png)
 
-     ![](../../media/enable-continue-with-gh.png)
+1. Now, in the browser click on **Continue** to Autherize Visual Studio Code. 
 
-- Now, in the browser click on **Continue** to Autherize Visual Studio Code. 
+   ![](../../media/new/21.png)
 
-     ![](../../media/new/21.png)
+1. On next window, click on **Authrize Visual-Studio-Code**.
 
-- On next window, click on **Authrize Visual-Studio-Code**.
+   ![](../../media/new/22a.png)
 
-     ![](../../media/new/22a.png)
+1. You will see a popup asking **This site is trying to open Visual Studio Code**. Enable the **CheckBox** (1) and then click on **Open** (2). It will take you to the VS Code. 
 
-- You will see a popup asking **This site is trying to open Visual Studio Code**. Enable the **CheckBox** (1) and then click on **Open** (2). It will take you to the VS Code. 
-
-     ![](../../media/auth-vs-code-open.png)
+   ![](../../media/auth-vs-code-open.png)
 
 ### 3.3 Test Copilot
 
-Open the Copilot Chat panel (`Ctrl+Shift+I` / `Cmd+Shift+I`) and try asking:
+1. Open the Copilot Chat panel (`Ctrl+Shift+I` / `Cmd+Shift+I`) and try asking:
 
-<details>
-<summary>💡 Example prompt to test Copilot</summary>
+   <details>
+   <summary>💡 Example prompt to test Copilot</summary>
 
-**Copilot Mode**: `Ask`
-```
-What is this repository about? Give me a brief overview.
-```
+   **Copilot Mode**: `Ask`
+   ```
+   What is this repository about? Give me a brief overview.
+   ```
 
-</details>
+   </details>
 
-Copilot should provide a summary of the ApproveThis application and repository structure.
+   ![](../../media/lab-01-ask-prompt.png)
+
+1. Copilot should provide a summary of the ApproveThis application and repository structure.
+
+   ![](../../media/lab-01-ask-prompt-response.png)
 
 ## Step 4: Exploring the Application
 
@@ -299,30 +295,30 @@ Let's take a quick tour of the ApproveThis application to understand what's alre
 
 Try logging in with each of the three default users to see the permission differences:
 
-**Viewer Account:**
-- Username: `viewer`
-- Password: `viewer123`
-- Permissions: Read-only access
+1. **Viewer Account:**
+   - Username: `viewer`
+   - Password: `viewer123`
+   - Permissions: Read-only access
 
-After logging in, note what you can see:
-- Repositories list
-- Workflows list
-- Workflow runs
+1. After logging in, note what you can see:
+   - Repositories list
+   - Workflows list
+   - Workflow runs
 
-**Developer Account:**
-- Username: `developer`  
-- Password: `developer123`
-- Permissions: View + Dispatch workflows
+1. **Developer Account:**
+   - Username: `developer`  
+   - Password: `developer123`
+   - Permissions: View + Dispatch workflows
 
-Notice the additional capability:
-- "Dispatch Workflow" buttons are enabled
+1. Notice the additional capability:
+   - "Dispatch Workflow" buttons are enabled
 
-**Admin Account:**
-- Username: `admin`
-- Password: `admin123`  
-- Permissions: Full access including user management and approvals
+1. **Admin Account:**
+   - Username: `admin`
+   - Password: `admin123`  
+   - Permissions: Full access including user management and approvals
 
-The admin role has access to all features, including future approval management.
+1. The admin role has access to all features, including future approval management.
 
 ### 4.2 Navigate the Interface
 
@@ -332,6 +328,8 @@ Explore the main sections:
 2. **Repositories** - List of accessible repositories (currently showing mock data)
 3. **Workflows** - Available workflows per repository
 4. **Runs** - Workflow execution history
+
+   ![](../../media/approve-this-main-page.png)
 
 > [!NOTE]
 > Currently, the application displays **mock data**. In later labs, you'll implement the real GitHub API integration to show live data.
@@ -345,15 +343,16 @@ Your repository comes pre-configured with necessary secrets for Azure deployment
 1. Navigate to your repository on GitHub in a browser
 2. Click **Settings** → **Secrets and variables** → **Actions**
 3. Confirm the following secrets are present:
-
-- `AZURE_CLIENT_ID`
-- `AZURE_TENANT_ID`  
-- `AZURE_SUBSCRIPTION_ID`
+   - `AZURE_CLIENT_ID`
+   - `AZURE_TENANT_ID`  
+   - `AZURE_SUBSCRIPTION_ID`
+  
+   ![](../../media/github-repo-sercrets.png)
 
 > [!IMPORTANT]
 > **Do not modify or delete these secrets.** They are pre-configured by your instructor and will be used in Lab 6 for Terraform deployments to Azure.
 
-You won't need to access the values, just confirm they exist.
+4. You won't need to access the values, just confirm they exist.
 
 ---
 
