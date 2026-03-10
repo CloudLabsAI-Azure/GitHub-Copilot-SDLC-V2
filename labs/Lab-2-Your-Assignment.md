@@ -70,7 +70,7 @@ Let's start by getting a high-level understanding of the application architectur
 
     </details>
 
-    ![](../../media/step-1-1-prompt.png)
+    ![](../media/step-1-1-prompt.png)
 
 1. **Things to observe:**
     - Copilot will describe the application factory pattern
@@ -93,7 +93,7 @@ Let's start by getting a high-level understanding of the application architectur
 
    </details>
 
-   ![](../../media/step-1-2-prompt.png)
+   ![](../media/step-1-2-prompt.png)
 
 ### 1.3 Explore the Blueprint Organization
 
@@ -111,7 +111,7 @@ Let's start by getting a high-level understanding of the application architectur
 
    </details>
 
-   ![](../../media/step-1-3-prompt.png)
+   ![](../media/step-1-3-prompt.png)
 
 1. **Expected blueprints:**
    
@@ -133,7 +133,7 @@ One of the key architectural decisions in ApproveThis is the **provider pattern*
    - `mock.py` - Mock GitHub implementation returning sample data
    - `github.py` - Placeholder for real GitHub API integration (not yet implemented!)
   
-   ![](../../media/step-2-1.png)
+   ![](../media/step-2-1.png)
 
 ### 2.2 Examine the Base Provider Interface
 
@@ -157,7 +157,7 @@ One of the key architectural decisions in ApproveThis is the **provider pattern*
        def dispatch_workflow(self, owner, repo, workflow_id, ref, inputs): pass
    ```
 
-   ![](../../media/step-2-2.png)
+   ![](../media/step-2-2.png)
 
 1. If you're unsure about the provider pattern, you can ask Copilot to help you understand it:
 
@@ -171,7 +171,7 @@ One of the key architectural decisions in ApproveThis is the **provider pattern*
 
    </details>
 
-   ![](../../media/step-2-2-prompt.png)
+   ![](../media/step-2-2-prompt.png)
 
 > [!NOTE]
 > The provider pattern allows switching between mock data (for development) and real API calls (for production) without changing application code. This is a helpful pattern for external service integration.
@@ -187,7 +187,7 @@ Now let's find what needs to be completed. Copilot excels at finding TODOs, NotI
    > [!TIP]
    > Use Copilot with `@workspace` to search for any of the things mentioned above.
    
-   ![](../../media/step-3-1-prompt.png)
+   ![](../media/step-3-1-prompt.png)
 
 1. **Potential findings:**
    - `app/utils/form_builder.py` - TODO comments for parsing yaml
@@ -209,7 +209,7 @@ Now let's find what needs to be completed. Copilot excels at finding TODOs, NotI
        # ... etc
    ```
 
-   ![](../../media/step-3-2.png)
+   ![](../media/step-3-2.png)
 
 1. This is a key feature that needs implementation!
 
@@ -227,14 +227,14 @@ Now let's find what needs to be completed. Copilot excels at finding TODOs, NotI
 
    </details>
 
-   ![](../../media/step-3-3-prompt.png)
+   ![](../media/step-3-3-prompt.png)
 
 1. Look at the models in `app/models/`:
    - `job_definition.py` - Defines job templates
    - `job_execution.py` - Tracks job execution history
    - `execution_target.py` - Defines where jobs can execute
   
-   ![](../../media/step-3-3.png)
+   ![](../media/step-3-3.png)
 
 1. These models exist, but may not have complete route or UI support yet.
 
@@ -257,7 +257,7 @@ ApproveThis implements Role-Based Access Control. Let's understand how it works.
        ADMIN = 64
    ```
 
-   ![](../../media/step-4-1.png)
+   ![](../media/step-4-1.png)
 
 1. This class uses powers of 2 to define permissions. We don't know exactly why yet, so let's ask Copilot to help explain it to us:
 
@@ -271,7 +271,7 @@ ApproveThis implements Role-Based Access Control. Let's understand how it works.
 
    </details>
 
-   ![](../../media/step-4-1-prompt.png)
+   ![](../media/step-4-1-prompt.png)
 
 <!-- > [!TIP]
 > 💡 Using powers of 2 allows combining multiple permissions with bitwise operations. A role can have permissions 1 + 2 + 4 = 7, representing VIEW_REPOS, VIEW_WORKFLOWS, and VIEW_RUNS. -->
@@ -300,7 +300,7 @@ ApproveThis implements Role-Based Access Control. Let's understand how it works.
 
    </details>
 
-   ![](../../media/step-4-3-prompt.png)
+   ![](../media/step-4-3-prompt.png)
 
 1. Look for the `@permission_required` decorator usage in route files.
 
