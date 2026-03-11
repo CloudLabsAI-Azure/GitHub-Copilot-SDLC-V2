@@ -38,15 +38,17 @@ Let's use Copilot to understand the existing Terraform setup since we're new to 
 
 ### 1.1 Explore the Module Structure
 
-Let's ask Copilot to explain the overall structure of the Terraform code.
+1. Let's ask Copilot to explain the overall structure of the Terraform code.
 
-The Terraform code for ApproveThis is located in the `approvethis/terraform/` directory. 
+   ![](../media/lab-6-step-1-1-prompt.png)
 
-We want to know:
+1. The Terraform code for ApproveThis is located in the `approvethis/terraform/` directory. 
 
-- What modules exist?
-- How are they organized?
-- What does each module create?
+1. We want to know:
+
+   - What modules exist?
+   - How are they organized?
+   - What does each module create?
 
 > [!TIP]
 > Remember that you can always use Copilot to help you locate files even if you aren't familiar with the repo structure or technologies. There's nothing wrong with having Copilot help you undestand the code enough to ask better questions!
@@ -64,30 +66,38 @@ terraform/
 
 ### 1.2 Understand the App Service Module
 
-Ok great! We now have a basic understanding of the module structure. Given that the App Service is where the ApproveThis Flask application will be deployed let's dive deeper into that module.
+1. Ok great! We now have a basic understanding of the module structure. Given that the App Service is where the ApproveThis Flask application will be deployed let's dive deeper into that module.
 
-We can have Copilot give us a more in depth explanation of the App Service module. 
+1. We can have Copilot give us a more in depth explanation of the App Service module.
 
-We want to know:
+   ![](../media/lab-6-step-1-2-prompt.png)
 
-- What Azure resources does it create?
-- What are the required variables and outputs?
+1. We want to know:
 
-**Key resources created:**
-- Azure App Service Plan (compute tier)
-- Azure App Service (the web application host)
-- Application settings configuration
+   - What Azure resources does it create?
+   - What are the required variables and outputs?
+
+1. **Key resources created:**
+   
+   - Azure App Service Plan (compute tier)
+   - Azure App Service (the web application host)
+   - Application settings configuration
 
 ### 1.3 Compare Environment Configurations
 
-Understanding the differences between dev and production is important for knowing what you're deploying:
+1. Understanding the differences between dev and production is important for knowing what you're deploying:
 
-Let's have Copilot help us compare the two environment configurations.
+1. Let's have Copilot help us compare the two environment configurations.
 
-**Typical differences:**
-- App Service Plan tier (Basic for dev, Premium for prod)
-- Number of instances
-- Storage redundancy settings
+   ![](../media/lab-6-step-1-3-prompt.png)
+
+1. **Typical differences:**
+   
+   - App Service Plan tier (Basic for dev, Premium for prod)
+   - Number of instances
+   - Storage redundancy settings
+  
+   ![](../media/lab-6-step-1-3-prompt-response.png)
 
 > [!TIP]
 > 💡 For detailed Terraform documentation, see [approvethis/terraform/README.md](../approvethis/terraform/README.md) which contains comprehensive information about prerequisites, variables, and deployment options.
@@ -98,16 +108,16 @@ ShipIt Industries uses a PR-based deployment workflow. Let's understand how it w
 
 ### 2.1 Review the Terraform Workflows
 
-The Terraform process is broken into two main workflows `terraform-plan.yml` and `terraform-apply.yml`.
+1. The Terraform process is broken into two main workflows `terraform-plan.yml` and `terraform-apply.yml`.
 
-We need to understand how each workflow works so we can use them effectively.
+1. We need to understand how each workflow works so we can use them effectively.
 
-- When does each workflow trigger?
-- What does each workflow do?
-- How do they report their results?
-- What environment do they target?
+   - When does each workflow trigger?
+   - What does each workflow do?
+   - How do they report their results?
+   - What environment do they target?
 
-Once you've gotten a grasp of the workflows it's time to get ready to deploy!
+1. Once you've gotten a grasp of the workflows it's time to get ready to deploy!
 
 ## Step 3: Triggering a Deployment via PR
 
