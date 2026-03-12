@@ -1,1 +1,47 @@
 
+[
+    {
+        "Name": "Mastering GitHub Copilot Across the SDLC",
+        "Language": "English",
+        "BaseURL": "https://github.com/CloudLabsAI-Azure/GitHub-Copilot-Hands-on-lab",
+        "Files": [
+            {
+                "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/GitHub-Copilot-SDLC-V2/refs/heads/main/README.md",
+                "Order": 1
+            },
+            {
+                "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/GitHub-Copilot-SDLC-V2/refs/heads/main/labs/Lab-1-Setup-and-Configuration.md",
+                "Order": 2
+            },
+            {
+                "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/GitHub-Copilot-SDLC-V2/refs/heads/main/labs/Lab-2-Your-Assignment.md",
+                "Order": 3
+            },
+            {
+                "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/GitHub-Copilot-SDLC-V2/refs/heads/main/labs/Lab-3-Planning-with-MCP.md",
+                "Order": 4
+            },
+            {
+                "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/GitHub-Copilot-SDLC-V2/refs/heads/main/labs/Lab-4-Development-Process.md",
+                "Order": 5
+            },
+            {
+                "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/GitHub-Copilot-SDLC-V2/refs/heads/main/labs/Lab-5-Testing-with-Copilot.md",
+                "Order": 6
+            },
+            {
+                "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/GitHub-Copilot-SDLC-V2/refs/heads/main/labs/Lab-6-IaC-and-Deployments.md",
+                "Order": 7
+            },
+            {
+                "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/GitHub-Copilot-SDLC-V2/refs/heads/main/labs/Lab-7-CI-CD-Beyond-GitHub-Actions.md",
+                "Order": 8
+            },
+            {
+                "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/GitHub-Copilot-SDLC-V2/refs/heads/main/labs/Lab-8-Capstone-Approvals.md",
+                "Order": 9
+            }
+        ]
+    }
+]
+
