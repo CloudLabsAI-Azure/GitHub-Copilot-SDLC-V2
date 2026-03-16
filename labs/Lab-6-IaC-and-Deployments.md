@@ -102,6 +102,142 @@ terraform/
 > [!TIP]
 > 💡 For detailed Terraform documentation, see [approvethis/terraform/README.md](../approvethis/terraform/README.md) which contains comprehensive information about prerequisites, variables, and deployment options.
 
+## 1.4 Running Terraform Locally
+
+1. Navigate to the desired environment:
+   ```bash
+   cd environments/dev
+   ```
+
+2. Copy the example variables file:
+   ```bash
+   cp terraform.tfvars.example terraform.tfvars
+   ```
+
+3. Edit `terraform.tfvars` with your values:
+   - Update resource names (must be globally unique)
+   - Set location if different from default
+   - Configure any sensitive variables
+
+4. Initialize Terraform:
+   ```bash
+   terraform init
+   ```
+
+5. Review the execution plan:
+   ```bash
+   terraform plan
+   ```
+
+6. Apply the configuration:
+   ```bash
+   terraform apply
+   ```
+
+### Running via GitHub Actions
+
+The repository includes GitHub Actions workflows for automated Terraform operations:
+
+- **terraform-plan.yml**: Run Terraform plan
+- **terraform-apply.yml**: Apply Terraform changes
+- **terraform-destroy.yml**: Destroy infrastructure
+
+To use these workflows:
+
+1. Configure GitHub secrets:
+   - `AZURE_CREDENTIALS`: Azure service principal credentials
+   - `TF_VAR_*`: Terraform variables (e.g., `TF_VAR_database_url`)
+
+2. Trigger workflow via GitHub UI or workflow dispatch
+
+3. Review workflow logs for results
+
+### Running via Azure Function
+
+The Azure Function provider allows executing Terraform from the ApproveThis application:
+
+1. Deploy the Azure Function using Terraform
+2. Configure the function URL in ApproveThis config
+3. Use the Jobs UI to trigger Terraform operations
+
+This will be implemented in lab exercises.
+
+## State Management
+
+### Development
+
+Development environment uses local state (`terraform.tfstate`) for simplicity.
+
+**Warning**: Local state is not suitable for team collaboration or production use.
+
+### Production
+
+For production, configure Azure Storage backend:
+
+1. Create a storage account for Terraform state:
+   ```bash
+   az group create --name rg-terraform-state --location eastus
+   az storage account create --name stterraformstate --resource-group rg-terraform-state --location eastus --sku Standard_LRS
+   az storage container create --name tfstate --account-name stterraformstate
+   ```
+
+2. Uncomment the `backend "azurerm"` block in `backend.tf`
+
+3. Run `terraform init` to migrate state
+
+## Variable Management
+
+### Required Variables
+
+All environments require:
+- `storage_account_name`: Globally unique, 3-24 lowercase letters/numbers
+- `function_storage_name`: Globally unique, 3-24 lowercase letters/numbers
+- `app_service_name`: Globally unique
+- `function_app_name`: Globally unique
+
+### Optional Variables
+
+- `location`: Azure region (default: "East US")
+- `database_url`: Database connection string (use environment variables in CI/CD)
+
+### Sensitive Variables
+
+Never commit sensitive values to version control:
+- Use `terraform.tfvars` (add to `.gitignore`)
+- Use environment variables: `TF_VAR_variable_name`
+- Use Azure Key Vault in production
+
+## Common Commands
+
+```bash
+# Initialize Terraform
+terraform init
+
+# Validate configuration
+terraform validate
+
+# Format code
+terraform fmt -recursive
+
+# Plan changes
+terraform plan -out=tfplan
+
+# Apply changes
+terraform apply tfplan
+
+# Show current state
+terraform show
+
+# List resources
+terraform state list
+
+# Destroy infrastructure
+terraform destroy
+
+# Output values
+terraform output
+```
+
 ## Step 2: Understanding the Deployment Workflow
 
 ShipIt Industries uses a PR-based deployment workflow. Let's understand how it works.
