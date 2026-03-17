@@ -38,15 +38,17 @@ Let's use Copilot to understand the existing Terraform setup since we're new to 
 
 ### 1.1 Explore the Module Structure
 
-Let's ask Copilot to explain the overall structure of the Terraform code.
+1. Let's ask Copilot to explain the overall structure of the Terraform code.
 
-The Terraform code for ApproveThis is located in the `approvethis/terraform/` directory. 
+   ![](../media/lab-6-step-1-1-prompt.png)
 
-We want to know:
+1. The Terraform code for ApproveThis is located in the `approvethis/terraform/` directory. 
 
-- What modules exist?
-- How are they organized?
-- What does each module create?
+1. We want to know:
+
+   - What modules exist?
+   - How are they organized?
+   - What does each module create?
 
 > [!TIP]
 > Remember that you can always use Copilot to help you locate files even if you aren't familiar with the repo structure or technologies. There's nothing wrong with having Copilot help you undestand the code enough to ask better questions!
@@ -64,33 +66,177 @@ terraform/
 
 ### 1.2 Understand the App Service Module
 
-Ok great! We now have a basic understanding of the module structure. Given that the App Service is where the ApproveThis Flask application will be deployed let's dive deeper into that module.
+1. Ok great! We now have a basic understanding of the module structure. Given that the App Service is where the ApproveThis Flask application will be deployed let's dive deeper into that module.
 
-We can have Copilot give us a more in depth explanation of the App Service module. 
+1. We can have Copilot give us a more in depth explanation of the App Service module.
 
-We want to know:
+   ![](../media/lab-6-step-1-2-prompt.png)
 
-- What Azure resources does it create?
-- What are the required variables and outputs?
+1. We want to know:
 
-**Key resources created:**
-- Azure App Service Plan (compute tier)
-- Azure App Service (the web application host)
-- Application settings configuration
+   - What Azure resources does it create?
+   - What are the required variables and outputs?
+
+1. **Key resources created:**
+   
+   - Azure App Service Plan (compute tier)
+   - Azure App Service (the web application host)
+   - Application settings configuration
 
 ### 1.3 Compare Environment Configurations
 
-Understanding the differences between dev and production is important for knowing what you're deploying:
+1. Understanding the differences between dev and production is important for knowing what you're deploying:
 
-Let's have Copilot help us compare the two environment configurations.
+1. Let's have Copilot help us compare the two environment configurations.
 
-**Typical differences:**
-- App Service Plan tier (Basic for dev, Premium for prod)
-- Number of instances
-- Storage redundancy settings
+   ![](../media/lab-6-step-1-3-prompt.png)
+
+1. **Typical differences:**
+   
+   - App Service Plan tier (Basic for dev, Premium for prod)
+   - Number of instances
+   - Storage redundancy settings
+  
+   ![](../media/lab-6-step-1-3-prompt-response.png)
 
 > [!TIP]
 > 💡 For detailed Terraform documentation, see [approvethis/terraform/README.md](../approvethis/terraform/README.md) which contains comprehensive information about prerequisites, variables, and deployment options.
+
+## 1.4 Running Terraform Locally
+
+1. Navigate to the desired environment:
+   ```bash
+   cd environments/dev
+   ```
+
+2. Copy the example variables file:
+   ```bash
+   cp terraform.tfvars.example terraform.tfvars
+   ```
+
+3. Edit `terraform.tfvars` with your values:
+   - Update resource names (must be globally unique)
+   - Set location if different from default
+   - Configure any sensitive variables
+
+4. Initialize Terraform:
+   ```bash
+   terraform init
+   ```
+
+5. Review the execution plan:
+   ```bash
+   terraform plan
+   ```
+
+6. Apply the configuration:
+   ```bash
+   terraform apply
+   ```
+
+### Running via GitHub Actions
+
+The repository includes GitHub Actions workflows for automated Terraform operations:
+
+- **terraform-plan.yml**: Run Terraform plan
+- **terraform-apply.yml**: Apply Terraform changes
+- **terraform-destroy.yml**: Destroy infrastructure
+
+To use these workflows:
+
+1. Configure GitHub secrets:
+   - `AZURE_CREDENTIALS`: Azure service principal credentials
+   - `TF_VAR_*`: Terraform variables (e.g., `TF_VAR_database_url`)
+
+2. Trigger workflow via GitHub UI or workflow dispatch
+
+3. Review workflow logs for results
+
+### Running via Azure Function
+
+The Azure Function provider allows executing Terraform from the ApproveThis application:
+
+1. Deploy the Azure Function using Terraform
+2. Configure the function URL in ApproveThis config
+3. Use the Jobs UI to trigger Terraform operations
+
+This will be implemented in lab exercises.
+
+## State Management
+
+### Development
+
+Development environment uses local state (`terraform.tfstate`) for simplicity.
+
+**Warning**: Local state is not suitable for team collaboration or production use.
+
+### Production
+
+For production, configure Azure Storage backend:
+
+1. Create a storage account for Terraform state:
+   ```bash
+   az group create --name rg-terraform-state --location eastus
+   az storage account create --name stterraformstate --resource-group rg-terraform-state --location eastus --sku Standard_LRS
+   az storage container create --name tfstate --account-name stterraformstate
+   ```
+
+2. Uncomment the `backend "azurerm"` block in `backend.tf`
+
+3. Run `terraform init` to migrate state
+
+## Variable Management
+
+### Required Variables
+
+All environments require:
+- `storage_account_name`: Globally unique, 3-24 lowercase letters/numbers
+- `function_storage_name`: Globally unique, 3-24 lowercase letters/numbers
+- `app_service_name`: Globally unique
+- `function_app_name`: Globally unique
+
+### Optional Variables
+
+- `location`: Azure region (default: "East US")
+- `database_url`: Database connection string (use environment variables in CI/CD)
+
+### Sensitive Variables
+
+Never commit sensitive values to version control:
+- Use `terraform.tfvars` (add to `.gitignore`)
+- Use environment variables: `TF_VAR_variable_name`
+- Use Azure Key Vault in production
+
+## Common Commands
+
+```bash
+# Initialize Terraform
+terraform init
+
+# Validate configuration
+terraform validate
+
+# Format code
+terraform fmt -recursive
+
+# Plan changes
+terraform plan -out=tfplan
+
+# Apply changes
+terraform apply tfplan
+
+# Show current state
+terraform show
+
+# List resources
+terraform state list
+
+# Destroy infrastructure
+terraform destroy
+
+# Output values
+terraform output
+```
 
 ## Step 2: Understanding the Deployment Workflow
 
@@ -98,16 +244,16 @@ ShipIt Industries uses a PR-based deployment workflow. Let's understand how it w
 
 ### 2.1 Review the Terraform Workflows
 
-The Terraform process is broken into two main workflows `terraform-plan.yml` and `terraform-apply.yml`.
+1. The Terraform process is broken into two main workflows `terraform-plan.yml` and `terraform-apply.yml`.
 
-We need to understand how each workflow works so we can use them effectively.
+1. We need to understand how each workflow works so we can use them effectively.
 
-- When does each workflow trigger?
-- What does each workflow do?
-- How do they report their results?
-- What environment do they target?
+   - When does each workflow trigger?
+   - What does each workflow do?
+   - How do they report their results?
+   - What environment do they target?
 
-Once you've gotten a grasp of the workflows it's time to get ready to deploy!
+1. Once you've gotten a grasp of the workflows it's time to get ready to deploy!
 
 ## Step 3: Triggering a Deployment via PR
 
@@ -223,4 +369,6 @@ Take a moment to consider:
 
 In **Lab 7: CI/CD Beyond GitHub Actions**, you'll explore how GitHub Copilot can help with CI/CD across multiple platforms. Not just GitHub Actions, but also Azure DevOps Pipelines, Jenkins, and more. You'll see how Copilot's knowledge extends across the entire DevOps ecosystem!
 
-**[← Back to Lab 5](Lab-5-Testing-with-Copilot.md)** | **[Continue to Lab 7: CI/CD Beyond GitHub Actions →](Lab-7-CI-CD-Beyond-GitHub-Actions.md)**
+#### You have successfully completed the lab. Click on **Next >>** to continue to the next lab.
+
+![](../media/next.png)

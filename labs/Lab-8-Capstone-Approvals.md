@@ -254,6 +254,4 @@ The ApproveThis application is now ready to help ShipIt Industries manage their 
 
 Most importantly, they now have **ApproveThis with approvals**! 🚀
 
----
-
-**[← Back to Lab 7](Lab-7-CI-CD-Beyond-GitHub-Actions.md)**
+#### You have successfully completed the lab.
