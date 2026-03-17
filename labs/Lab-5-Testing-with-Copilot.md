@@ -366,4 +366,6 @@ Take a moment to consider:
 
 In **Lab 6: IaC and Deployments**, you'll use GitHub Copilot with Azure and Terraform MCP servers to understand and enhance infrastructure as code. You'll explore the existing Terraform modules, make improvements, and deploy infrastructure through both GitHub Actions and the ApproveThis application. Get ready to see how AI transforms infrastructure management!
 
-**[← Back to Lab 4](Lab-4-Development-Process.md)** | **[Continue to Lab 6: IaC and Deployments →](Lab-6-IaC-and-Deployments.md)**
+#### You have successfully completed the lab. Click on **Next >>** to continue to the next lab.
+
+![](../media/next.png)
