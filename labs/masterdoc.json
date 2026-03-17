@@ -1,12 +1,12 @@
 
 [
     {
-        "Name": "Mastering GitHub Copilot Across the SDLC",
+        "Name": "GitHub Copilot Advanced Workshop: Copilot throughout the SDLC",
         "Language": "English",
-        "BaseURL": "https://github.com/CloudLabsAI-Azure/GitHub-Copilot-Hands-on-lab",
+        "BaseURL": "https://github.com/CloudLabsAI-Azure/GitHub-Copilot-SDLC-V2",
         "Files": [
             {
-                "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/GitHub-Copilot-SDLC-V2/refs/heads/main/README.md",
+                "RawFilePath": "https://raw.githubusercontent.com/CloudLabsAI-Azure/GitHub-Copilot-SDLC-V2/refs/heads/main/labs/Getting-Started.md",
                 "Order": 1
             },
             {
