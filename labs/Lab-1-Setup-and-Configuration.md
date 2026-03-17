@@ -80,8 +80,6 @@ Your training repository has been **pre-created and pre-configured** for this wo
 
 1. You are now successfully logged in to **GitHub** and have been redirected to the **GitHub homepage**.
 
-   ![](../media/home.png)
-
 1. Now navigate to the **approve-this-DID** repository which is newly created.
 
    ![](../media/approve-this-repo.png)
@@ -101,9 +99,6 @@ Your training repository has been **pre-created and pre-configured** for this wo
 1. On the **Authorize Git Crdential Manager**, click **Authorize git-ecosystem**.
 
 1. You will now see the repository setup is done.
-
-# TODO Insert Spektra specific instructions for accessing the pre-provisioned repository, e.g.
-
 
 ## Step 2: ApproveThis Application Setup
 
