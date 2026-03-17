@@ -135,72 +135,16 @@ To adjust the zoom level for the environment page, click the **A↕: 100%** icon
 
 ![Use the Split Window Feature](../../media/new/zoom.png)
 
-## Login to GitHub
+## Support Contact
 
-1. In the **Lab VM**, open the **Microsoft Edge** browser from the desktop.
+The CloudLabs support team is available 24/7, 365 days a year, via email and live chat to ensure seamless assistance at any time. We offer dedicated support channels tailored specifically for both learners and instructors, ensuring that all your needs are promptly and efficiently addressed.
 
-   ![](../../media/lab-vm-ms-edge.png)
+Learner Support Contacts:
 
-1. In a new tab, navigate to the **GitHub login** page by copying and pasting the following URL into the address bar:
+- Email Support: cloudlabs-support@spektrasystems.com
+- Live Chat Support: https://cloudlabs.ai/labs-support
 
-   ```
-   https://github.com/login
-   ```
+#### You have successfully completed the lab. Click on **Next >>** to continue to the next lab.
 
-1. On the **Sign in to GitHub** tab, enter the provided **GitHub username** in the input field, and click on **Sign in with your identity provider** **(2)**.
+![](../../media/new/next.png)
 
-    - Email/Username: <inject key="GitHub User Name" enableCopy="true"/> **(1)**
-
-      ![](../../media/23-7-25-g1.png)
-
-1. Click on **Continue** on the **Single sign-on to CloudLabs Organizations** page to proceed.
-
-    ![](../../media/23-7-25-g2.png)
-
-1. You'll see the **Sign in** tab. Here, enter your Azure Entra credentials and click **Next (2)**.
-
-   - **Email/Username:** <inject key="AzureAdUserEmail"></inject> **(1)**
-
-       ![Enter Your Username](../../media/new/email.png)
-
-1. Next, provide your Temporary Password and click on **Sign in (2)**
-
-   - **Temporary Access Pass:** <inject key="AzureAdUserPassword"></inject> **(1)**
-
-      ![Enter Your Password](../../media/new/pass.png)
-
-1. On the **Stay Signed in?** pop-up, click on No.
-
-    ![](../../media/new/stay.png)
-
-1. You are now successfully logged in to **GitHub** and have been redirected to the **GitHub homepage**.
-
-   ![](../../media/new/home.png)
-
-## Login to DevOps Organization
-
-1. Navigate to the below URL to sign in to Azure DevOps
-
-   ```
-   https://aex.dev.azure.com
-   ```
-
-1. You'll see the **Sign in** tab. Here, enter your Azure Entra credentials and click **Next (2)**.
-
-   - **Email/Username:** <inject key="AzureAdUserEmail"></inject> **(1)**
-
-       ![Enter Your Username](../../media/new/email.png)
-
-1. Next, provide your Temporary Password and click on **Sign in (2)**
-
-   - **Temporary Access Pass:** <inject key="AzureAdUserPassword"></inject> **(1)**
-
-      ![Enter Your Password](../../media/new/pass.png)
-
-1. On the **Stay Signed in?** pop-up, click on No.
-
-    ![](../../media/new/stay.png)
-
-1. On the **We need a few more details** page, click on **Continue** with the default settings.
-
-1. On the DevOps organization page, you will see the pre-created organization and project created. Use this Project for further exercises.
