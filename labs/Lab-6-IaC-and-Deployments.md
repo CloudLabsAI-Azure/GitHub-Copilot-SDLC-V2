@@ -369,4 +369,6 @@ Take a moment to consider:
 
 In **Lab 7: CI/CD Beyond GitHub Actions**, you'll explore how GitHub Copilot can help with CI/CD across multiple platforms. Not just GitHub Actions, but also Azure DevOps Pipelines, Jenkins, and more. You'll see how Copilot's knowledge extends across the entire DevOps ecosystem!
 
-**[← Back to Lab 5](Lab-5-Testing-with-Copilot.md)** | **[Continue to Lab 7: CI/CD Beyond GitHub Actions →](Lab-7-CI-CD-Beyond-GitHub-Actions.md)**
+#### You have successfully completed the lab. Click on **Next >>** to continue to the next lab.
+
+![](../media/next.png)
