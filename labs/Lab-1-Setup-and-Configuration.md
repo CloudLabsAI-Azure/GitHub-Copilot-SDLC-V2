@@ -391,4 +391,4 @@ In **Lab 2: Your Assignment**, you'll step into your role at ShipIt Industries a
 
 #### You have successfully completed the lab. Click on **Next >>** to continue to the next lab.
 
-![](../../media/new/next.png)
+![](../media/next.png)
