@@ -517,4 +517,6 @@ You'll use the Azure Functions you just deployed to create a complete approval s
 
 This is your opportunity to work autonomously with Copilot as your development partner and demonstrate mastery of AI-assisted SDLC practices.
 
-**[← Back to Lab 6](Lab-6-IaC-and-Deployments.md)** | **[Continue to Lab 8: Capstone Challenge →](Lab-8-Capstone-Approvals.md)**
+#### You have successfully completed the lab. Click on **Next >>** to continue to the next lab.
+
+![](../media/next.png)
