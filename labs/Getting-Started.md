@@ -146,5 +146,5 @@ Learner Support Contacts:
 
 #### You have successfully completed the lab. Click on **Next >>** to continue to the next lab.
 
-![](../../media/new/next.png)
+![](../media/next.png)
 
