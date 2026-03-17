@@ -389,4 +389,6 @@ Take a moment to consider:
 
 In **Lab 2: Your Assignment**, you'll step into your role at ShipIt Industries and use GitHub Copilot to explore the ApproveThis codebase. You'll discover what's been implemented, identify gaps, and plan your next steps. Get ready to become familiar with a new codebase faster than ever before!
 
-**[Continue to Lab 2: Your Assignment →](Lab-2-Your-Assignment.md)**
+#### You have successfully completed the lab. Click on **Next >>** to continue to the next lab.
+
+![](../../media/new/next.png)
