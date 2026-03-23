@@ -80,17 +80,17 @@ Your training repository has been **pre-created and pre-configured** for this wo
 
 1. You are now successfully logged in to **GitHub** and have been redirected to the **GitHub homepage**.
 
-1. Now navigate to the **approve-this-DID** repository which is newly created.
+1. Now navigate to the **approve-this-<inject key="Deployment-id"></inject>** repository which is newly created.
 
    ![](../media/approve-this-repo.png)
 
-1. Run the below commands to clone the parent repository in your newly created repoistory.
+1. In a new PowerShell window, run the below commands to clone the parent repository in your newly created repoistory.
 
    ```
    git clone https://github.com/CloudLabsAI-Azure/GitHub-Copilot-SDLC-V2.git
    cd GitHub-Copilot-SDLC-V2
    git remote remove origin
-   git remote add origin https://github.com/Cloudlabs-Enterprises/approve-this-2119197
+   git remote add origin https://github.com/Cloudlabs-Enterprises/approve-this-<inject key="Deployment-id"></inject>
    git push -u origin main --force
    ```
 
