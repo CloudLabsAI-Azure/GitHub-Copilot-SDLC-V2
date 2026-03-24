@@ -56,7 +56,7 @@ Let's start by getting a high-level understanding of the application architectur
 ### 1.1 Query the Project Structure
 
 > [!TIP]
-> Using Ask mode is the go to when working with Copilot to learn about a codebase.
+> Using **Ask** mode is the go to when working with Copilot to learn about a codebase.
 
 1. Open Copilot Chat and use the `@workspace` participant to ask about the overall structure:
 
@@ -173,8 +173,8 @@ One of the key architectural decisions in ApproveThis is the **provider pattern*
 
    ![](../media/step-2-2-prompt.png)
 
-> [!NOTE]
-> The provider pattern allows switching between mock data (for development) and real API calls (for production) without changing application code. This is a helpful pattern for external service integration.
+   > [!NOTE]
+   > The provider pattern allows switching between mock data (for development) and real API calls (for production) without changing application code. This is a helpful pattern for external service integration.
 
 ## Step 3: Identifying Implementation Gaps
 

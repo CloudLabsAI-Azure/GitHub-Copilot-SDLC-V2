@@ -96,7 +96,11 @@ Your training repository has been **pre-created and pre-configured** for this wo
 
 1. On the **GitHub Sign In** pop-up, click **Sign in with your browser**.
 
+   ![](../media/github-sign-in-browser.png)
+
 1. On the **Authorize Git Crdential Manager**, click **Authorize git-ecosystem**.
+
+   ![](../media/auth-github-sign-in-browser.png)
 
 1. You will now see the repository setup is done.
 
@@ -110,7 +114,7 @@ Now let's get the ApproveThis application running locally.
 
    ![](../media/vs.png)
 
-1. In the File option, click on New Folder.
+1. In the **File** option, click on **Open Folder**.
 
    ![](../media/new-folder.png)
 
@@ -137,8 +141,8 @@ Now let's get the ApproveThis application running locally.
    venv\Scripts\activate
    ```
 
-> [!TIP]
-> 💡 You should see `(venv)` in your terminal prompt after activation, indicating the virtual environment is active.
+   > [!TIP]
+   > 💡 You should see `(venv)` in your terminal prompt after activation, indicating the virtual environment is active.
 
 ### 2.3 Install Dependencies
 
@@ -168,8 +172,8 @@ Now let's get the ApproveThis application running locally.
    FLASK_RUN_PORT=5001
    ```
 
-> [!IMPORTANT]
-> The `SECRET_KEY` shown here is for development only. In production, this would be a secure, randomly generated value.
+   > [!IMPORTANT]
+   > The `SECRET_KEY` shown here is for development only. In production, this would be a secure, randomly generated value.
 
 ### 2.5 Initialize the Database
 
@@ -326,8 +330,8 @@ Explore the main sections:
 
    ![](../media/approve-this-main-page.png)
 
-> [!NOTE]
-> Currently, the application displays **mock data**. In later labs, you'll implement the real GitHub API integration to show live data.
+   > [!NOTE]
+   > Currently, the application displays **mock data**. In later labs, you'll implement the real GitHub API integration to show live data.
 
 ## Step 5: Verify Pre-Configured Secrets
 
@@ -344,8 +348,8 @@ Your repository comes pre-configured with necessary secrets for Azure deployment
   
    ![](../media/github-repo-sercrets.png)
 
-> [!IMPORTANT]
-> **Do not modify or delete these secrets.** They are pre-configured by your instructor and will be used in Lab 6 for Terraform deployments to Azure.
+   > [!IMPORTANT]
+   > **Do not modify or delete these secrets.** They are pre-configured by your instructor and will be used in Lab 6 for Terraform deployments to Azure.
 
 4. You won't need to access the values, just confirm they exist.
 
