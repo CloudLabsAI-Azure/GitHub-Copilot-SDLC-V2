@@ -61,8 +61,8 @@ Let's set up the Azure DevOps MCP server to connect Copilot with Azure Boards.
 ### 2.1 Prerequisites Check
 
 Before proceeding, ensure you have:
-- Access to an Azure DevOps organization (your instructor will provide details)
-- VS Code with GitHub Copilot and Copilot Chat extensions installed
+- Access to an Azure DevOps organization
+- VS Code with GitHub Copilot Chat extension installed
 
 1. Navigate to the below URL to sign in to Azure DevOps
 
@@ -99,7 +99,7 @@ Before proceeding, ensure you have:
 
 The Azure DevOps MCP server by Microsoft is available in the GitHub MCP Registry and can be installed directly from VS Code:
 
-1. Open the **Extensions** panel (`Ctrl+Shift+X` / `Cmd+Shift+X`), click the **filter icon** in the search bar and select **MCP Server** and click **Install**
+1. In Visual Studio Code, open the **Extensions** panel (`Ctrl+Shift+X` / `Cmd+Shift+X`), click the **filter icon** in the search bar and select **MCP Servers**
 
    ![](../media/vsc-ext-filder-mcp-server.png)
 
@@ -111,7 +111,7 @@ The Azure DevOps MCP server by Microsoft is available in the GitHub MCP Registry
 
    ![](../media/vsc-enable-mcp-servers-enable.png)
 
-1. Search for **Azure DevOps** in the search bar and install the **Azure DevOps** MCP server by **microsoft** from the results
+1. Search for **Azure DevOps** in the search bar and install the **Azure DevOps** MCP server by **Microsoft** from the results
 
    ![](../media/vsc-mcp-install-azure-ado.png)
 
@@ -144,8 +144,8 @@ The Azure DevOps MCP server by Microsoft is available in the GitHub MCP Registry
    }
    ```
 
-> [!NOTE]
-> The `npx` command automatically downloads and runs the latest version of the Azure DevOps MCP server — no global install required. When the server starts, VS Code will prompt you for your Azure DevOps organization name.
+   > [!NOTE]
+   > The `npx` command automatically downloads and runs the latest version of the Azure DevOps MCP server — no global install required. When the server starts, VS Code will prompt you for your Azure DevOps organization name.
 
 ### 2.3 Start the Server and Authenticate
 
@@ -331,8 +331,8 @@ It's always important to review existing instructions in the `.github/copilot-in
    - Which patterns to follow (e.g., Provider Pattern, RBAC decorators)
    - Required imports and conventions
 
-> [!NOTE]
-> Copilot automatically reads this file when generating suggestions for your project. Well-structured instructions help Copilot produce code that aligns with your team's standards from the start.
+   > [!NOTE]
+   > Copilot automatically reads this file when generating suggestions for your project. Well-structured instructions help Copilot produce code that aligns with your team's standards from the start.
 
 ### 4.2 Incorporating Governance Standards through Copilot Spaces
 
@@ -388,8 +388,8 @@ Copilot Spaces are accessed in VS Code through **Agent mode** by referencing the
 
    </details>
 
-> [!TIP]
-> 💡 You don't need to remember the exact Space name. You can also use a natural language description and Copilot will search for matching Spaces. For example: `Summarize the governance policies from the Copilot Space for ShipIt coding standards.`
+   > [!TIP]
+   > 💡 You don't need to remember the exact Space name. You can also use a natural language description and Copilot will search for matching Spaces. For example: `Summarize the governance policies from the Copilot Space for ShipIt coding standards.`
 
 1. Copilot should return information about ShipIt's organization-wide standards, such as:
    - Required code review approvals
@@ -426,8 +426,8 @@ Copilot Spaces are accessed in VS Code through **Agent mode** by referencing the
 
    </details>
 
-> [!NOTE]
-> Copilot Spaces give organizations a way to enforce standards **across repositories** without duplicating instructions in every repo. When combined with repository-level `copilot-instructions.md`, you get a layered policy model — organization-wide governance plus project-specific conventions.
+   > [!NOTE]
+   > Copilot Spaces give organizations a way to enforce standards **across repositories** without duplicating instructions in every repo. When combined with repository-level `copilot-instructions.md`, you get a layered policy model — organization-wide governance plus project-specific conventions.
 
 ### 4.3 Generate Technical Design Documentation
 
