@@ -104,7 +104,12 @@ terraform/
 
 ## 1.4 Running Terraform Locally
 
-1. Navigate to the desired environment:
+1. In Visual Studio Code, open a new terminal and navigate to the `approvethis/terraform` directory.
+   ```
+   cd .\approvethis\terraform\
+   ```
+   
+2. Navigate to the desired environment:
    ```bash
    cd environments/dev
    ```
@@ -114,24 +119,38 @@ terraform/
    cp terraform.tfvars.example terraform.tfvars
    ```
 
-3. Edit `terraform.tfvars` with your values:
+4. Edit `terraform.tfvars` with your values:
    - Update resource names (must be globally unique)
    - Set location if different from default
    - Configure any sensitive variables
 
-4. Initialize Terraform:
+5. Login to Azure using Work or School account:
+   ```
+   az login
+   ```
+   
+6. Initialize Terraform:
    ```bash
    terraform init
    ```
 
-5. Review the execution plan:
+7. Review the execution plan:
    ```bash
    terraform plan
    ```
 
-6. Apply the configuration:
+   >**NOTE:** If you get errors regarding permissions to register Resource Providers, then simply utilize GitHub Copilot Agent to fix the errors.
+
+8. Apply the configuration:
    ```bash
    terraform apply
+   ```
+
+   **NOTE:** If you encounter resource group not found errors, then pre-create the necessary resource groups needed for deployment.
+   ```
+   az group create --name rg-approvethis-dev --location eastus
+   az group create --name rg-approvethis-app-dev --location eastus
+   az group create --name rg-approvethis-func-dev --location eastus
    ```
 
 ### Running via GitHub Actions
