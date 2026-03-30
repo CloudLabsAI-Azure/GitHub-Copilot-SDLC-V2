@@ -115,11 +115,11 @@ The Azure DevOps MCP server by Microsoft is available in the GitHub MCP Registry
 
    ![](../media/vsc-mcp-install-azure-ado.png)
 
-1. Enter the Azure DevOps organization name as **GitHub-Copilot-SDLC** when prompted and press **Enter**
+1. Enter the Azure DevOps organization name as **GitHub-Copilot-SDLC-V2** when prompted and press **Enter**
 
    ![](../media/vsc-mcp-azure-ado-org-name.png)
 
-1. Enter the same Azure DevOps organization name as **GitHub-Copilot-SDLC** when prompted to repeat to enable specific domains and press **Enter**
+1. Enter the same Azure DevOps organization name as **GitHub-Copilot-SDLC-V2** when prompted to repeat to enable specific domains and press **Enter**
 
    ![](../media/vsc-mcp-azure-ado-org-name-repeat.png)
 
@@ -367,7 +367,6 @@ A Copilot Space has already been created with ShipIt's governance policies. To a
 3. Verify the Spaces tools are available:
    - Open the **Copilot Chat** panel and select **Agent** mode
    - Click the **tools icon** (wrench) in the chat input box
-     ![](../media/vsc-settings-tool-sets.png)
    - Expand the list of tools for **GitHub**
    - Confirm that `get_copilot_space` and `list_copilot_spaces` are listed and enabled
 
