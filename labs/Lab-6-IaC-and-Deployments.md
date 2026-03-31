@@ -32,6 +32,30 @@ Your GitHub provider implementation is tested and ready. Erica now wants to disc
 >
 > Remember, working with Copilot is an iterative process. If the first response isn't quite what you need, refine your prompt or ask follow-up questions to get closer to your goal.
 
+## Login to Azure portal
+
+1. On your virtual machine, click on the **Azure Portal** icon as shown below:
+
+   ![](../media/labvm-azure-portal.png)
+
+1. On the Sign in to Microsoft Azure tab you will see the login screen, in that enter the following email/username and click **Next**.
+
+   - **Email/Username:** <inject key="AzureAdUserEmail"></inject>
+
+     ![](../media/migrate-aks-azure-email-01.png)
+
+1. Now enter the following password and click **Sign in**.
+
+   - **Temporary Access Pass:** <inject key="AzureAdUserPassword"></inject>
+
+     ![](../media/migrate-aks-azure-tap-01.png)
+
+1. If you see the pop-up **Stay Signed in?**, click **Yes**.
+
+   ![](../media/migrate-aks-azure-yes-01.png)
+
+1. If a Welcome to Microsoft Azure pop-up window appears, simply click **Maybe later** to skip the tour.
+
 ## Step 1: Understanding the Terraform Structure
 
 Let's use Copilot to understand the existing Terraform setup since we're new to this codebase.
