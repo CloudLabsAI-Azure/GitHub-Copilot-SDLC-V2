@@ -254,4 +254,3 @@ The ApproveThis application is now ready to help ShipIt Industries manage their 
 
 Most importantly, they now have **ApproveThis with approvals**! 🚀
 
-#### You have successfully completed the lab.
