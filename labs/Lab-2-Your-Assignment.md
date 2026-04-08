@@ -42,30 +42,28 @@ You arrive at your desk at ShipIt Industries, coffee in hand, and find a message
 > 
 > \- Erica
 
-> [!IMPORTANT]
-> This lab focuses on **exploration and understanding**, not implementation. We'll build features in later labs. The goal is to map the codebase mentally and identify what's done vs. what's missing. Afterall, it's hard to work on something you don't understand!
->
-> Like Erica said, feel free to use the example prompts or adapt them to fit your style. You can also come up with your own questions as you explore. The key is to leverage Copilot to accelerate your learning.
-
 ---
 
 ## Step 1: Understanding Project Structure with @workspace
 
 Let's start by getting a high-level understanding of the application architecture.
 
+> This lab focuses on **exploration and understanding**, not implementation. We'll build features in later labs. The goal is to map the codebase mentally and identify what's done vs. what's missing. Afterall, it's hard to work on something you don't understand!
+>
+> Like Erica said, feel free to use the example prompts or adapt them to fit your style. You can also come up with your own questions as you explore. The key is to leverage Copilot to accelerate your learning.
+
 ### 1.1 Query the Project Structure
 
-> [!TIP]
-> Using **Ask** mode is the go to when working with Copilot to learn about a codebase.
+> Using Ask mode is the go to when working with Copilot to learn about a codebase.
 
-1. Open Copilot Chat and use the `@workspace` participant to ask about the overall structure:
+1. Open Copilot Chat and ask about the overall structure:
 
     <details>
     <summary>💡 Example prompt</summary>
 
     **Copilot Mode**: `Ask`
     ```
-    @workspace Can you explain the overall structure of this Python Flask application? What are the main components and how are they organized?
+    Can you explain the overall structure of this Python Flask application? What are the main components and how are they organized?
     ```
 
     </details>
@@ -73,11 +71,11 @@ Let's start by getting a high-level understanding of the application architectur
     ![](../media/step-1-1-prompt.png)
 
 1. **Things to observe:**
-    - Copilot will describe the application factory pattern
-    - Blueprint-based organization (auth, main, api, jobs)
-    - Provider abstraction layer
-    - RBAC with Role and Permission models
-    - Database models and migrations
+   - Copilot will describe the application factory pattern
+   - Blueprint-based organization (auth, main, api, jobs)
+   - Provider abstraction layer
+   - RBAC with Role and Permission models
+   - Database models and migrations
 
 ### 1.2 Understand the Application Factory Pattern
 
@@ -106,7 +104,7 @@ Let's start by getting a high-level understanding of the application architectur
 
    **Copilot Mode**: `Ask`
    ```
-   @workspace What blueprints exist in this application and what is each responsible for?
+   What blueprints exist in this application and what is each responsible for?
    ```
 
    </details>
@@ -166,15 +164,15 @@ One of the key architectural decisions in ApproveThis is the **provider pattern*
 
    **Copilot Mode**: `Ask`
    ```
-   @workspace Explain the provider pattern used in app/providers/. What is the purpose of this design pattern?
+   Explain the provider pattern used in app/providers/. What is the purpose of this design pattern?
    ```
 
    </details>
 
    ![](../media/step-2-2-prompt.png)
 
-   > [!NOTE]
    > The provider pattern allows switching between mock data (for development) and real API calls (for production) without changing application code. This is a helpful pattern for external service integration.
+
 
 ## Step 3: Identifying Implementation Gaps
 
@@ -184,8 +182,7 @@ Now let's find what needs to be completed. Copilot excels at finding TODOs, NotI
 
 1. Ask Copilot to locate unimplemented functionality:
 
-   > [!TIP]
-   > Use Copilot with `@workspace` to search for any of the things mentioned above.
+   > Use Copilot to search for any of the things mentioned above.
    
    ![](../media/step-3-1-prompt.png)
 
@@ -222,7 +219,7 @@ Now let's find what needs to be completed. Copilot excels at finding TODOs, NotI
 
    **Copilot Mode**: `Ask`
    ```
-   @workspace Does the jobs blueprint in app/blueprints/jobs/ have routes implemented? What functionality is available vs. what's missing?
+   Does the jobs blueprint in app/blueprints/jobs/ have routes implemented? What functionality is available vs. what's missing?
    ```
 
    </details>
@@ -295,7 +292,7 @@ ApproveThis implements Role-Based Access Control. Let's understand how it works.
 
    **Copilot Mode**: `Ask`
    ```
-   @workspace How are permissions checked in the application routes? Show me examples of permission enforcement.
+   How are permissions checked in the application routes? Show me examples of permission enforcement.
    ```
 
    </details>
@@ -330,7 +327,7 @@ Take a moment to consider:
 
 ## 🎓 Key Takeaways
 
-- **@workspace participant** gives Copilot full project context for comprehensive answers
+- **Copilot Chat** provides full project context for comprehensive answers
 - **Architectural patterns** like provider abstraction enable clean separation of concerns
 - **NotImplementedError and TODOs** are clear markers for incomplete functionality
 - **Database models** often contain fields for future features before UI is implemented
