@@ -482,7 +482,3 @@ Take a moment to consider:
 ## Coming Up Next
 
 In **Lab 4: Shifting Our Development Process**, you'll put your plan into action! You'll implement the real GitHub provider using Copilot's advanced modes (Edit and Agent), practice multitasking with AI assistance, and use GitHub Copilot Code Review to ensure quality. Get ready to see how AI transforms the development phase of the SDLC!
-
-#### You have successfully completed the lab. Click on **Next >>** to continue to the next lab.
-
-![](../media/next.png)
