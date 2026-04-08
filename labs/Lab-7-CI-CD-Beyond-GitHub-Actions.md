@@ -546,7 +546,3 @@ You'll use the Azure Functions you just deployed to create a complete approval s
 - The workflow continues or stops based on the decision
 
 This is your opportunity to work autonomously with Copilot as your development partner and demonstrate mastery of AI-assisted SDLC practices.
-
-#### You have successfully completed the lab. Click on **Next >>** to continue to the next lab.
-
-![](../media/next.png)
