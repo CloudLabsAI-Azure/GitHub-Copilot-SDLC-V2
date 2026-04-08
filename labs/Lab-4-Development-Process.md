@@ -511,7 +511,3 @@ Take a moment to consider:
 ## Coming Up Next
 
 In **Lab 5: Testing Isn't an Afterthought Anymore**, you'll discover how GitHub Copilot transforms testing from a chore into an integrated part of development. You'll generate comprehensive unit tests, implement end-to-end testing with Playwright, and see how AI can identify edge cases you might miss. Building on the GitHub provider implementation from this lab, you'll achieve better test coverage in less time!
-
-#### You have successfully completed the lab. Click on **Next >>** to continue to the next lab.
-
-![](../media/next.png)
