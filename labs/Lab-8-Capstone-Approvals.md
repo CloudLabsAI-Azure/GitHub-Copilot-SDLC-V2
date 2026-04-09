@@ -37,16 +37,17 @@ Erica messages you and asks if you can stop by her desk for a moment.
 > - Once approved, the GitHub Action job continues
 > - Full audit trail as above
 
-> I'm giving you full autonomy on this. You've learned all the tools - planning with MCP, development with Agent mode, testing, deployment. Put it all together. Show me what you can do."
+> I'm giving you full autonomy on this. You've learned all the tools - planning with MCP, development with Agent mode, testing, deployment. Put it all together. Show me what you can do.
+>
+> Oh and no pressure but can you have this done by the end of the day? 😅"
 
 With that, Erica returns to her work and you head back to your desk. It's time to get cracking on these approval workflows!
 
-> [!IMPORTANT]
 > **This lab is intentionally less prescriptive.** You'll make decisions, choose approaches, and solve problems independently. Use Copilot as your assistant, but you're the developer in charge.
 >
-> After reading through the high-level requirements, plan your approach. Break the work into manageable pieces. Implement, test, document, and deploy the feature end-to-end.
+> After reading through the high-level requirements, plan your approach. Break the work into manageable pieces. Implement, iterate, and deploy the feature end-to-end.
 >
-> The goal is to simulate real-world development where you own a feature from requirements to production.
+> **Focus on delivering a minimum viable product.** Don't worry about making it perfect. This lab intentionally gives you more work than you can reasonably complete in an hour. The goal is to practice prioritization and decision-making with Copilot as your partner.
 
 ---
 
@@ -108,10 +109,7 @@ Before writing any code, revisit the existing code if necessary:
 - **Be specific** - Tell Copilot exactly what you want: endpoints, fields, permissions
 - **Iterate** - Start with the model, then routes, then UI; build incrementally
 - **Ask for reviews** - Have Copilot review your code for security issues
-- **Use `@workspace`** to give Copilot context about the entire project
-
-> [!WARNING]
-> Do not use `@workspace` when using `Plan` or `Agent` mode. At the time of writing, using `@workspace` in those modes can prevent Copilot from using its full autonomous critical thinking capabilities.
+- **Provide context** - Reference specific files or areas of the project when prompting Copilot
 
 ### Potential API Structure
 
@@ -133,7 +131,6 @@ Consider endpoints like:
 
 ### Bonus Challenges 🎉!
 
-> [!IMPORTANT]
 > Do not attempt the bonus challenges until you have fully completed the core requirements above.
 
 If you complete the core requirements early and wish to push your skills further, consider tackling these bonus challenges:
@@ -254,3 +251,4 @@ The ApproveThis application is now ready to help ShipIt Industries manage their 
 
 Most importantly, they now have **ApproveThis with approvals**! 🚀
 
+---
