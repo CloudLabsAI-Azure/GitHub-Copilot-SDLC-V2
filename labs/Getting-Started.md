@@ -144,7 +144,5 @@ Learner Support Contacts:
 - Email Support: cloudlabs-support@spektrasystems.com
 - Live Chat Support: https://cloudlabs.ai/labs-support
 
-#### You have successfully completed the lab. Click on **Next >>** to continue to the next lab.
-
-![](../media/next.png)
+### Let’s begin the hands-on lab exercises.
 
