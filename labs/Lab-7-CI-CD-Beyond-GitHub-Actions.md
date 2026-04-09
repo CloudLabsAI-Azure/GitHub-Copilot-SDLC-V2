@@ -34,57 +34,60 @@ With that Erica heads back to her desk. Now it's time to get to work!
 
 Now that you know the goal, let's explore how GitHub Copilot can help us work with Azure Functions through the Azure MCP Server.
 
-### 1.1 Understanding Azure MCP Server
+### 1.1 Installing the Azure MCP Server
 
-The Azure MCP Server allows GitHub Copilot to directly query and understand your Azure infrastructure. This gives Copilot context about:
+Before we can use the Azure MCP Server with Copilot, we need to install it from the VS Code Marketplace.
+
+1. Open VS Code and go to the **Extensions** view (`Ctrl+Shift+X` / `Cmd+Shift+X`)
+2. Search for **"Azure MCP Server"** in the marketplace
+3. Find the **Azure MCP Server** extension published by **Microsoft**
+4. Click **Install**
+5. Once installed, you may be prompted to sign in to your Azure account. Follow the authentication flow in your browser and return to VS Code after signing in.
+6. After installation, verify the MCP Server is active by opening the **MCP Servers** panel:
+   - Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`)
+   - Type **"MCP: List Servers"** and select it
+   - You should see the **Azure MCP Server** listed and running
+
+> If you're already signed in to Azure through the **Azure Account** extension, the Azure MCP Server should automatically use those credentials. If not, you'll be prompted to authenticate.
+
+With the Azure MCP Server installed, Copilot can now directly query and understand your Azure infrastructure. This gives Copilot context about:
 
 - Existing Azure resources (Resource Groups, Function Apps, Storage Accounts)
 - Resource configurations and properties
 - Deployment status and health
 - Resource relationships and dependencies
 
-> [!NOTE]
-> The Azure MCP Server was configured during Lab 1 setup. If you haven't set it up yet, refer to the [MCP Configuration Guide](../docs/MCP-Configuration-Guide.md).
-
 ### 1.2 Exploring Azure Resources with Copilot
 
-1. Let's use Copilot with the Azure MCP Server to understand our current Azure infrastructure.
+Let's use Copilot with the Azure MCP Server to understand our current Azure infrastructure.
 
-   <details>
-   <summary>💡 Example prompt</summary>
+<details>
+<summary>💡 Example prompt</summary>
 
-   **Copilot Mode**: `Ask`
-   ```
-   @azure List all resource groups in my Azure subscription. What resources exist in each?
-   ```
+**Copilot Mode**: `Ask`
+```
+List all resource groups in my Azure subscription. What resources exist in each?
+```
 
-   </details>
+</details>
 
-   ![](../media/lab-7-step-1-2.png)
-
-1. If you get a pop-up to install the **Install GitHub Copilot for Azure** extension, install the extension and wait for the Azure MCP server to start.
-
-   ![](../media/lab-7-step-1-2-install.png)
-
-1. You should see information about existing resource groups and their resources. This context will help us understand where our Azure Functions will be deployed.
+You should see information about existing resource groups and their resources. This context will help us understand where our Azure Functions will be deployed.
 
 ### 1.3 Understanding Function Apps
 
-1. Now let's ask Copilot about Azure Function Apps specifically:
+Now let's ask Copilot about Azure Function Apps specifically:
 
-   <details>
-   <summary>💡 Example prompt</summary>
+<details>
+<summary>💡 Example prompt</summary>
 
-   **Copilot Mode**: `Ask`
-   ```
-   @azure What Azure Function Apps currently exist in my subscription? Show me their configuration and runtime settings.
-   ```
+**Copilot Mode**: `Ask`
+```
+What Azure Function Apps currently exist in my subscription? Show me their configuration and runtime settings.
+```
 
-   </details>
+</details>
 
-   ![](../media/lab-7-step-1-3.png)
-
-1. This gives us a baseline of what's already deployed (if anything) before we create our new approval functions.
+This gives us a baseline of what's already deployed (if anything) before we create our new approval functions.
 
 ---
 
@@ -101,7 +104,7 @@ Before deploying, let's use Copilot to understand the Azure Function code that w
 
    **Copilot Mode**: `Ask`
    ```
-   @workspace Explain the structure of the Azure Functions in approvethis/azure-functions/. What are the three functions and what does each one do?
+   Explain the structure of the Azure Functions in approvethis/azure-functions/. What are the three functions and what does each one do?
    ```
 
    </details>
@@ -122,7 +125,7 @@ Before deploying, let's use Copilot to understand the Azure Function code that w
 
    **Copilot Mode**: `Ask`
    ```
-   @workspace Review the request-approval function in approvethis/azure-functions/request-approval/__init__.py. Explain:
+   Review the request_approval function in approvethis/azure-functions/function_app.py. Explain:
    1. What payload does it expect from GitHub Actions?
    2. How does it validate the request?
    3. Where does it forward the request?
@@ -144,7 +147,7 @@ Before deploying, let's use Copilot to understand the Azure Function code that w
 
    **Copilot Mode**: `Ask`
    ```
-   @workspace Review the approval-response function in approvethis/azure-functions/approval-response/__init__.py. Explain:
+   Review the approval_response function in approvethis/azure-functions/function_app.py. Explain:
    1. What payload does it expect from ApproveThis?
    2. How does it communicate the decision back to GitHub?
    3. What environment variables does it need?
@@ -164,7 +167,7 @@ Before deploying, let's use Copilot to understand the Azure Function code that w
 
    **Copilot Mode**: `Ask`
    ```
-   @workspace Create a sequence diagram or detailed explanation showing the complete approval workflow flow:
+   Create a sequence diagram or detailed explanation showing the complete approval workflow flow:
    1. GitHub Actions workflow starts
    2. Request approval function is called
    3. ApproveThis receives and processes request
@@ -194,7 +197,7 @@ The Azure Functions infrastructure is defined in Terraform. Let's explore how it
 
    **Copilot Mode**: `Ask`
    ```
-   @workspace Explain the Terraform configuration in approvethis/terraform/modules/azure-function/. What Azure resources does it create and how are they configured?
+   Explain the Terraform configuration in approvethis/terraform/modules/azure-function/. What Azure resources does it create and how are they configured?
    ```
 
    </details>
@@ -216,7 +219,7 @@ The Azure Functions infrastructure is defined in Terraform. Let's explore how it
 
    **Copilot Mode**: `Ask`
    ```
-   @workspace What app settings are configured in the azure-function Terraform module? What does each setting do and why is it needed?
+   What app settings are configured in the azure-function Terraform module? What does each setting do and why is it needed?
    ```
 
    </details>
@@ -238,7 +241,7 @@ The Azure Functions infrastructure is defined in Terraform. Let's explore how it
 
    **Copilot Mode**: `Ask`
    ```
-   @workspace How is CORS configured in the azure-function Terraform module? Why is this important for the approval workflow?
+   How is CORS configured in the azure-function Terraform module? Why is this important for the approval workflow?
    ```
 
    </details>
@@ -260,7 +263,7 @@ Now let's deploy the Azure Function infrastructure using the GitHub Actions work
 
    **Copilot Mode**: `Ask`
    ```
-   @workspace Explain the deploy-azure-functions.yml workflow. What does it do and how is it different from the regular terraform-apply workflow?
+   Explain the deploy-azure-functions.yml workflow. What does it do and how is it different from the regular terraform-apply workflow?
    ```
 
    </details>
@@ -272,10 +275,65 @@ Now let's deploy the Azure Function infrastructure using the GitHub Actions work
    - Deploys just the Function App infrastructure
    - Doesn't deploy the function code (we'll do that in Step 5)
 
-### 4.2 Trigger the Deployment Workflow
+### 4.2 Configure Azure Function Application Settings
 
-> [!IMPORTANT]
-> This step requires Azure credentials to be configured in your repository. If you're in a workshop environment, your instructor will let you know if this step should be run or simulated.
+The Function App needs three critical application settings: `APPROVETHIS_API_URL`, `APPROVETHIS_API_KEY`, and `GITHUB_TOKEN`. Without these, the functions cannot communicate with ApproveThis or GitHub. Let's configure them so they are passed through Terraform variables so they are managed as infrastructure.
+
+#### Obtain the Required Values
+
+You need three values before proceeding:
+
+| Setting | Where to Get It |
+|---|---|
+| `APPROVETHIS_API_URL` | The URL of your deployed ApproveThis App Service. You can find this in the Azure Portal under your App Service's **Overview** page (e.g., `https://app-approvethis-xxxxxxxx.azurewebsites.net`). If you are running ApproveThis locally for testing, use `http://localhost:5001`. |
+| `APPROVETHIS_API_KEY` | A shared secret that the Azure Functions will send to ApproveThis to authenticate requests. Generate a strong random string by whatever means you would like. |
+| `GITHUB_TOKEN` | A **GitHub Personal Access Token (classic)** with `repo` and `workflow` scopes. To create one: go to **GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token**. Give it a descriptive name (e.g., `approvethis-functions`), select the `repo` and `workflow` scopes, and click **Generate token**. Copy the token immediately — you won't be able to see it again. |
+
+> Treat `APPROVETHIS_API_KEY` and `GITHUB_TOKEN` as secrets. Never commit them to source control.
+
+#### Understanding How the API Key Works
+
+It's important to understand how `APPROVETHIS_API_KEY` fits into the system, because you'll need to wire up both sides of the connection:
+
+**Azure Functions side (already done):** The `request_approval` function in `function_app.py` reads `APPROVETHIS_API_KEY` from its environment and sends it as an `X-API-Key` HTTP header when making requests to the ApproveThis application:
+
+```python
+headers = {"Content-Type": "application/json"}
+if approvethis_api_key:
+    headers["X-API-Key"] = approvethis_api_key
+```
+
+It sends this header when calling `POST /api/approvals/requests` on ApproveThis.
+
+**ApproveThis side (you will build this in Lab 8):** The ApproveThis Flask application does not yet have the `/api/approvals/requests` endpoint or any API key validation logic. In Lab 8, you will:
+
+1. **Create the API endpoint** — `POST /api/approvals/requests` in the `api` blueprint to receive approval requests from Azure Functions
+2. **Validate the API key** — Check that incoming requests include an `X-API-Key` header matching the value stored in the app's configuration
+3. **Configure the app to know the key** — Add an `APPROVETHIS_API_KEY` environment variable (or config setting) to the ApproveThis App Service so it can compare against incoming requests
+
+The key you generate here is a **shared secret**: the Azure Function sends it, and the ApproveThis app checks it. Both sides must have the same value. When you reach Lab 8, you will set this same key as an environment variable on the ApproveThis App Service and write middleware or a decorator to reject requests that don't present a valid key.
+
+#### Add the Values as GitHub Repository Secrets
+
+The deployment workflow reads Terraform variables from GitHub secrets using the `TF_VAR_` prefix convention. Add the following secrets to your repository:
+
+1. Navigate to your repository on GitHub
+2. Go to **Settings → Secrets and variables → Actions**
+3. Click **New repository secret** and add each of the following:
+
+| Secret Name | Value |
+|---|---|
+| `TF_VAR_APPROVETHIS_API_URL` | Your ApproveThis App Service URL |
+| `TF_VAR_APPROVETHIS_API_KEY` | The API key you generated |
+| `TF_VAR_GITHUB_TOKEN` | Your GitHub Personal Access Token |
+
+Once complete, the Function App's application settings will be populated with the correct values. You can verify this in the Azure Portal under your Function App → **Configuration → Application Settings**.
+
+> If you ever need to rotate these values, update the GitHub secrets and re-run the deployment workflow. Terraform will apply the new settings without recreating the Function App.
+
+### 4.3 Trigger the Deployment Workflow
+
+Let's deploy the infrastructure:
 
 If Azure credentials are configured, let's deploy the infrastructure:
 
@@ -288,7 +346,7 @@ If Azure credentials are configured, let's deploy the infrastructure:
 
 ![](../media/lab-7-step-4-2.png)
 
-### 4.3 Monitor the Deployment
+### 4.4 Monitor the Deployment
 
 1. Watch the workflow execution:
 
@@ -297,11 +355,12 @@ If Azure credentials are configured, let's deploy the infrastructure:
    3. Look for the **Terraform Output** step to see the created resources
 
 1. **Expected outputs:**
+   
    - Function App name
    - Function App URL
    - Function endpoints for request-approval, approval-response, and trigger-workflow
 
-### 4.4 Verify Deployment with Azure Extension or MCP
+### 4.5 Verify Deployment with Azure Extension or MCP
 
 Now let's verify the Function App was created successfully. You can use either the Azure VS Code extension or the Azure MCP Server.
 
@@ -320,12 +379,10 @@ Now let's verify the Function App was created successfully. You can use either t
 
 **Copilot Mode**: `Ask`
 ```
-@azure Show me the Function App we just deployed in the dev environment. What are its current configuration settings and status?
+Show me the Function App we just deployed in the dev environment. What are its current configuration settings and status?
 ```
 
 </details>
-
-![](../media/lab-7-step-4-4-option-2-prompt.png)
 
 This will show you the Function App details, including:
 - Function App name and URL
@@ -340,12 +397,10 @@ Alternatively, use the Azure MCP Server:
 
 **Copilot Mode**: `Ask`
 ```
-@azure Show me the newly created Function App and its configuration. What app settings are currently set?
+Show me the newly created Function App and its configuration. What app settings are currently set?
 ```
 
 </details>
-
-![](../media/lab-7-step-4-4-option-2-prompt-alternate.png)
 
 ---
 
@@ -380,7 +435,6 @@ Now let's deploy the function code:
 5. Select the Function App you created (e.g., `func-approvethis-dev-001`)
 6. Confirm the deployment when prompted
 
-> [!TIP]
 > The deployment may take a few minutes. VS Code will show progress in the output panel.
 
 ### 5.4 Verify the Deployment
@@ -413,14 +467,15 @@ curl -X POST https://your-function-app.azurewebsites.net/api/approval/request?co
   }'
 ```
 
-Expected response (may show error about ApproveThis URL not configured, which is expected):
+Expected response (may show a connection error if ApproveThis is not running, which is expected):
 ```json
 {
-  "error": "Function not properly configured"
+  "error": "Failed to communicate with ApproveThis",
+  "details": "..."
 }
 ```
 
-This is normal - the function needs the `APPROVETHIS_API_URL` to be configured, which will be done in Lab 8.
+This is normal — the function is correctly configured and attempting to reach ApproveThis, but the ApproveThis application may not be running or reachable at the configured URL yet. The full integration will be completed in Lab 8.
 
 </details>
 
@@ -439,7 +494,7 @@ Have Copilot explain how GitHub Actions will call these functions:
 
 **Copilot Mode**: `Ask`
 ```
-@workspace How would a GitHub Actions workflow call the request-approval Azure Function? Show me an example workflow step that makes this call.
+How would a GitHub Actions workflow call the request-approval Azure Function? Show me an example workflow step that makes this call.
 ```
 
 </details>
@@ -471,7 +526,7 @@ Now understand how ApproveThis will use these functions:
 
 **Copilot Mode**: `Ask`
 ```
-@workspace How will the ApproveThis application call the approval-response function when a user approves or denies a request? What Python code would make this call?
+How will the ApproveThis application call the approval-response function when a user approves or denies a request? What Python code would make this call?
 ```
 
 </details>
@@ -485,7 +540,7 @@ Let's have Copilot create a comprehensive explanation:
 
 **Copilot Mode**: `Ask`
 ```
-@workspace Create a detailed walkthrough of the complete approval workflow from start to finish:
+Create a detailed walkthrough of the complete approval workflow from start to finish:
 1. GitHub Actions workflow triggers
 2. Calls request-approval function
 3. ApproveThis receives and displays request

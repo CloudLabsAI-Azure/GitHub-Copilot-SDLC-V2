@@ -27,7 +27,6 @@ To solve this, management has greenlit the development of an internal applicatio
 
 **Your Role**: The initial version of ApproveThis was built by another developer who has since left the company. Management has assigned you to take over the application and implement the remaining functionality. You'll use GitHub Copilot throughout the entire software development lifecycle to complete this mission.
 
-> [!IMPORTANT]
 > This workshop focuses on **advanced GitHub Copilot scenarios** throughout the SDLC. Unlike fundamentals workshops, you'll explore:
 > - Real-world planning with Model Context Protocol (MCP)
 > - Advanced development workflows (Edit mode, Agent mode, multitasking)
@@ -41,6 +40,14 @@ To solve this, management has greenlit the development of an internal applicatio
 ## Step 1: Repository Setup
 
 Your training repository has been **pre-created and pre-configured** for this workshop.
+
+### 1.1 Obtain Your Repository URL
+
+> **Do NOT create a new repository from a template.** Each participant receives a pre-configured repository with:
+> - Azure credentials for Terraform deployments
+> - Azure subscription information  
+> - Required secrets for workflow execution
+> - All necessary configurations
 
 1. In the **Lab VM**, open the **Microsoft Edge** browser from the desktop.
 
@@ -84,6 +91,8 @@ Your training repository has been **pre-created and pre-configured** for this wo
 
    ![](../media/approve-this-repo.png)
 
+### 1.2 Clone the Repository
+
 1. In a new PowerShell window, run the below commands to clone the parent repository in your newly created repoistory.
 
    ```
@@ -103,6 +112,22 @@ Your training repository has been **pre-created and pre-configured** for this wo
    ![](../media/auth-github-sign-in-browser.png)
 
 1. You will now see the repository setup is done.
+
+### 1.3 Explore the Repository Structure
+
+Take a moment to familiarize yourself with the repository layout:
+
+```
+<your-repository-name>/
+├── approvethis/          # Main Flask application
+│   ├── app/              # Application code
+│   ├── migrations/       # Database migrations
+│   ├── terraform/        # Infrastructure as Code
+│   └── requirements.txt  # Python dependencies
+├── docs/                 # Documentation and guides
+├── labs/                 # Workshop lab exercises
+└── README.md             # Main documentation
+```
 
 ## Step 2: ApproveThis Application Setup
 
@@ -136,12 +161,20 @@ Now let's get the ApproveThis application running locally.
 
 1. Create and activate a Python virtual environment:
 
-   ```bash
-   python -m venv venv
-   venv\Scripts\activate
-   ```
+   - **On macOS/Linux:**
+     
+     ```bash
+     python3 -m venv venv
+     source venv/bin/activate
+     ```
 
-   > [!TIP]
+   - **On Windows:**
+     
+     ```bash
+     python -m venv venv
+     venv\Scripts\activate
+     ```
+
    > 💡 You should see `(venv)` in your terminal prompt after activation, indicating the virtual environment is active.
 
 ### 2.3 Install Dependencies
@@ -172,7 +205,6 @@ Now let's get the ApproveThis application running locally.
    FLASK_RUN_PORT=5001
    ```
 
-   > [!IMPORTANT]
    > The `SECRET_KEY` shown here is for development only. In production, this would be a secure, randomly generated value.
 
 ### 2.5 Initialize the Database
@@ -228,7 +260,6 @@ Now let's get the ApproveThis application running locally.
 
 Let's ensure GitHub Copilot is properly configured in your development environment.
 
-> [!TIP]
 > 💡 Refer to the [Glossary](../docs/Glossary.md) anytime you encounter unfamiliar terminology.
 
 ### 3.1 Verify Copilot Installation
@@ -330,7 +361,6 @@ Explore the main sections:
 
    ![](../media/approve-this-main-page.png)
 
-   > [!NOTE]
    > Currently, the application displays **mock data**. In later labs, you'll implement the real GitHub API integration to show live data.
 
 ## Step 5: Verify Pre-Configured Secrets
@@ -348,7 +378,6 @@ Your repository comes pre-configured with necessary secrets for Azure deployment
   
    ![](../media/github-repo-sercrets.png)
 
-   > [!IMPORTANT]
    > **Do not modify or delete these secrets.** They are pre-configured by your instructor and will be used in Lab 6 for Terraform deployments to Azure.
 
 4. You won't need to access the values, just confirm they exist.

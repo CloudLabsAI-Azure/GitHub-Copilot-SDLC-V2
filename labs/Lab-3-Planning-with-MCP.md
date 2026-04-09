@@ -24,7 +24,6 @@ You're wrapping up your codebase exploration when Erica, your team lead, stops b
 
 This lab introduces a powerful Copilot capability: **connecting to external tools and data sources** via MCP. Instead of leaving your editor to check work items, create tasks, or update project boards, Copilot can do it for you.
 
-> [!IMPORTANT]
 > **Model Context Protocol (MCP)** is an open standard that allows AI assistants like GitHub Copilot to securely connect to external data sources and tools. Think of it as giving Copilot "plugins" for your development infrastructure.
 
 ---
@@ -40,19 +39,15 @@ This lab introduces a powerful Copilot capability: **connecting to external tool
 - Retrieve documentation from knowledge bases
 - Execute specialized tools (Terraform, deployment systems)
 
-> [!NOTE]
 > MCP extends Copilot's context beyond your codebase. While Copilot normally only knows about your code, MCP allows it to understand your work items, infrastructure state, deployment history, and more.
 
 ### 1.2 MCP Servers for This Workshop
 
-In this workshop, you'll work with four MCP servers:
+In this workshop, you'll work with three MCP servers:
 
 - **GitHub MCP** - Integrate with GitHub data (pull requests, issues, Copilot Spaces, etc.)
 - **Azure DevOps MCP** (This lab) - Connect to Azure Boards for work item management
 - **Azure MCP** (Lab 6) - Query and manage Azure resources
-- **Terraform MCP** (Lab 6) - Understand infrastructure state and plan changes
-
-For detailed information on MCP architecture and concepts, see the [MCP Configuration Guide](../docs/MCP-Configuration-Guide.md).
 
 ## Step 2: Azure DevOps MCP Setup
 
@@ -144,7 +139,6 @@ The Azure DevOps MCP server by Microsoft is available in the GitHub MCP Registry
    }
    ```
 
-   > [!NOTE]
    > The `npx` command automatically downloads and runs the latest version of the Azure DevOps MCP server — no global install required. When the server starts, VS Code will prompt you for your Azure DevOps organization name.
 
 ### 2.3 Start the Server and Authenticate
@@ -158,7 +152,6 @@ The Azure DevOps MCP server by Microsoft is available in the GitHub MCP Registry
 3. If prompted, confirm that you **trust** the MCP server
 4. The first time an ADO tool is invoked, your **browser will open** prompting you to sign in with your Microsoft account — use the credentials associated with your Azure DevOps organization
 
-> [!IMPORTANT]
 > The Azure DevOps MCP server uses browser-based Microsoft authentication. No Personal Access Token (PAT) is required. Ensure you sign in with the account that has access to your organization's Azure DevOps instance.
 > 
 > If you have issues with Copilot accessing your Azure DevOps instance, try asking Copilot to help you diagnose the problem. It's possible that you might need to modify your `mcp.json` configuration...
@@ -235,10 +228,9 @@ Now that the MCP is set up, let's use it for real-world planning.
 
 1. With our prioritized list, let's create user stories in Azure DevOps for the items Copilot helped us come up with.
 
-> [!IMPORTANT]
-> As we need to make use of the ADO MCP to create the work items the best approach is to use `Agent` mode. This will allow Copilot to interact with ADO directly through the MCP connection.
->
-> Ensure you have the ADO MCP tools enabled for Agent mode in the tool configuration dropdown.
+   > As we need to make use of the ADO MCP to create the work items the best approach is to use `Agent` mode. This will allow Copilot to interact with ADO directly through the MCP connection.
+   >
+   > Ensure you have the ADO MCP tools enabled for Agent mode in the tool configuration dropdown.
 
 1. Use Copilot **Agent** mode to help create create user stories in Azure DevOps for each feature:
 
@@ -274,8 +266,7 @@ Now that the MCP is set up, let's use it for real-world planning.
   
    ![](../media/step-3-2-ado-work-items.png)
 
-> [!TIP]
-> To enhance Copilot's capabilities when planning out features, consider making use of [custom agents](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents) that are specifically designed to help with project management tasks. This can further streamline the process of creating and managing work items.
+   > To enhance Copilot's capabilities when planning out features, consider making use of [custom agents](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents) that are specifically designed to help with project management tasks. This can further streamline the process of creating and managing work items.
 
 ### 3.3 Review and Refine User Stories
 
@@ -331,7 +322,6 @@ It's always important to review existing instructions in the `.github/copilot-in
    - Which patterns to follow (e.g., Provider Pattern, RBAC decorators)
    - Required imports and conventions
 
-   > [!NOTE]
    > Copilot automatically reads this file when generating suggestions for your project. Well-structured instructions help Copilot produce code that aligns with your team's standards from the start.
 
 ### 4.2 Incorporating Governance Standards through Copilot Spaces
@@ -344,7 +334,7 @@ These policies live in a **Copilot Space**, a shared knowledge context that Copi
 
 A Copilot Space has already been created with ShipIt's governance policies. To access Spaces from VS Code, you need to install the GitHub MCP server and enable the `copilot_spaces` toolset.
 
-1. Open the **Extensions** panel (`Ctrl+Shift+X` / `Cmd+Shift+X`), click the **filter icon** in the search bar and select **GitHub** and click **Install**
+1. Open the **Extensions** panel (`Ctrl+Shift+X` / `Cmd+Shift+X`), click the **filter icon** in the search bar and select **GitHub** and click **Install** the **GitHub MCP Server**.
 
    ![](../media/vsc-ext-filder-mcp-server-gh.png)
 
@@ -357,7 +347,6 @@ A Copilot Space has already been created with ShipIt's governance policies. To a
   
    ![](../media/vsc-settings-enable-copilot-spaces.png)
 
-   > [!IMPORTANT]
    > The `copilot_spaces` toolset is **not included** by default. You must explicitly enable it through the settings as described above.
 
 1. Add `copilot_spaces` to the list of enabled toolsets and click **OK**.
@@ -387,7 +376,6 @@ Copilot Spaces are accessed in VS Code through **Agent mode** by referencing the
 
    </details>
 
-   > [!TIP]
    > 💡 You don't need to remember the exact Space name. You can also use a natural language description and Copilot will search for matching Spaces. For example: `Summarize the governance policies from the Copilot Space for ShipIt coding standards.`
 
 1. Copilot should return information about ShipIt's organization-wide standards, such as:
@@ -395,7 +383,7 @@ Copilot Spaces are accessed in VS Code through **Agent mode** by referencing the
    - Security and authentication guidelines
    - Documentation requirements for new features
    - Testing coverage thresholds
-
+     
 #### Validate Policy Compliance
 
 1. Now let's verify that Copilot respects both the repository-level instructions and the organization-wide governance policies when generating suggestions.
@@ -425,7 +413,6 @@ Copilot Spaces are accessed in VS Code through **Agent mode** by referencing the
 
    </details>
 
-   > [!NOTE]
    > Copilot Spaces give organizations a way to enforce standards **across repositories** without duplicating instructions in every repo. When combined with repository-level `copilot-instructions.md`, you get a layered policy model — organization-wide governance plus project-specific conventions.
 
 ### 4.3 Generate Technical Design Documentation

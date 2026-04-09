@@ -27,7 +27,6 @@ After reviewing your GitHub provider implementation, Erica emphasizes testing:
 
 This lab demonstrates how AI can transform testing from a tedious chore into a rapid, thorough process.
 
-> [!IMPORTANT]
 > Testing is crucial for:
 > - Preventing regressions when adding features
 > - Documenting expected behavior
@@ -44,7 +43,6 @@ Let's start by understanding what we need to test and setting up the infrastruct
 
 ### 1.1 Review Existing Test Structure
 
-> [!IMPORTANT]
 > For this lab we want to make sure we start with a new Copilot chat session focused on testing. This will ensure that Copilot is in the right context for generating tests. 
 >
 > Steps that should use a new chat session will be clearly indicated.
@@ -52,6 +50,7 @@ Let's start by understanding what we need to test and setting up the infrastruct
 > Continue using the same chat sessions unless otherwise instructed.
 
 1. First start a new Copilot chat session.
+
 2. Have Copilot analyze the existing test setup and if there are any gaps currently. 
 
    <details>
@@ -59,7 +58,7 @@ Let's start by understanding what we need to test and setting up the infrastruct
 
    **Copilot Mode**: `Ask`
    ```
-   @workspace What testing infrastructure exists in the `tests/` directory? What's already set up and what's missing?
+   What testing infrastructure exists in the `tests/` directory? What's already set up and what's missing?
    ```
 
    </details>
@@ -111,7 +110,6 @@ Let's start by understanding what we need to test and setting up the infrastruct
 
 1. We can quickly do this by clicking the **Open in Editor** button in the Copilot chat window. 
 
-   > [!TIP]
    > If you do not see this button you need to switch back in to `Plan` mode.
    
    ![](../media/lab-5-step-1-2-open-in-editor.png)
@@ -170,7 +168,6 @@ So instead, we're going to leverage Copilot's `Agent` mode to build out the enti
 
 One of the benefits of using Copilot is the ability to work on multiple tasks in parallel. While Copilot is working on the testing infrastructure, you can start analyzing and planning test implementations for some of the future work we have to do.
 
-> [!TIP]
 > You can switch between different Copilot chat sessions using the Copilot pane in VS Code. Just click on the session you want to interact with.
 >
 > If you're unfamiliar with this feature, refer to the [Manage agent sessions](https://code.visualstudio.com/docs/copilot/agents/overview#_manage-agent-sessions) in the vs code documentation.
@@ -187,7 +184,9 @@ One of the benefits of using Copilot is the ability to work on multiple tasks in
 
    **Copilot Mode**: `Ask`
    ```
-   @workspace Based on the test plan we created (`tests/test_plan.md`), what are the most critical test cases for the approval workflow feature we'll build in `Lab 8`? Prioritize them by risk.
+   Based on the test plan we created (`tests/test_plan.md`), what are the most critical test cases for the approval workflow feature we'll build in `Lab 8`? 
+
+   Prioritize them by risk.
    ```
 
    ![](../media/lab-5-step-3-1-prompt.png)
@@ -205,6 +204,7 @@ By now Copilot should have completed the testing infrastructure setup. If not gi
 Before moving on, let's do a quick functional verification of each test layer to ensure everything is working correctly. As **Erica** indicated we don't have time for deep debugging, so we're just confirming the basics work.
 
 For all of the following steps, make sure to be in the main `approvethis/` directory.
+
 ```bash
 cd approvethis
 ```
@@ -223,11 +223,10 @@ Unit tests should run the fastest and be the most straightforward to verify.
 
    ![](../media/lab-5-step-4-1.png)
 
-> [!TIP]
-> If tests fail due to missing dependencies or import errors, ask Copilot to help fix them:
-> ```
-> @workspace #terminalLastCommand The unit tests are failing with this error: [paste error]. Can you help fix this?
-> ```
+   > If tests fail due to missing dependencies or import errors, ask Copilot to help fix them:
+   > ```
+   > #terminalLastCommand The unit tests are failing with this error: [paste error]. Can you help fix this?
+   > ```
 
 ### 4.2 Integration Tests
 
@@ -243,7 +242,6 @@ Integration tests verify API endpoints and database interactions work together.
 
    ![](../media/lab-5-step-4-2.png)
 
-> [!NOTE]
 > Integration tests may require the Flask app context to be set up correctly. If you see errors about `application context`, the test fixtures may need adjustment.
 
 ### 4.3 E2E Tests (Playwright)
@@ -266,8 +264,7 @@ E2E tests are the most complex but also the most valuable for verifying real use
 
    ![](../media/lab-5-step-4-3.png)
 
-> [!WARNING]
-> E2E tests require the Flask app to be running or the test fixtures to start it automatically. If you see connection errors, verify the test configuration starts a test server.
+   > E2E tests require the Flask app to be running or the test fixtures to start it automatically. If you see connection errors, verify the test configuration starts a test server.
 
 ### 4.4 Troubleshooting Common Issues
 
@@ -281,12 +278,11 @@ If any tests fail, here are quick fixes to try:
 | Playwright errors | Run `playwright install` to install browser binaries |
 | Import errors | Check `conftest.py` sets up the Python path correctly |
 
-> [!TIP]
-> > Rememeber you can always ask Copilot for help fixing specific errors. Whether they are listed above or not, just provide the error message and context.
+> Rememeber you can always ask Copilot for help fixing specific errors. Whether they are listed above or not, just provide the error message and context.
 
 ### 4.5 Confirm Test Summary
 
-1. Once all three test layers run (even if some tests fail), you've verified the testing infrastructure is in place. 
+1. Once all three test layers run (even if some tests fail), you've verified the testing infrastructure is in place.
 
 1. **Run all tests together** to get a summary:
 
@@ -302,13 +298,12 @@ If any tests fail, here are quick fixes to try:
   
    ![](../media/lab-5-step-4-5.png)
 
-> [!TIP]
-> If you have time and want to see coverage, run:
-> ```bash
-> pytest tests/ --cov=app --cov-report=term-missing
-> ```
+   > If you have time and want to see coverage, run:
+   > ```bash
+   > pytest tests/ --cov=app --cov-report=term-missing
+   > ```
 
-![](../media/lab-5-step-4-5-coverage.png)
+   ![](../media/lab-5-step-4-5-coverage.png)
 
 ### 4.6 Document Any Issues for Later
 
@@ -364,4 +359,4 @@ Take a moment to consider:
 
 ## 🔜 Coming Up Next
 
-In **Lab 6: IaC and Deployments**, you'll use GitHub Copilot with Azure and Terraform MCP servers to understand and enhance infrastructure as code. You'll explore the existing Terraform modules, make improvements, and deploy infrastructure through both GitHub Actions and the ApproveThis application. Get ready to see how AI transforms infrastructure management!
+In **Lab 6: IaC and Deployments**, you'll use GitHub Copilot with Azure server to understand and enhance infrastructure as code. You'll explore the existing Terraform modules, make improvements, and deploy infrastructure through both GitHub Actions and the ApproveThis application. Get ready to see how AI transforms infrastructure management!
