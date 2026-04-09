@@ -47,7 +47,6 @@ Ask Copilot to create a detailed implementation plan for the GitHub provider tas
 <details>
 <summary>💡 Example planning prompt</summary>
 
-> [!NOTE]
 > You need to replace `XXX` with the actual Azure DevOps work item ID for the GitHub provider task.
 
 **Copilot Mode**: `Plan`
@@ -118,7 +117,6 @@ Think of the Coding Agent as a junior developer on your team. You assign it a ta
 
 ### 2.2 Delegating the Task from Chat
 
-> [!IMPORTANT]
 > Currently Coding Agent sessions triggered from VS Code can only branch from the default branch (e.g., `main` or `master`).
 
 Now let's delegate the GitHub provider implementation to the Coding Agent directly from VS Code.
@@ -155,8 +153,7 @@ There are 2 different ways to delegate to the Coding Agent:
    - Begin implementing the changes in the cloud environment
    - Open a draft pull request to track progress
 
-> [!TIP]
-> You can also type out your prompt, then click the arrow on the right of the input box and select `Cloud` from the options to trigger a Coding Agent session.
+   > You can also type out your prompt, then click the arrow on the right of the input box and select `Cloud` from the options to trigger a Coding Agent session.
 
 ### 2.3 Understanding the Agent Panel on GitHub.com
 
@@ -261,7 +258,6 @@ From Mission Control on GitHub.com:
 - **Style Preferences**: When you want to ensure consistency with team standards
 - **Priority Adjustments**: When you need to refocus the agent's efforts
 
-> [!IMPORTANT]
 > Real-time steering makes human-AI collaboration truly iterative. You don't need to wait for the agent to finish, review everything, and request changes. You can guide the work as it happens, saving significant time.
 
 #### Best Practices for Steering
@@ -311,7 +307,6 @@ Once the Coding Agent completes its task, it's time to review the pull request.
 - Configuration is updated correctly
 - No obvious missing pieces
 
-> [!IMPORTANT]
 > Even though the Coding Agent is highly capable, you are still responsible for the final code quality. Always review carefully before merging. The agent is a powerful assistant, not a replacement for human judgment.
 
 ### 2.7 Testing the Implementation
@@ -328,17 +323,18 @@ Let's test the GitHub provider implementation to ensure it works correctly:
 
     ![](../media/lab-4-step-2-7-1-1.png)
 
-3. **Install any new dependencies** (ensure you are in the approvethis directory inside the terminal):
+2. **Install any new dependencies** (ensure you are in the approvethis directory inside the terminal):
+   
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Set up your GitHub token** according to the implementation:
+3. **Set up your GitHub token** according to the implementation:
    ```bash
    export GITHUB_TOKEN="your-token-here"
    ```
 
-5. **Run the application** and test the GitHub provider:
+4. **Run the application** and test the GitHub provider:
    - Start the application
    - Navigate to the repository listing section
    - Verify repositories load from your GitHub account
@@ -348,7 +344,7 @@ Let's test the GitHub provider implementation to ensure it works correctly:
 
    ![](../media/lab-4-step-2-7-4-app02.png)
 
-7. **Check the logs** for any errors or warnings
+5. **Check the logs** for any errors or warnings
 
 ### 2.8 Iterating with the Coding Agent
 
@@ -437,7 +433,6 @@ Review Copilot's suggestions and apply the ones that make sense:
 - Optimizing performance-critical sections
 - Ensuring consistent code style with the rest of the codebase
 
-> [!TIP]
 > If the Coding Agent is still active and you find issues during review, you can provide feedback directly in Mission Control, and it will make the necessary corrections.
 
 ## Step 5: Finishing Up
@@ -464,7 +459,6 @@ For this lab, we'll keep the PR as a draft and not merge it yet. We will be usin
 
 1. Push any additional commits you've made locally to the Coding Agent's branch
 
-> [!NOTE]
 > The Coding Agent's PR is already on GitHub since it works in the cloud. You only need to push if you made additional local changes on top of the agent's work.
 
 ---
