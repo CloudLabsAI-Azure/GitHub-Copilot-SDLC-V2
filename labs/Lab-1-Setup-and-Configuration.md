@@ -81,6 +81,10 @@ Your training repository has been **pre-created and pre-configured** for this wo
 
       ![Enter Your Password](../media/pass.png)
 
+1. On the **Permissions requested by** pop-up, click on **Accept**.
+
+    ![](../media/permissions-requested-accept.png)
+
 1. On the **Stay Signed in?** pop-up, click on No.
 
     ![](../media/stay.png)
@@ -151,12 +155,6 @@ Now let's get the ApproveThis application running locally.
 
    ![](../media/vsc-trust-folder.png)
 
-1. Open a new terminal and run the below command.
-
-   ```bash
-   cd approvethis
-   ```
-
 ### 2.2 Create Python Virtual Environment
 
 1. Create and activate a Python virtual environment:
@@ -178,6 +176,12 @@ Now let's get the ApproveThis application running locally.
    > 💡 You should see `(venv)` in your terminal prompt after activation, indicating the virtual environment is active.
 
 ### 2.3 Install Dependencies
+
+1. Open a new terminal and run the below command.
+
+   ```bash
+   cd approvethis
+   ```
 
 1. Install the required Python packages:
 
@@ -277,9 +281,9 @@ Open VS Code (or your preferred IDE with Copilot support) and verify:
 
 Ensure you're signed in to the correct GitHub account:
 
-1. Click the GitHub Copilot icon **🤖 Signed out (1)** and then click on **Enable more AI Features (2)** to login.
+1. Click the GitHub Copilot icon **🤖 Signed out (1)** and then click on **Sign in to use AI Features (2)** to login.
 
-   ![](../media/enable-more-ai-featu.png)
+   ![](../media/sign-in-to-use-ai-features.png)
 
 1. Now, on Enable more features tab, click on **Continue with GitHub**. 
 
