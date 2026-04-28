@@ -121,7 +121,7 @@ To get a better understanding of your lab resources and credentials, navigate to
 
 For convenience, you can open the lab guide in a separate window by selecting the **Split Window** button from the top right corner.
 
-![Use the Split Window Feature](../media/split.png)
+![Use the Split Window Feature](../media/split-window.png)
 
 ### Managing Your Virtual Machine
 
@@ -131,7 +131,7 @@ Feel free to **Start, Stop, or Restart (2)** your virtual machine as needed from
 
 ### Utilizing the Zoom In/Out Feature
 
-To adjust the zoom level for the environment page, click the **A↕: 100%** icon located next to the timer in the lab environment.
+To adjust the zoom level for the environment page, click the **A↕ (Zoom In/Zoom Out)** icon located next to the timer in the lab environment.
 
 ![Use the Split Window Feature](../media/zoom.png)
 
