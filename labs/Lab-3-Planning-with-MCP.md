@@ -96,46 +96,61 @@ The Azure DevOps MCP server by Microsoft is available in the GitHub MCP Registry
 
 1. In Visual Studio Code, open the **Extensions** panel (`Ctrl+Shift+X` / `Cmd+Shift+X`), click the **filter icon** in the search bar and select **MCP Servers**
 
-   ![](../media/vsc-ext-filder-mcp-server.png)
+   ![](../media/vsc-ext-filder-mcp-server-new.png)
 
 1. On the MCP Servers panel, click **Enable MCP Servers Marketplace**
 
-   ![](../media/vsc-enable-mcp-servers.png)
+   ![](../media/vsc-enable-mcp-servers-new.png)
 
 1. On the *Enable MCP Servers Marketplace?* pop-up, click **Enable**
 
-   ![](../media/vsc-enable-mcp-servers-enable.png)
+   ![](../media/vsc-enable-mcp-servers-enable-new.png)
 
 1. Search for **Azure DevOps** in the search bar and install the **Azure DevOps** MCP server by **Microsoft** from the results
 
-   ![](../media/vsc-mcp-install-azure-ado.png)
+   ![](../media/vsc-mcp-install-azure-ado-new.png)
 
 1. Enter the Azure DevOps organization name as **GitHub-Copilot-SDLC-V2** when prompted and press **Enter**
 
-   ![](../media/vsc-mcp-azure-ado-org-name.png)
+   ![](../media/vsc-mcp-azure-ado-org-name-new.png)
 
 1. Enter the same Azure DevOps organization name as **GitHub-Copilot-SDLC-V2** when prompted to repeat to enable specific domains and press **Enter**
 
-   ![](../media/vsc-mcp-azure-ado-org-name-repeat.png)
+   ![](../media/vsc-mcp-azure-ado-org-name-repeat-new.png)
 
 1. This will automatically create the server configuration in your `.vscode/mcp.json` file with the recommended `npx`-based setup:
 
    ```json
    {
-     "inputs": [
-       {
-         "id": "ado_org",
-         "type": "promptString",
-         "description": "Azure DevOps organization name  (e.g. 'contoso')"
-       }
-     ],
-     "servers": {
-       "ado": {
-         "type": "stdio",
-         "command": "npx",
-         "args": ["-y", "@azure-devops/mcp", "${input:ado_org}"]
-       }
-     }
+	   "servers": {
+		   "microsoft/azure-devops-mcp": {
+			   "type": "stdio",
+			   "command": "npx",
+			   "args": [
+				   "-y",
+				   "@azure-devops/mcp@latest",
+				   "${input:ado_org}",
+				   "-d",
+				   "${input:ado_domain}"
+			   ],
+			   "gallery": "https://api.mcp.github.com",
+			   "version": "1.0.0"
+		   }
+	   },
+	   "inputs": [
+		   {
+			   "id": "ado_org",
+			   "type": "promptString",
+			   "description": "Azure DevOps organization name (e.g., contoso).",
+			   "password": false
+		   },
+		   {
+			   "id": "ado_domain",
+			   "type": "promptString",
+			   "description": "Repeat to enable specific domains: core, work, work-items, search, test-plans, repositories, wiki, pipelines, advanced-security.",
+			"password": false
+		   }
+	   ]
    }
    ```
 
@@ -147,7 +162,7 @@ The Azure DevOps MCP server by Microsoft is available in the GitHub MCP Registry
    - Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`)
    - Search for `MCP: Start Server` and select the Azure DevOps server from the list
    - Click the settings icon next to the server in the MCP panel and select **Start Server**
-2. When prompted, enter your **Azure DevOps organization name**: `GitHub-Copilot-SDLC`
+2. When prompted, enter your **Azure DevOps organization name**: `GitHub-Copilot-SDLC-V2`
    - You may not be prompted for this input. If that is the case see the comment below about manually adding the input to `mcp.json`
 3. If prompted, confirm that you **trust** the MCP server
 4. The first time an ADO tool is invoked, your **browser will open** prompting you to sign in with your Microsoft account — use the credentials associated with your Azure DevOps organization
@@ -174,11 +189,11 @@ Now that the MCP is set up, let's use it for real-world planning.
 
    </details>
 
-   ![](../media/step-3-1-prompt.png)
+   ![](../media/step-3-1-prompt-new.png)
 
 1. When prompted, click **Allow in this Session** for the Copilot Agent to search for the specific work items.
 
-   ![](../media/step-3-1-prompt-response.png)
+   ![](../media/step-3-1-prompt-response-new.png)
 
 1. You might find:
    - Existing user stories from the previous developer
@@ -186,7 +201,7 @@ Now that the MCP is set up, let's use it for real-world planning.
    - Feature requests from stakeholders
    - OR you might find nothing, which lets us know we need to create new work items!
   
-   ![](../media/step-3-1-prompt-response-final.png)
+   ![](../media/step-3-1-prompt-response-final-new.png)
 
 ### 3.2 Create User Stories for ApproveThis Features
 
@@ -224,7 +239,7 @@ Now that the MCP is set up, let's use it for real-world planning.
 
    </details>
 
-   ![](../media/step-3-2-prompt.png)
+   ![](../media/step-3-2-prompt-new.png)
 
 1. With our prioritized list, let's create user stories in Azure DevOps for the items Copilot helped us come up with.
 
@@ -248,15 +263,11 @@ Now that the MCP is set up, let's use it for real-world planning.
 
    </details>
 
-   ![](../media/step-3-2-prompt-02.png)
+   ![](../media/step-3-2-prompt-02-new.png)
 
 1. When prompted, click **Allow in this Session** fpr the Copilot Agent mode to create to the user stories in Azure DevOps.
 
-   ![](../media/step-3-2-allow-session.png)
-
 1. The Copilot Agent may ask you to authenticate to Azure DevOps to create these user stories. **Allow** the Copilot Agent to create the user stories post authentication.
-
-   ![](../media/step-3-2-follow-steps.png)
 
 1. Copilot will:
    - Analyze all relevant code files and models
@@ -264,7 +275,7 @@ Now that the MCP is set up, let's use it for real-world planning.
    - Generate user story titles and descriptions
    - Submit the work items to Azure DevOps
   
-   ![](../media/step-3-2-ado-work-items.png)
+   ![](../media/step-3-2-ado-work-items-new.png)
 
    > To enhance Copilot's capabilities when planning out features, consider making use of [custom agents](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents) that are specifically designed to help with project management tasks. This can further streamline the process of creating and managing work items.
 
@@ -279,7 +290,6 @@ Now that the MCP is set up, let's use it for real-world planning.
    <details>
    <summary>💡 Example prompt to modify a work item</summary>
 
-   > [!NOTE]
    > **This prompt is strictly an example. The actual work item IDs will vary based on your Azure DevOps instance and the work items created by Copilot.**
 
    **Copilot Mode**: `Agent`
@@ -293,6 +303,8 @@ Now that the MCP is set up, let's use it for real-world planning.
 
    </details>
 
+   ![](../media/step-3-3-ado-prompt-new.png)
+
 ## Step 4: Governance Policy Integration
 
 ShipIt Industries has development standards. Let's ensure Copilot respects them.
@@ -305,7 +317,7 @@ It's always important to review existing instructions in the `.github/copilot-in
 
 1. Open `.github/copilot-instructions.md` in VS Code
 
-   ![](../media/step-4-1.png)
+   ![](../media/step-4-1-new.png)
    
 1. Skim through the file and note the following sections:
    
@@ -330,34 +342,91 @@ While the `copilot-instructions.md` file defines standards at the repository lev
 
 These policies live in a **Copilot Space**, a shared knowledge context that Copilot can reference alongside your codebase. Think of it as a centralized policy library that Copilot can consult when generating suggestions, ensuring consistency across the entire organization.
 
+### Create a Copilot Space on GitHub
+
+1. Ensure you are logged in to your **approve-this-<inject key="Deployment-id"></inject>** GitHub repository GitHub repository, then navigate to Copilot Spaces:
+   
+   ```
+   https://github.com/copilot/spaces
+   ```
+
+   > Alternatively, you can access Copilot Spaces directly from your repository by clicking the **Chat with Copilot** icon at the top, then selecting **Spaces**.
+   
+   ![](../media/gh-chat-with-copilot-icon.png)
+
+1. On the **Copilot Spaces** page, click **Create Space**.
+
+   ![](../media/copilot-spaces-create-space.png)
+
+1. In the **New Space** window:
+
+   - Enter a name for your Copilot Space. For this workshop, use **ShipIt Governance <inject key="Deployment-id"></inject>** (ensure the name is unique).
+   - Verify that the **Owner** is set to **<inject key="GitHub User Name" enableCopy="false"/>**.
+   - Click **Create**.
+
+   ![](../media/copilot-spaces-new-space-01.png)
+
 #### Enable Copilot Spaces in Your IDE
 
-A Copilot Space has already been created with ShipIt's governance policies. To access Spaces from VS Code, you need to install the GitHub MCP server and enable the `copilot_spaces` toolset.
+To access Spaces from VS Code, you need to install the GitHub MCP server and enable the `copilot_spaces` toolset.
 
 1. Open the **Extensions** panel (`Ctrl+Shift+X` / `Cmd+Shift+X`), click the **filter icon** in the search bar and select **GitHub** and click **Install** the **GitHub MCP Server**.
 
-   ![](../media/vsc-ext-filder-mcp-server-gh.png)
+   ![](../media/vsc-ext-filder-mcp-server-gh-new.png)
 
-2. Enable the Copilot Spaces toolset:
+1. When prompted by Visual Studio Code to authenticate the MCP Server with GitHub, click **Allow** to proceed.
+
+   > This step grants the required permissions for the GitHub MCP Server to connect and function correctly.
+
+   ![](../media/vsc-mcp-server-gh-auth-allow.png)
+
+1. On the ***Authorize Visual Studio Code*** tab, click **Continue**.
+
+   ![](../media/vsc-mcp-server-gh-auth-continue.png)
+
+1. On the addtional permissions requested tab, click **Authorize Visual-Studio-Code**.
+
+   ![](../media/vsc-mcp-server-gh-auth-vs-code.png)
+
+1. You will see a popup asking **This site is trying to open Visual Studio Code**, click on **Open**. This will launch Visual Studio Code.
+
+   ![](../media/auth-vs-code-open-new.png)
+
+1. Enable the Copilot Spaces toolset:
    
    - Open **VS Code Settings** (`Ctrl+,` / `Cmd+,`)
    - Search for `GitHub MCP toolsets`
    - Locate the **GitHub > Copilot > Chat > GitHub MCP Server: Toolsets** setting
    - Add `copilot_spaces` to the list of enabled toolsets
   
-   ![](../media/vsc-settings-enable-copilot-spaces.png)
+   ![](../media/vsc-settings-enable-copilot-spaces-new.png)
 
    > The `copilot_spaces` toolset is **not included** by default. You must explicitly enable it through the settings as described above.
 
 1. Add `copilot_spaces` to the list of enabled toolsets and click **OK**.
 
-   ![](../media/vsc-settings-enable-copilot-spaces-add.png)
+   ![](../media/vsc-settings-enable-copilot-spaces-add-new.png)
 
-3. Verify the Spaces tools are available:
+1. You can also enable Copilot Spaces directly through your GitHub MCP server configuration (`mcp.json`). Locate the `io.github.github/github-mcp-server` entry, add the following **`headers`** section and save the file:
+
+   ```JSON
+   "headers": {
+      "X-MCP-Toolsets": "default,copilot_spaces"
+   }
+   ```
+
+   ![](../media/vsc-settings-enable-copilot-spaces-headers-json.png)
+
+1. **Restart** Visual Studio Code to apply the changes. After the restart, make sure the **GitHub MCP server** is **running**, and **start** it if needed.
+   
+1. Verify the Spaces tools are available:
+   
    - Open the **Copilot Chat** panel and select **Agent** mode
-   - Click the **tools icon** (wrench) in the chat input box
+   - Click the **Configure tools icon** (slider) in the chat input box
    - Expand the list of tools for **GitHub**
    - Confirm that `get_copilot_space` and `list_copilot_spaces` are listed and enabled
+  
+   ![](../media/vsc-ghc-configure-tools-icon.png)
 
 #### Access the Governance Space
 
@@ -371,12 +440,14 @@ Copilot Spaces are accessed in VS Code through **Agent mode** by referencing the
 
    **Copilot Mode**: `Agent`
    ```
-   Using the Copilot Space 'ShipIt Governance' owned by our organization, summarize the coding standards and governance policies defined in the Space.
+   Using the Copilot Space 'ShipIt Governance <inject key="Deployment-id"></inject>' owned by our organization, summarize the coding standards and governance policies defined in the Space.
    ```
 
    </details>
 
    > 💡 You don't need to remember the exact Space name. You can also use a natural language description and Copilot will search for matching Spaces. For example: `Summarize the governance policies from the Copilot Space for ShipIt coding standards.`
+   >
+   > Sign in to GitHub Copilot in your VS Code if prompted.
 
 1. Copilot should return information about ShipIt's organization-wide standards, such as:
    - Required code review approvals
@@ -398,6 +469,8 @@ Copilot Spaces are accessed in VS Code through **Agent mode** by referencing the
 
    </details>
 
+   ![](../media/exc-03-validate-policy-compliance-prompt.png)
+
 1. Copilot will cross-reference both sources and highlight:
    - Repository-specific patterns (Provider Pattern, RBAC decorators)
    - Organization-wide requirements (security policies, testing standards)
@@ -412,6 +485,8 @@ Copilot Spaces are accessed in VS Code through **Agent mode** by referencing the
    ```
 
    </details>
+
+   ![](../media/exc-03-validate-governance-awareness-prompt.png)
 
    > Copilot Spaces give organizations a way to enforce standards **across repositories** without duplicating instructions in every repo. When combined with repository-level `copilot-instructions.md`, you get a layered policy model — organization-wide governance plus project-specific conventions.
 
@@ -429,7 +504,11 @@ Copilot Spaces are accessed in VS Code through **Agent mode** by referencing the
 
    </details>
 
+   ![](../media/exc-03-gen-tech-design-doc-prompt.png)
+
 1. Copilot will generate comprehensive documentation that you can refine and commit to the repository.
+
+   ![](../media/exc-03-gen-tech-design-doc-response.png)
 
 ---
 
