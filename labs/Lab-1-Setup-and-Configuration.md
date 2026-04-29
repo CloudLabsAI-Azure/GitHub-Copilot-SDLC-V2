@@ -279,7 +279,7 @@ Open VS Code (or your preferred IDE with Copilot support) and verify:
    - Search for "GitHub Copilot"
    - Ensure it's installed and enabled
   
-   ![](../media/vsc-ghc-chat-ext.png)
+   ![](../media/vsc-ghc-chat-ext-new.png)
 
 ### 3.2 Sign In to GitHub
 
