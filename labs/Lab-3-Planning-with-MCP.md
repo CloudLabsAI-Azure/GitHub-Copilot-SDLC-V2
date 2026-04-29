@@ -83,11 +83,11 @@ Before proceeding, ensure you have:
 
 1. On the **We need a few more details** page, click on **Continue** with the default settings.
 
-   ![](../media/devops-continue.png)
+   ![](../media/devops-continue-new.png)
 
 1. On the DevOps organization page, you will see the pre-created organization and project created. Use this Project for further exercises.
 
-   ![](../media/devops-org-project.png)
+   ![](../media/devops-org-project-new.png)
 
 
 ### 2.2 Install the Azure DevOps MCP Server
