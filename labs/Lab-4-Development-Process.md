@@ -36,7 +36,7 @@ Before diving into code, let's use Copilot's Plan mode to create a structured im
 
 From the Copilot Chat panel, click the mode selector dropdown at the bottom of the chat and select **Plan** mode.
 
-![](../media/select-plan-mode.png)
+![](../media/vsc-select-plan-mode.png)
 
 Plan mode is designed to help you think through implementation strategies before writing code. It creates a structured outline that you can review and refine.
 
@@ -56,7 +56,7 @@ I need to implement the real GitHub provider. The work item is in Azure DevOps u
 
 </details>
 
-![](../media/lab-4-step-1-2-prompt.png)
+![](../media/lab-4-step-1-2-prompt-new.png)
 
 ### 1.3 Review the Generated Plan
 
@@ -129,13 +129,11 @@ There are 2 different ways to delegate to the Coding Agent:
    
 1. Select `Continue in Cloud` to delegate the task to the Coding Agent
 
-   ![](../media/lab-4-step-2-2-start-implementation-cloud.png)
+   ![](../media/lab-4-step-2-2-start-implementation-cloud-new.png)
 
-   ![](../media/lab-4-step-2-2-commit-changes-delegate.png)
+   ![](../media/lab-4-step-2-2-commit-changes-delegate-new.png)
 
 1. If the Coding Agent fails to run the session, then it may be possible that the github username and user email are not configured. Provide the Copilot your github user name and user email and then delegate.
-
-   ![](../media/lab-4-step-2-2-gh-user-email.png)
 
 #### Method 2: Using @cloud in Copilot Chat
 
@@ -146,7 +144,7 @@ There are 2 different ways to delegate to the Coding Agent:
    @cloud implement the GitHub provider based on the implementation plan we created above.
    ```
 
-   ![](../media/lab-4-step-2-2-mention-cloud.png)
+   ![](../media/lab-4-step-2-2-mention-cloud-new.png)
    
 3. **Submit the prompt**. Copilot will confirm the delegation and the Coding Agent will:
    - Create a new branch for the work
@@ -163,9 +161,9 @@ Once you've delegated the task, the Coding Agent starts working independently. O
 
 1. **Navigate to GitHub.com** in your browser
 2. Open your repository for this lab
-3. Click on the **Agent Panel** in the top right of the page (it's next to the Copilot icon)
+3. Navigate to the **Agents** tab 
 
-   ![](../media/lab-4-step-2-3-agents.png)
+   ![](../media/lab-4-step-2-3-agents-new.png)
 
 #### What You'll See in the Agent Panel
 
@@ -191,7 +189,7 @@ The other method of monitoring and controlling Coding Agent sessions is **Missio
 
 You can access Mission Control at **[github.com/copilot/agents](https://github.com/copilot/agents)**.
 
-![](../media/lab-4-step-2-4-mission-control-agents.png)
+![](../media/lab-4-step-2-4-mission-control-agents-new.png)
 
 #### Mission Control Features
 
@@ -241,7 +239,7 @@ From Mission Control on GitHub.com:
 3. **Use the chat input** at the bottom of the session view to send messages to the agent
 4. The agent will **see your feedback and adapt** as soon as its current task completes
 
-   ![](../media/lab-4-step-2-5-steer-agent.png)
+   ![](../media/lab-4-step-2-5-steer-agent-new.png)
 
 **Example Steering Messages:**
 
@@ -279,7 +277,7 @@ Once the Coding Agent completes its task, it's time to review the pull request.
    - Check the **Session Logs** in Mission Control to understand the agent's decision-making
    - Look at any automated checks or tests
 
-   ![](../media/lab-4-step-2-6-gh-pr.png)
+   ![](../media/lab-4-step-2-6-gh-pr-new.png)
 
 2. **In VS Code** (Optional)
    - Open the **GitHub Pull Requests** extension
@@ -287,7 +285,7 @@ Once the Coding Agent completes its task, it's time to review the pull request.
    - Review changes with VS Code's diff viewer
    - Test locally by checking out the branch
   
-   ![](../media/lab-4-step-2-6-gh-pr-vsc.png)
+   ![](../media/lab-4-step-2-6-gh-pr-vsc-new.png)
 
 #### What to Check For
 
@@ -319,9 +317,7 @@ Let's test the GitHub provider implementation to ensure it works correctly:
     - Select the PR created by the agent
     - Review and Merge the PR
   
-    ![](../media/lab-4-step-2-7-1.png)
-
-    ![](../media/lab-4-step-2-7-1-1.png)
+    ![](../media/lab-4-step-2-7-1-new.png)
 
 2. **Install any new dependencies** (ensure you are in the approvethis directory inside the terminal):
    
@@ -340,9 +336,9 @@ Let's test the GitHub provider implementation to ensure it works correctly:
    - Verify repositories load from your GitHub account
    - Test workflow listing and other features
   
-   ![](../media/lab-4-step-2-7-4-app01.png)
+   ![](../media/lab-4-step-2-7-4-app01-new.png)
 
-   ![](../media/lab-4-step-2-7-4-app02.png)
+   ![](../media/lab-4-step-2-7-4-app02-new.png)
 
 5. **Check the logs** for any errors or warnings
 
@@ -376,7 +372,7 @@ Add comprehensive docstrings to all methods in app/providers/github.py following
 
 </details>
 
-![](../media/lab-4-step-3-1.png)
+![](../media/lab-4-step-3-1-new.png)
 
 ### 3.2 Create API Documentation
 
@@ -399,7 +395,7 @@ Save this as docs/GitHub-Provider-API.md
 
 </details>
 
-![](../media/lab-4-step-3-2.png)
+![](../media/lab-4-step-3-2-new.png)
 
 ## Step 4: GitHub Copilot Code Review
 
@@ -451,7 +447,7 @@ To have Copilot generate a commit message for your changes:
 4. Click the **Generate Commit Message** button (sparkle icon ✨) at the end of the input box
 5. Review and edit the generated message as needed
 
-   ![](../media/lab-4-step-5-1-source-control-commit.png)
+   ![](../media/lab-4-step-5-1-source-control-commit-new.png)
 
 ### 5.2 Sync Our Changes
 
