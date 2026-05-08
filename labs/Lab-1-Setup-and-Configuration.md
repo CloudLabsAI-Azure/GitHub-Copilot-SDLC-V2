@@ -145,6 +145,18 @@ Now let's get the ApproveThis application running locally.
 
    ![](../media/vs.png)
 
+1. Once the IDE opens, if you see a prompt to sign in to GitHub. Click **Continue without signing in** (you will sign in during the upcoming steps).
+
+   ![](../media/vsc-continue-without-sign-in.png)
+
+1. When the color theme pop-up appears, select your preferred theme and click **Continue**.
+
+   ![](../media/vsc-colour-theme-continue.png)
+
+1. When the Build with AI Agents pop-up appears, explore the available Copilot agents and features, then click **Get Started**.
+
+   ![](../media/vsc-new-build-with-ai-agents-get-started.png)
+
 1. From the **File** menu in VS Code, choose **Open Folder**.
 
    ![](../media/vsc-open-folder.png)
