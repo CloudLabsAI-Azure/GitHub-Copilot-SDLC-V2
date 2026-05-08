@@ -265,7 +265,7 @@ Now that the MCP is set up, let's use it for real-world planning.
 
    ![](../media/step-3-2-prompt-02-new.png)
 
-1. When prompted, click **Allow in this Session** fpr the Copilot Agent mode to create to the user stories in Azure DevOps.
+1. When prompted, click **Allow in this Session** for the Copilot Agent mode to create to the user stories in Azure DevOps.
 
 1. The Copilot Agent may ask you to authenticate to Azure DevOps to create these user stories. **Allow** the Copilot Agent to create the user stories post authentication.
 
@@ -342,33 +342,9 @@ While the `copilot-instructions.md` file defines standards at the repository lev
 
 These policies live in a **Copilot Space**, a shared knowledge context that Copilot can reference alongside your codebase. Think of it as a centralized policy library that Copilot can consult when generating suggestions, ensuring consistency across the entire organization.
 
-### Create a Copilot Space on GitHub
-
-1. Ensure you are logged in to your **approve-this-<inject key="Deployment-id"></inject>** GitHub repository GitHub repository, then navigate to Copilot Spaces:
-   
-   ```
-   https://github.com/copilot/spaces
-   ```
-
-   > Alternatively, you can access Copilot Spaces directly from your repository by clicking the **Chat with Copilot** icon at the top, then selecting **Spaces**.
-   
-   ![](../media/gh-chat-with-copilot-icon.png)
-
-1. On the **Copilot Spaces** page, click **Create Space**.
-
-   ![](../media/copilot-spaces-create-space.png)
-
-1. In the **New Space** window:
-
-   - Enter a name for your Copilot Space. For this workshop, use **ShipIt Governance <inject key="Deployment-id"></inject>** (ensure the name is unique).
-   - Verify that the **Owner** is set to **<inject key="GitHub User Name" enableCopy="false"/>**.
-   - Click **Create**.
-
-   ![](../media/copilot-spaces-new-space-01.png)
-
 #### Enable Copilot Spaces in Your IDE
 
-To access Spaces from VS Code, you need to install the GitHub MCP server and enable the `copilot_spaces` toolset.
+A Copilot Space has already been created with ShipIt's governance policies. To access Spaces from VS Code, you need to install the GitHub MCP server and enable the `copilot_spaces` toolset.
 
 1. Open the **Extensions** panel (`Ctrl+Shift+X` / `Cmd+Shift+X`), click the **filter icon** in the search bar and select **GitHub** and click **Install** the **GitHub MCP Server**.
 
@@ -412,7 +388,7 @@ To access Spaces from VS Code, you need to install the GitHub MCP server and ena
    ```JSON
    "headers": {
       "X-MCP-Toolsets": "default,copilot_spaces"
-   }
+   },
    ```
 
    ![](../media/vsc-settings-enable-copilot-spaces-headers-json.png)
@@ -440,14 +416,14 @@ Copilot Spaces are accessed in VS Code through **Agent mode** by referencing the
 
    **Copilot Mode**: `Agent`
    ```
-   Using the Copilot Space 'ShipIt Governance <inject key="Deployment-id"></inject>' owned by our organization, summarize the coding standards and governance policies defined in the Space.
+   Using the Copilot Space 'ShipIt Governance' owned by our organization, summarize the coding standards and governance policies defined in the Space.
    ```
 
    </details>
 
    > 💡 You don't need to remember the exact Space name. You can also use a natural language description and Copilot will search for matching Spaces. For example: `Summarize the governance policies from the Copilot Space for ShipIt coding standards.`
    >
-   > Sign in to GitHub Copilot in your VS Code if prompted.
+   > 📌 Sign in to GitHub Copilot in your VS Code if prompted.
 
 1. Copilot should return information about ShipIt's organization-wide standards, such as:
    - Required code review approvals
